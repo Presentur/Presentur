@@ -65,7 +65,7 @@ namespace SharedPowerpointFavoritesPlugin
                 var targetSlide = temporaryPresentation.Slides[1];
                 var targetShape = targetSlide.Shapes[1];
                 var shapeExportArgs = new object[] { thumbnailPath, PowerPoint.PpShapeFormat.ppShapeFormatPNG, 0, 0, PowerPoint.PpExportMode.ppRelativeToSlide };
-                targetShape.GetType().InvokeMember("Export", System.Reflection.BindingFlags.InvokeMethod, null, targetShape, shapeExportArgs);
+                targetShape.GetType().InvokeMember("Export", System.Reflection.BindingFlags.InvokeMethod, null, targetShape, shapeExportArgs); //ATTENTION. This is the risky part...
                 temporaryPresentation.Close();
                 stopwatch.Stop();
                 DebugLogger.Log("Creating thumbnail took " + stopwatch.ElapsedMilliseconds);
