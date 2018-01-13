@@ -158,7 +158,7 @@
     can be found.
   -->
   <ItemGroup>
-    <Compile Include="DebugLogger.cs" />
+    <Compile Include="util\DebugLogger.cs" />
     <Compile Include="service\ImportExportService.cs" />
     <Compile Include="MainRibbon.cs" />
     <Compile Include="model\ShapeFavorite.cs" />
@@ -174,7 +174,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="SharedFavView.resx">
+    <EmbeddedResource Include="view\SharedFavView.resx">
       <DependentUpon>SharedFavView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
@@ -188,10 +188,10 @@
     </Compile>
     <Compile Include="persistence\ShapePersistence.cs" />
     <Compile Include="service\ShapeService.cs" />
-    <Compile Include="SharedFavView.cs">
+    <Compile Include="view\SharedFavView.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SharedFavView.Designer.cs">
+    <Compile Include="view\SharedFavView.Designer.cs">
       <DependentUpon>SharedFavView.cs</DependentUpon>
     </Compile>
     <Compile Include="ThisAddIn.cs">
@@ -209,6 +209,7 @@
   <ItemGroup>
     <EmbeddedResource Include="MainRibbon.xml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
