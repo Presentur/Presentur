@@ -159,7 +159,7 @@
   -->
   <ItemGroup>
     <Compile Include="DebugLogger.cs" />
-    <Compile Include="ImportExportService.cs" />
+    <Compile Include="service\ImportExportService.cs" />
     <Compile Include="MainRibbon.cs" />
     <Compile Include="model\ShapeFavorite.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
@@ -186,8 +186,8 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="ShapePersistence.cs" />
-    <Compile Include="ShapeService.cs" />
+    <Compile Include="persistence\ShapePersistence.cs" />
+    <Compile Include="service\ShapeService.cs" />
     <Compile Include="SharedFavView.cs">
       <SubType>Form</SubType>
     </Compile>
