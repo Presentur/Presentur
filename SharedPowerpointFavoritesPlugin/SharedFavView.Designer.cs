@@ -83,7 +83,7 @@
             this.Controls.Add(this.saveShapeButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "SharedFavView";
-            this.Text = "SharedFavView";
+            this.Text = "Shared FavoriteShapes";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.SharedFavView_FormClosed);
             this.Load += new System.EventHandler(this.SharedFavView_Load);
             this.Shown += new System.EventHandler(this.SharedFavView_Shown);
