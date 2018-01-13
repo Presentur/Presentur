@@ -87,7 +87,6 @@ namespace SharedPowerpointFavoritesPlugin
         private void ReloadFavorites()
         {
             DebugLogger.Log("Reloading all favorites.");
-            //TODO remove all existing pictureBoxes
             foreach(PictureBox pictureBox in displayedShapes.Keys)
             {
                 this.panel1.Controls.Remove(pictureBox);
