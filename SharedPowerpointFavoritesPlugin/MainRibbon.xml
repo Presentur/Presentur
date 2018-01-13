@@ -5,12 +5,19 @@
       <tab idMso="TabAddIns">
         <group id="MainGroup"
                label="MainGroup">
-          <button id="openSharedFavButton" label="Shared Favorites..."  
-             screentip="Opens Shared Favorites" onAction="OnOpenSharedFavButton"  
+          <button id="openSharedFavButton" label="Shared Favorites..."
+             screentip="Opens Shared Favorites" onAction="OnOpenSharedFavButton"
              supertip="Opens Shared Favorites"/>
         </group>
       </tab>
     </tabs>
   </ribbon>
+  <contextMenus>
+    <contextMenu idMso="ContextMenuShape">
+      <menu id="ShapeFavoritesMenu" label="Favorite Shapes...">
+        <button id="SaveFavoriteShapeContextButton" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape"/>
+      </menu>
+    </contextMenu>
+  </contextMenus>
 </customUI>
 

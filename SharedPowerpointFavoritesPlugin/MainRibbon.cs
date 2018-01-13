@@ -6,25 +6,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Text;
 using Office = Microsoft.Office.Core;
-
-// TODO:  Führen Sie diese Schritte aus, um das Element auf dem Menüband (XML) zu aktivieren:
-
-// 1: Kopieren Sie folgenden Codeblock in die ThisAddin-, ThisWorkbook- oder ThisDocument-Klasse.
-
-//  protected override Microsoft.Office.Core.IRibbonExtensibility CreateRibbonExtensibilityObject()
-//  {
-//      return new MainRibbon();
-//  }
-
-// 2. Erstellen Sie Rückrufmethoden im Abschnitt "Menübandrückrufe" dieser Klasse, um Benutzeraktionen
-//    zu behandeln, z.B. das Klicken auf eine Schaltfläche. Hinweis: Wenn Sie dieses Menüband aus dem Menüband-Designer exportiert haben,
-//    verschieben Sie den Code aus den Ereignishandlern in die Rückrufmethoden, und ändern Sie den Code für die Verwendung mit dem
-//    Programmmodell für die Menübanderweiterung (RibbonX).
-
-// 3. Weisen Sie den Steuerelementtags in der Menüband-XML-Datei Attribute zu, um die entsprechenden Rückrufmethoden im Code anzugeben.  
-
-// Weitere Informationen erhalten Sie in der Menüband-XML-Dokumentation in der Hilfe zu Visual Studio-Tools für Office.
-
+using Microsoft.Office.Interop.PowerPoint;
 
 namespace SharedPowerpointFavoritesPlugin
 {
@@ -56,9 +38,26 @@ namespace SharedPowerpointFavoritesPlugin
 
         public void OnOpenSharedFavButton(Office.IRibbonControl control)
         {
-            Console.WriteLine("Open Button pressed.");
+            DebugLogger.Log("Open Button pressed.");
             SharedFavView.ShowOrFocus();
         }
+
+        public void SaveFavoriteShape(Office.IRibbonControl control)
+        {
+            DebugLogger.Log("Save As FavoriteShape clicked.");
+            Selection selection = Globals.ThisAddIn.Application.ActiveWindow.Selection;
+            Shape selectedShape = selection.ShapeRange[1];
+            if (selectedShape != null)
+            {
+                ShapePersistence.INSTANCE.SaveShape(selectedShape);
+                SharedFavView.ShowOrFocus();
+            }
+            else
+            {
+                DebugLogger.Log("Could not save selection " + selection);
+            }
+        }
+
 
         #endregion
 
