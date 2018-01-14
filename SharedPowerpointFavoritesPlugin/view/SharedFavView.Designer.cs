@@ -36,9 +36,9 @@
             // 
             // saveShapeButton
             // 
-            this.saveShapeButton.Location = new System.Drawing.Point(185, 346);
+            this.saveShapeButton.Location = new System.Drawing.Point(173, 367);
             this.saveShapeButton.Name = "saveShapeButton";
-            this.saveShapeButton.Size = new System.Drawing.Size(87, 48);
+            this.saveShapeButton.Size = new System.Drawing.Size(89, 48);
             this.saveShapeButton.TabIndex = 1;
             this.saveShapeButton.Text = "Save From Clipboard";
             this.saveShapeButton.UseVisualStyleBackColor = true;
@@ -49,14 +49,14 @@
             this.panel1.AutoScroll = true;
             this.panel1.Location = new System.Drawing.Point(13, 13);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(259, 327);
+            this.panel1.Size = new System.Drawing.Size(249, 347);
             this.panel1.TabIndex = 3;
             // 
             // importButton
             // 
-            this.importButton.Location = new System.Drawing.Point(13, 345);
+            this.importButton.Location = new System.Drawing.Point(13, 366);
             this.importButton.Name = "importButton";
-            this.importButton.Size = new System.Drawing.Size(75, 49);
+            this.importButton.Size = new System.Drawing.Size(77, 49);
             this.importButton.TabIndex = 4;
             this.importButton.Text = "Import...";
             this.importButton.UseVisualStyleBackColor = true;
@@ -64,9 +64,9 @@
             // 
             // exportButton
             // 
-            this.exportButton.Location = new System.Drawing.Point(94, 346);
+            this.exportButton.Location = new System.Drawing.Point(96, 367);
             this.exportButton.Name = "exportButton";
-            this.exportButton.Size = new System.Drawing.Size(85, 48);
+            this.exportButton.Size = new System.Drawing.Size(71, 48);
             this.exportButton.TabIndex = 5;
             this.exportButton.Text = "Export...";
             this.exportButton.UseVisualStyleBackColor = true;
@@ -76,7 +76,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 406);
+            this.ClientSize = new System.Drawing.Size(274, 427);
             this.Controls.Add(this.exportButton);
             this.Controls.Add(this.importButton);
             this.Controls.Add(this.panel1);
