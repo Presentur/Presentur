@@ -35,18 +35,7 @@ namespace SharedPowerpointFavoritesPlugin
             {
                 return allShapes;
             }
-            return allShapes.FindAll(shapeFavorite =>
-            {
-                try
-                {
-                    return shapeFavorite.Shape.Type == type;
-                }
-                catch (Exception e)
-                {
-                    logger.Log("Exception while filtering shapes: " + e.Message);
-                    return false;
-                }
-            });
+            return allShapes.FindAll(shapeFavorite => shapeFavorite.Shape.Type == type);
         }
 
         public void PasteToCurrentPresentation(ShapeFavorite shape)

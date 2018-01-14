@@ -71,6 +71,7 @@ namespace SharedPowerpointFavoritesPlugin
 
         public void OnExportSharedFavButton(Office.IRibbonControl control)
         {
+            logger.Log("Export button clicked.");
             var filePath = DialogUtil.GetFilePathViaDialog(isSaveAction: true);
             if (filePath != null)
             {
@@ -87,6 +88,7 @@ namespace SharedPowerpointFavoritesPlugin
 
         public void OnCopyFromClipboardButton(Office.IRibbonControl control)
         {
+            logger.Log("Copy from Clipboard clicked.");
             if (!this.shapePersistence.SaveShapeFromClipBoard())
             {
                 MessageBox.Show("Clipboard content could not be read.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

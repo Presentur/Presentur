@@ -152,10 +152,11 @@ namespace SharedPowerpointFavoritesPlugin
             }
             logger.Log("Saving shape.");
             var cachedShapes = CachedShapes; // ensure this is already loaded before saving!
-            var shapeToSave = new ShapeFavorite(persistenceFile, targetSlide.Shapes[1]);
-            logger.Log("Saving shape of type " + shapeToSave.Shape.Type.ToString());
-            temporaryPresentation.SaveAs(shapeToSave.FilePath, PowerPoint.PpSaveAsFileType.ppSaveAsOpenXMLPresentation, Core.MsoTriState.msoFalse);
+            logger.Log("Saving shape of type " + targetSlide.Shapes[1]);
+            temporaryPresentation.SaveAs(persistenceFile, PowerPoint.PpSaveAsFileType.ppSaveAsOpenXMLPresentation, Core.MsoTriState.msoFalse);
             temporaryPresentation.Close();
+            //we reload this since the shape's type seems not to be known otherwise...
+            var shapeToSave = new ShapeFavorite(persistenceFile, this.GetShapesFromFile(persistenceFile).First()); // there is only one shape in this file
             this.GetThumbnail(shapeToSave); //create thumbnail
             cachedShapes.Add(shapeToSave);
             InformCacheListenersOnItemAdded(shapeToSave);
