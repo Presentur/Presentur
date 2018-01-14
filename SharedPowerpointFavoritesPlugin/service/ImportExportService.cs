@@ -12,6 +12,7 @@ namespace SharedPowerpointFavoritesPlugin
     {
         public static ImportExportService INSTANCE = new ImportExportService();
         private ShapePersistence shapePersistance = ShapePersistence.INSTANCE;
+        private static readonly DebugLogger logger = DebugLogger.GetLogger(typeof(ImportExportService).Name);
 
         private ImportExportService()
         {
@@ -30,10 +31,10 @@ namespace SharedPowerpointFavoritesPlugin
             }
             catch(Exception e)
             {
-                DebugLogger.Log("Exception while importing from file: " + e.Message);
+                logger.Log("Exception while importing from file: " + e.Message);
                 return false;
             }
-            DebugLogger.Log("Import successful.");
+            logger.Log("Import successful.");
             return true;
         }
 
@@ -46,10 +47,10 @@ namespace SharedPowerpointFavoritesPlugin
             }
             catch(Exception e)
             {
-                DebugLogger.Log("Exception while exporting: " + e.Message);
+                logger.Log("Exception while exporting: " + e.Message);
                 return false;
             }
-            DebugLogger.Log("Export successful.");
+            logger.Log("Export successful.");
             return true;
         }
     }

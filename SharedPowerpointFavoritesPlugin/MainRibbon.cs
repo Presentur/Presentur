@@ -14,7 +14,7 @@ namespace SharedPowerpointFavoritesPlugin
     public class MainRibbon : Office.IRibbonExtensibility
     {
         private Office.IRibbonUI ribbon;
-
+        private static readonly DebugLogger logger = DebugLogger.GetLogger(typeof(MainRibbon).Name);
         public MainRibbon()
         {
         }
@@ -38,13 +38,13 @@ namespace SharedPowerpointFavoritesPlugin
 
         public void OnOpenSharedFavButton(Office.IRibbonControl control)
         {
-            DebugLogger.Log("Open Button pressed.");
+            logger.Log("Open Button pressed.");
             SharedFavView.ShowOrFocus();
         }
 
         public void SaveFavoriteShape(Office.IRibbonControl control)
         {
-            DebugLogger.Log("Save As FavoriteShape clicked.");
+            logger.Log("Save As FavoriteShape clicked.");
             Selection selection = Globals.ThisAddIn.Application.ActiveWindow.Selection;
             Shape selectedShape = selection.ShapeRange[1];
             if (selectedShape != null)
@@ -54,7 +54,7 @@ namespace SharedPowerpointFavoritesPlugin
             }
             else
             {
-                DebugLogger.Log("Could not save selection " + selection);
+                logger.Log("Could not save selection " + selection);
             }
         }
 

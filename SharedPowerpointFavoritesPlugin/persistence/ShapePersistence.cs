@@ -21,6 +21,7 @@ namespace SharedPowerpointFavoritesPlugin
         public const string PERSISTENCE_DIR = ".sharedpowerpointfavorites";
         public const string PERSISTENCE_EXTENSION = ".pptx";
         public const string PNG_EXTENSION = ".png";
+        private static readonly DebugLogger logger = DebugLogger.GetLogger(typeof(ShapePersistence).Name);
         private List<CacheListener> cacheListeners = new List<CacheListener>();
         private List<ShapeFavorite> _cachedShapes; //backing dictionary
         private List<ShapeFavorite> CachedShapes
@@ -69,7 +70,7 @@ namespace SharedPowerpointFavoritesPlugin
             var thumbnailPath = GetThumbnailPath(shape);
             if (!System.IO.File.Exists(thumbnailPath))
             {
-                DebugLogger.Log("Thumbnail does not exist. Creating one.");
+                logger.Log("Thumbnail does not exist. Creating one.");
                 var stopwatch = System.Diagnostics.Stopwatch.StartNew();
                 var temporaryPresentation = Globals.ThisAddIn.Application.Presentations.Open(shape.FilePath, Core.MsoTriState.msoTrue, Core.MsoTriState.msoTrue, Core.MsoTriState.msoFalse);
                 var targetSlide = temporaryPresentation.Slides[1];
@@ -78,14 +79,14 @@ namespace SharedPowerpointFavoritesPlugin
                 targetShape.GetType().InvokeMember("Export", System.Reflection.BindingFlags.InvokeMethod, null, targetShape, shapeExportArgs); //ATTENTION. This is the risky part...
                 temporaryPresentation.Close();
                 stopwatch.Stop();
-                DebugLogger.Log("Creating thumbnail took " + stopwatch.ElapsedMilliseconds);
+                logger.Log("Creating thumbnail took " + stopwatch.ElapsedMilliseconds);
             }
             return thumbnailPath;
         }
 
         internal void DeleteShape(ShapeFavorite shapeFavorite)
         {
-            DebugLogger.Log("Deleting shape of type " + shapeFavorite.Shape.Type);
+            logger.Log("Deleting shape of type " + shapeFavorite.Shape.Type);
             var thumbnail = GetThumbnailPath(shapeFavorite);
             this.DeleteIfExtant(shapeFavorite.FilePath, thumbnail);
             CachedShapes.Remove(shapeFavorite);
@@ -98,26 +99,26 @@ namespace SharedPowerpointFavoritesPlugin
             {
                 if(File.Exists(path))
                 {
-                    DebugLogger.Log("Deleting file " + path);
+                    logger.Log("Deleting file " + path);
                     try
                     {
                         File.Delete(path);
                     }
                     catch(Exception e)
                     {
-                        DebugLogger.Log("Exception while deleting file " + path + ". Exception is: " + e.Message);
+                        logger.Log("Exception while deleting file " + path + ". Exception is: " + e.Message);
                     }
                 }
                 else
                 {
-                    DebugLogger.Log("File does not exist: " + path);
+                    logger.Log("File does not exist: " + path);
                 }
             }
         }
 
         internal void RemoveCacheListener(CacheListener updateListener)
         {
-            DebugLogger.Log("Removing cache listener " + updateListener);
+            logger.Log("Removing cache listener " + updateListener);
             this.cacheListeners.Remove(updateListener);
         }
 
@@ -139,10 +140,10 @@ namespace SharedPowerpointFavoritesPlugin
             var fileName = GetFileName(newUuid);
             var persistenceFile = GetPersistenceFile(fileName);
             targetSlide.Shapes.Paste();
-            DebugLogger.Log("Saving shape.");
+            logger.Log("Saving shape.");
             var cachedShapes = CachedShapes; // ensure this is already loaded before saving!
             var shapeToSave = new ShapeFavorite(persistenceFile, targetSlide.Shapes[1]);
-            DebugLogger.Log("Saving shape of type " + shapeToSave.Shape.Type.ToString());
+            logger.Log("Saving shape of type " + shapeToSave.Shape.Type.ToString());
             temporaryPresentation.SaveAs(shapeToSave.FilePath, PowerPoint.PpSaveAsFileType.ppSaveAsOpenXMLPresentation, Core.MsoTriState.msoFalse);
             temporaryPresentation.Close();
             this.GetThumbnail(shapeToSave); //create thumbnail
@@ -166,18 +167,18 @@ namespace SharedPowerpointFavoritesPlugin
         internal void LoadShapes()
         {
             var persistenceDir = GetPersistenceDir();
-            DebugLogger.Log("Loading shapes from persistence directory: " + persistenceDir);
+            logger.Log("Loading shapes from persistence directory: " + persistenceDir);
             string[] filePaths = Directory.GetFiles(@persistenceDir, "*" + PERSISTENCE_EXTENSION,
                                          System.IO.SearchOption.TopDirectoryOnly).OrderBy(path => new FileInfo(path).CreationTime).ToArray();
             var loadedShapes = new List<ShapeFavorite>();
             foreach (string file in filePaths)
             {
-                DebugLogger.Log("Reading file " + file);
+                logger.Log("Reading file " + file);
                 List<Shape> shapesFromFile = this.GetShapesFromFile(file);
                 foreach (Shape shape in shapesFromFile)
                 {
                     loadedShapes.Add(new ShapeFavorite(file, shape));
-                    DebugLogger.Log("Loaded shape from of type " + shape.Type + " from file " + file);
+                    logger.Log("Loaded shape from of type " + shape.Type + " from file " + file);
                 }
             }
             CachedShapes = loadedShapes;
@@ -206,7 +207,7 @@ namespace SharedPowerpointFavoritesPlugin
             var separator = Path.DirectorySeparatorChar;
             var fileDir = GetPersistenceDir();
             var filePath = fileDir + separator + fileName;
-            DebugLogger.Log("Using file path: " + filePath);
+            logger.Log("Using file path: " + filePath);
             return filePath;
         }
 
@@ -221,7 +222,7 @@ namespace SharedPowerpointFavoritesPlugin
 
         internal void RegisterCacheListener(CacheListener listener)
         {
-            DebugLogger.Log("Adding cache listener: " + listener);
+            logger.Log("Adding cache listener: " + listener);
             this.cacheListeners.Add(listener);
         }
 

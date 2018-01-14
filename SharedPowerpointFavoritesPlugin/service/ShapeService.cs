@@ -17,7 +17,7 @@ namespace SharedPowerpointFavoritesPlugin
 
         public static ShapeService INSTANCE = new ShapeService();
         private ShapePersistence shapePersistance = ShapePersistence.INSTANCE;
-
+        private static readonly DebugLogger logger = DebugLogger.GetLogger(typeof(ShapeService).Name);
         private ShapeService()
         {
             //singleton

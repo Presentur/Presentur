@@ -21,6 +21,7 @@ namespace SharedPowerpointFavoritesPlugin
         private ShapeService shapeService = ShapeService.INSTANCE;
         private Dictionary<PictureBox, ShapeFavorite> displayedShapes = new Dictionary<PictureBox, ShapeFavorite>();
         private ImportExportService importExportService = ImportExportService.INSTANCE;
+        private static readonly DebugLogger logger = DebugLogger.GetLogger(typeof(SharedFavView).Name);
         private Dictionary<Office.MsoShapeType, Panel> panels = new Dictionary<Office.MsoShapeType, Panel>();
 
         public SharedFavView()
@@ -83,10 +84,10 @@ namespace SharedPowerpointFavoritesPlugin
 
         private void HandleDeleteItem(PictureBox pictureBox)
         {
-            DebugLogger.Log("User clicked delete.");
+            logger.Log("User clicked delete.");
             if (!this.AskForDeleteConfirmation())
             {
-                DebugLogger.Log("User cancelled item deletion.");
+                logger.Log("User cancelled item deletion.");
                 return;
             }
             this.shapeService.DeleteShape(this.displayedShapes[pictureBox]);
@@ -141,7 +142,7 @@ namespace SharedPowerpointFavoritesPlugin
 
         private void ReloadFavorites()
         {
-            DebugLogger.Log("Reloading all favorites.");
+            logger.Log("Reloading all favorites.");
             this.RemoveAllPictureBoxes();
             foreach (Office.MsoShapeType shapeType in this.panels.Keys)
             {
@@ -178,7 +179,7 @@ namespace SharedPowerpointFavoritesPlugin
         {
             if (!this.AskForImportConfirmation())
             {
-                DebugLogger.Log("User cancelled import.");
+                logger.Log("User cancelled import.");
                 return;
             }
             var filePath = GetFilePathViaDialog(isSaveAction: false);
@@ -240,7 +241,7 @@ namespace SharedPowerpointFavoritesPlugin
             }
             else
             {
-                DebugLogger.Log("No file chosen.");
+                logger.Log("No file chosen.");
                 return null;
             }
         }
@@ -249,19 +250,19 @@ namespace SharedPowerpointFavoritesPlugin
         {
             public void OnCacheRenewed()
             {
-                DebugLogger.Log("CacheRenewedListener fired.");
+                logger.Log("CacheRenewedListener fired.");
                 SharedFavView.CURRENT_INSTANCE.ReloadFavorites();
             }
 
             public void OnItemAdded(ShapeFavorite addedItem)
             {
-                DebugLogger.Log("ItemAddedListener fired.");
+                logger.Log("ItemAddedListener fired.");
                 SharedFavView.CURRENT_INSTANCE.DrawShape(addedItem, SharedFavView.CURRENT_INSTANCE.panels[addedItem.Shape.Type]);
             }
 
             public void OnItemRemoved(ShapeFavorite removedItem)
             {
-                DebugLogger.Log("ItemRemovedListener fired.");
+                logger.Log("ItemRemovedListener fired.");
                 SharedFavView.CURRENT_INSTANCE.ReloadFavorites(); //it would be difficult to do this incrementally since that would imply reordering of the picture boxes...
             }
         }
