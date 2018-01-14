@@ -102,7 +102,7 @@ namespace SharedPowerpointFavoritesPlugin
         private void SharedFavView_Load(object sender, EventArgs e)
         {
             this.InitializeTabPages();
-            this.ReloadFavorites();
+            this.RedrawFavorites();
             var updateListener = new UpdateFavViewListener();
             this.shapePersistance.RegisterCacheListener(updateListener);
             this.FormClosed += new FormClosedEventHandler((_sender, _args) =>
@@ -141,7 +141,7 @@ namespace SharedPowerpointFavoritesPlugin
             return panel;
         }
 
-        private void ReloadFavorites()
+        private void RedrawFavorites()
         {
             logger.Log("Reloading all favorites.");
             this.RemoveAllPictureBoxes();
@@ -181,7 +181,7 @@ namespace SharedPowerpointFavoritesPlugin
             public void OnCacheRenewed()
             {
                 logger.Log("CacheRenewedListener fired.");
-                SharedFavView.CURRENT_INSTANCE.ReloadFavorites();
+                SharedFavView.CURRENT_INSTANCE.RedrawFavorites();
             }
 
             public void OnItemAdded(ShapeFavorite addedItem)
@@ -193,7 +193,7 @@ namespace SharedPowerpointFavoritesPlugin
             public void OnItemRemoved(ShapeFavorite removedItem)
             {
                 logger.Log("ItemRemovedListener fired.");
-                SharedFavView.CURRENT_INSTANCE.ReloadFavorites(); //it would be difficult to do this incrementally since that would imply reordering of the picture boxes...
+                SharedFavView.CURRENT_INSTANCE.RedrawFavorites(); //it would be difficult to do this incrementally since that would imply reordering of the picture boxes...
             }
         }
     }
