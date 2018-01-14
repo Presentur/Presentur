@@ -28,6 +28,16 @@ namespace SharedPowerpointFavoritesPlugin
             Globals.ThisAddIn.Application.ActiveWindow.View.Slide.Shapes.Paste();
         }
 
+        public List<ShapeFavorite> GetShapesByType(Core.MsoShapeType? type)
+        {
+            var allShapes = this.shapePersistance.GetShapes();
+            if(type == null)
+            {
+                return allShapes;
+            }
+            return allShapes.FindAll(shapeFavorite => shapeFavorite.Shape.Type == type);
+        }
+
         public void PasteToCurrentPresentation(ShapeFavorite shape)
         {
             SetCenterLocation(shape);
@@ -40,10 +50,20 @@ namespace SharedPowerpointFavoritesPlugin
             PowerPoint.Presentation currentPresentation = Globals.ThisAddIn.Application.ActivePresentation;
             var slideHeight = currentPresentation.PageSetup.SlideHeight;
             var slideWidth = currentPresentation.PageSetup.SlideWidth;
-            var shapeHeight = shape.Shape.Height;
-            var shapeWidth = shape.Shape.Width;
-            var centerLeft = slideWidth / 2 - (shapeWidth / 2);
-            var centerTop = slideHeight / 2 - (shapeHeight / 2);
+            var centerLeft = 0F;
+            var centerTop = 0F;
+            if (shape.Shape.Type != Core.MsoShapeType.msoTextBox)
+            {
+                var shapeHeight = shape.Shape.Height;
+                var shapeWidth = shape.Shape.Width;
+                centerLeft = slideWidth / 2 - (shapeWidth / 2);
+                centerTop = slideHeight / 2 - (shapeHeight / 2);
+            }
+            else
+            {
+                centerLeft = slideWidth / 2;
+                centerTop = slideHeight / 2;
+            }
             shape.Shape.Left = centerLeft;
             shape.Shape.Top = centerTop;
         }

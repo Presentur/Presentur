@@ -10,6 +10,7 @@ using Path = System.IO.Path;
 using Directory = System.IO.Directory;
 using SharedPowerpointFavoritesPlugin.model;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
+using FileInfo = System.IO.FileInfo;
 
 namespace SharedPowerpointFavoritesPlugin
 {
@@ -100,6 +101,7 @@ namespace SharedPowerpointFavoritesPlugin
             DebugLogger.Log("Saving shape.");
             var cachedShapes = CachedShapes; // ensure this is already loaded before saving!
             var shapeToSave = new ShapeFavorite(persistenceFile, targetSlide.Shapes[1]);
+            DebugLogger.Log("Saving shape of type " + shapeToSave.Shape.Type.ToString());
             temporaryPresentation.SaveAs(shapeToSave.FilePath, PowerPoint.PpSaveAsFileType.ppSaveAsOpenXMLPresentation, Core.MsoTriState.msoFalse);
             temporaryPresentation.Close();
             this.GetThumbnail(shapeToSave); //create thumbnail
@@ -125,7 +127,7 @@ namespace SharedPowerpointFavoritesPlugin
             var persistenceDir = GetPersistenceDir();
             DebugLogger.Log("Loading shapes from persistence directory: " + persistenceDir);
             string[] filePaths = Directory.GetFiles(@persistenceDir, "*" + PERSISTENCE_EXTENSION,
-                                         System.IO.SearchOption.TopDirectoryOnly);
+                                         System.IO.SearchOption.TopDirectoryOnly).OrderBy(path => new FileInfo(path).CreationTime).ToArray();
             var loadedShapes = new List<ShapeFavorite>();
             foreach (string file in filePaths)
             {
@@ -134,7 +136,7 @@ namespace SharedPowerpointFavoritesPlugin
                 foreach (Shape shape in shapesFromFile)
                 {
                     loadedShapes.Add(new ShapeFavorite(file, shape));
-                    DebugLogger.Log("Loaded shape from file " + file);
+                    DebugLogger.Log("Loaded shape from of type " + shape.Type + " from file " + file);
                 }
             }
             CachedShapes = loadedShapes;

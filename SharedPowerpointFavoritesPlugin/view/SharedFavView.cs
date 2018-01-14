@@ -21,6 +21,7 @@ namespace SharedPowerpointFavoritesPlugin
         private ShapeService shapeService = ShapeService.INSTANCE;
         private Dictionary<PictureBox, ShapeFavorite> displayedShapes = new Dictionary<PictureBox, ShapeFavorite>();
         private ImportExportService importExportService = ImportExportService.INSTANCE;
+        private Dictionary<Office.MsoShapeType, Panel> panels = new Dictionary<Office.MsoShapeType, Panel>();
 
         public SharedFavView()
         {
@@ -49,11 +50,11 @@ namespace SharedPowerpointFavoritesPlugin
             }
         }
 
-        private void DrawShape(ShapeFavorite shape)
+        private void DrawShape(ShapeFavorite shape, Panel panel)
         {
-            var index = this.displayedShapes.Count;
+            var index = panel.Controls.Count;
             var pictureBox = GetPictureBox(shape, index);
-            this.panel1.Controls.Add(pictureBox);
+            panel.Controls.Add(pictureBox);
             this.displayedShapes.Add(pictureBox, shape);
         }
 
@@ -78,27 +79,69 @@ namespace SharedPowerpointFavoritesPlugin
 
         private void SharedFavView_Load(object sender, EventArgs e)
         {
+            this.InitializeTabPages();
             this.ReloadFavorites();
             var updateListener = new UpdateFavViewListener();
             this.shapePersistance.RegisterCacheListener(updateListener);
-            this.FormClosed += new FormClosedEventHandler((_sender, _args) => {
+            this.FormClosed += new FormClosedEventHandler((_sender, _args) =>
+            {
                 shapePersistance.RemoveCacheListener(updateListener);
             });
+        }
+
+        private void InitializeTabPages()
+        {
+            this.InitTabPage(tabPage1, Office.MsoShapeType.msoChart, "Charts");
+            this.InitTabPage(tabPage2, Office.MsoShapeType.msoAutoShape, "Auto Shapes");
+            this.InitTabPage(tabPage3, Office.MsoShapeType.msoTable, "Tables");
+            //TODO add further pages
+        }
+
+        private void InitTabPage(TabPage tabPage, Office.MsoShapeType shapeType, string caption)
+        {
+            var panel = this.GetPanel(tabPage);
+            tabPage.Controls.Add(panel);
+            this.panels.Add(shapeType, panel);
+            tabPage.Text = caption;
+        }
+
+        private Panel GetPanel(TabPage tabPage)
+        {
+            var panel = new Panel();
+            panel.Width = tabPage.Width;
+            panel.Height = tabPage.Height;
+            panel.AutoScroll = true;
+            return panel;
         }
 
         private void ReloadFavorites()
         {
             DebugLogger.Log("Reloading all favorites.");
-            foreach(PictureBox pictureBox in displayedShapes.Keys)
+            this.RemoveAllPictureBoxes();
+            foreach (Office.MsoShapeType shapeType in this.panels.Keys)
             {
-                this.panel1.Controls.Remove(pictureBox);
+                List<ShapeFavorite> shapes = this.shapeService.GetShapesByType(shapeType);
+                foreach (ShapeFavorite shape in shapes)
+                {
+                    this.DrawShape(shape, this.panels[shapeType]);
+                }
+
+            }
+        }
+
+        private void RemoveAllPictureBoxes()
+        {
+            foreach (PictureBox pictureBox in displayedShapes.Keys)
+            {
+                foreach (Panel panel in this.panels.Values)
+                {
+                    if (panel.Controls.Contains(pictureBox))
+                    {
+                        panel.Controls.Remove(pictureBox);
+                    }
+                }
             }
             this.displayedShapes.Clear();
-            List<ShapeFavorite> shapes = this.shapePersistance.GetShapes();
-            foreach (ShapeFavorite shape in shapes)
-            {
-                this.DrawShape(shape);
-            }
         }
 
         private void saveShapeButton_Click(object sender, EventArgs e)
@@ -108,10 +151,10 @@ namespace SharedPowerpointFavoritesPlugin
 
         private void importButton_Click(object sender, EventArgs e)
         {
-            var filePath = GetFilePathViaDialog(isSaveAction : false);
+            var filePath = GetFilePathViaDialog(isSaveAction: false);
             if (filePath != null)
             {
-                if(this.importExportService.ImportFromFile(filePath))
+                if (this.importExportService.ImportFromFile(filePath))
                 {
                     MessageBox.Show("Successfully imported favorites.");
                 }
@@ -124,10 +167,10 @@ namespace SharedPowerpointFavoritesPlugin
 
         private void exportButton_Click(object sender, EventArgs e)
         {
-            var filePath = GetFilePathViaDialog(isSaveAction : true);
+            var filePath = GetFilePathViaDialog(isSaveAction: true);
             if (filePath != null)
             {
-                if(this.importExportService.ExportToFile(filePath))
+                if (this.importExportService.ExportToFile(filePath))
                 {
                     MessageBox.Show("Successfully exported favorites.");
                 }
@@ -166,8 +209,9 @@ namespace SharedPowerpointFavoritesPlugin
             public void onItemAdded(ShapeFavorite addedItem)
             {
                 DebugLogger.Log("ItemAddedListener fired.");
-                SharedFavView.CURRENT_INSTANCE.DrawShape(addedItem);
+                SharedFavView.CURRENT_INSTANCE.DrawShape(addedItem, SharedFavView.CURRENT_INSTANCE.panels[addedItem.Shape.Type]);
             }
         }
+
     }
 }
