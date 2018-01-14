@@ -69,7 +69,27 @@ namespace SharedPowerpointFavoritesPlugin
             pictureBox.Image = shape.Thumbnail;
             pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox.MouseDoubleClick += new MouseEventHandler((sender, args) => HandlePictureBoxDoubleClick(shape));
+            pictureBox.ContextMenu = GetContextMenu(pictureBox);
             return pictureBox;
+        }
+
+        private ContextMenu GetContextMenu(PictureBox pictureBox)
+        {
+            var contextMenu = new ContextMenu();
+            var deleteItem = new MenuItem("Delete...", new EventHandler((sender, args) => HandleDeleteItem(pictureBox)));
+            contextMenu.MenuItems.Add(deleteItem);
+            return contextMenu;
+        }
+
+        private void HandleDeleteItem(PictureBox pictureBox)
+        {
+            DebugLogger.Log("User clicked delete.");
+            if (!this.AskForDeleteConfirmation())
+            {
+                DebugLogger.Log("User cancelled item deletion.");
+                return;
+            }
+            this.shapeService.DeleteShape(this.displayedShapes[pictureBox]);
         }
 
         private void HandlePictureBoxDoubleClick(ShapeFavorite shape)
@@ -156,6 +176,11 @@ namespace SharedPowerpointFavoritesPlugin
 
         private void importButton_Click(object sender, EventArgs e)
         {
+            if (!this.AskForImportConfirmation())
+            {
+                DebugLogger.Log("User cancelled import.");
+                return;
+            }
             var filePath = GetFilePathViaDialog(isSaveAction: false);
             if (filePath != null)
             {
@@ -168,6 +193,23 @@ namespace SharedPowerpointFavoritesPlugin
                     MessageBox.Show("An error occured while importing favorites.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
+        }
+
+        private bool AskForImportConfirmation()
+        {
+            return this.AskForConfirmation("Are you sure you want to import a favorites archive? This deletes your own favorites!");
+        }
+
+        private bool AskForDeleteConfirmation()
+        {
+            return this.AskForConfirmation("Are you sure you want to delete this item?");
+        }
+
+        private bool AskForConfirmation(string message)
+        {
+            return MessageBox.Show(message,
+                                     "Confirm",
+                                     MessageBoxButtons.YesNo) == DialogResult.Yes;
         }
 
         private void exportButton_Click(object sender, EventArgs e)
@@ -205,18 +247,23 @@ namespace SharedPowerpointFavoritesPlugin
 
         class UpdateFavViewListener : ShapePersistence.CacheListener
         {
-            public void onCacheRenewed()
+            public void OnCacheRenewed()
             {
                 DebugLogger.Log("CacheRenewedListener fired.");
                 SharedFavView.CURRENT_INSTANCE.ReloadFavorites();
             }
 
-            public void onItemAdded(ShapeFavorite addedItem)
+            public void OnItemAdded(ShapeFavorite addedItem)
             {
                 DebugLogger.Log("ItemAddedListener fired.");
                 SharedFavView.CURRENT_INSTANCE.DrawShape(addedItem, SharedFavView.CURRENT_INSTANCE.panels[addedItem.Shape.Type]);
             }
-        }
 
+            public void OnItemRemoved(ShapeFavorite removedItem)
+            {
+                DebugLogger.Log("ItemRemovedListener fired.");
+                SharedFavView.CURRENT_INSTANCE.ReloadFavorites(); //it would be difficult to do this incrementally since that would imply reordering of the picture boxes...
+            }
+        }
     }
 }

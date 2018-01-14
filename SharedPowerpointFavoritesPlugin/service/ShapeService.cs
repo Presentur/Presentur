@@ -67,5 +67,10 @@ namespace SharedPowerpointFavoritesPlugin
             shape.Shape.Left = centerLeft;
             shape.Shape.Top = centerTop;
         }
+
+        internal void DeleteShape(ShapeFavorite shapeFavorite)
+        {
+            this.shapePersistance.DeleteShape(shapeFavorite);
+        }
     }
 }

@@ -11,6 +11,7 @@ using Directory = System.IO.Directory;
 using SharedPowerpointFavoritesPlugin.model;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 using FileInfo = System.IO.FileInfo;
+using System.IO;
 
 namespace SharedPowerpointFavoritesPlugin
 {
@@ -43,7 +44,7 @@ namespace SharedPowerpointFavoritesPlugin
         {
             foreach(CacheListener listener in cacheListeners)
             {
-                listener.onCacheRenewed();
+                listener.OnCacheRenewed();
             }
         }
 
@@ -51,7 +52,15 @@ namespace SharedPowerpointFavoritesPlugin
         {
             foreach(CacheListener listener in cacheListeners)
             {
-                listener.onItemAdded(addedItem);
+                listener.OnItemAdded(addedItem);
+            }
+        }
+
+        private void InformCacheListenersOnItemRemoved(ShapeFavorite removedItem)
+        {
+            foreach (CacheListener listener in cacheListeners)
+            {
+                listener.OnItemRemoved(removedItem);
             }
         }
 
@@ -72,6 +81,38 @@ namespace SharedPowerpointFavoritesPlugin
                 DebugLogger.Log("Creating thumbnail took " + stopwatch.ElapsedMilliseconds);
             }
             return thumbnailPath;
+        }
+
+        internal void DeleteShape(ShapeFavorite shapeFavorite)
+        {
+            DebugLogger.Log("Deleting shape of type " + shapeFavorite.Shape.Type);
+            var thumbnail = GetThumbnailPath(shapeFavorite);
+            this.DeleteIfExtant(shapeFavorite.FilePath, thumbnail);
+            CachedShapes.Remove(shapeFavorite);
+            this.InformCacheListenersOnItemRemoved(shapeFavorite);
+        }
+
+        private void DeleteIfExtant(params string[] paths)
+        {
+            foreach(string path in paths)
+            {
+                if(File.Exists(path))
+                {
+                    DebugLogger.Log("Deleting file " + path);
+                    try
+                    {
+                        File.Delete(path);
+                    }
+                    catch(Exception e)
+                    {
+                        DebugLogger.Log("Exception while deleting file " + path + ". Exception is: " + e.Message);
+                    }
+                }
+                else
+                {
+                    DebugLogger.Log("File does not exist: " + path);
+                }
+            }
         }
 
         internal void RemoveCacheListener(CacheListener updateListener)
@@ -186,9 +227,11 @@ namespace SharedPowerpointFavoritesPlugin
 
         internal interface CacheListener
         {
-            void onCacheRenewed();
+            void OnCacheRenewed();
 
-            void onItemAdded(ShapeFavorite addedItem);
+            void OnItemAdded(ShapeFavorite addedItem);
+
+            void OnItemRemoved(ShapeFavorite removedItem);
         }
     }
 }
