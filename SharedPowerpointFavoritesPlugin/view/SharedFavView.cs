@@ -91,18 +91,23 @@ namespace SharedPowerpointFavoritesPlugin
 
         private void InitializeTabPages()
         {
-            this.InitTabPage(tabPage1, Office.MsoShapeType.msoChart, "Charts");
-            this.InitTabPage(tabPage2, Office.MsoShapeType.msoAutoShape, "Auto Shapes");
-            this.InitTabPage(tabPage3, Office.MsoShapeType.msoTable, "Tables");
-            //TODO add further pages
+            this.CreateTabPage(Office.MsoShapeType.msoChart, "Charts");
+            this.CreateTabPage(Office.MsoShapeType.msoAutoShape, "Auto Shapes");
+            this.CreateTabPage(Office.MsoShapeType.msoTable, "Tables");
+            //add further pages here...
         }
 
-        private void InitTabPage(TabPage tabPage, Office.MsoShapeType shapeType, string caption)
+        private void CreateTabPage(Office.MsoShapeType shapeType, string caption)
         {
+            var parentControl = this.tabControl1;
+            var tabPage = new TabPage();
+            tabPage.Width = parentControl.Width - 8;
+            tabPage.Height = parentControl.Height - 28;
             var panel = this.GetPanel(tabPage);
             tabPage.Controls.Add(panel);
             this.panels.Add(shapeType, panel);
             tabPage.Text = caption;
+            parentControl.Controls.Add(tabPage);
         }
 
         private Panel GetPanel(TabPage tabPage)
