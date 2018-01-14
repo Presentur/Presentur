@@ -31,11 +31,22 @@ namespace SharedPowerpointFavoritesPlugin
         public List<ShapeFavorite> GetShapesByType(Core.MsoShapeType? type)
         {
             var allShapes = this.shapePersistance.GetShapes();
-            if(type == null)
+            if (type == null)
             {
                 return allShapes;
             }
-            return allShapes.FindAll(shapeFavorite => shapeFavorite.Shape.Type == type);
+            return allShapes.FindAll(shapeFavorite =>
+            {
+                try
+                {
+                    return shapeFavorite.Shape.Type == type;
+                }
+                catch (Exception e)
+                {
+                    logger.Log("Exception while filtering shapes: " + e.Message);
+                    return false;
+                }
+            });
         }
 
         public void PasteToCurrentPresentation(ShapeFavorite shape)

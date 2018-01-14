@@ -1,4 +1,5 @@
 ﻿using SharedPowerpointFavoritesPlugin.model;
+using SharedPowerpointFavoritesPlugin.util;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -170,80 +171,9 @@ namespace SharedPowerpointFavoritesPlugin
             this.displayedShapes.Clear();
         }
 
-        private void saveShapeButton_Click(object sender, EventArgs e)
-        {
-            this.shapePersistance.SaveShapeFromClipBoard();
-        }
-
-        private void importButton_Click(object sender, EventArgs e)
-        {
-            if (!this.AskForImportConfirmation())
-            {
-                logger.Log("User cancelled import.");
-                return;
-            }
-            var filePath = GetFilePathViaDialog(isSaveAction: false);
-            if (filePath != null)
-            {
-                if (this.importExportService.ImportFromFile(filePath))
-                {
-                    MessageBox.Show("Successfully imported favorites.");
-                }
-                else
-                {
-                    MessageBox.Show("An error occured while importing favorites.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private bool AskForImportConfirmation()
-        {
-            return this.AskForConfirmation("Are you sure you want to import a favorites archive? This deletes your own favorites!");
-        }
-
         private bool AskForDeleteConfirmation()
         {
-            return this.AskForConfirmation("Are you sure you want to delete this item?");
-        }
-
-        private bool AskForConfirmation(string message)
-        {
-            return MessageBox.Show(message,
-                                     "Confirm",
-                                     MessageBoxButtons.YesNo) == DialogResult.Yes;
-        }
-
-        private void exportButton_Click(object sender, EventArgs e)
-        {
-            var filePath = GetFilePathViaDialog(isSaveAction: true);
-            if (filePath != null)
-            {
-                if (this.importExportService.ExportToFile(filePath))
-                {
-                    MessageBox.Show("Successfully exported favorites.");
-                }
-                else
-                {
-                    MessageBox.Show("An error occured while exporting favorites.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
-            }
-        }
-
-        private string GetFilePathViaDialog(bool isSaveAction)
-        {
-            FileDialog openFileDialog = isSaveAction ? (new SaveFileDialog() as FileDialog) : (new OpenFileDialog() as FileDialog);
-            openFileDialog.InitialDirectory = Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
-            openFileDialog.Filter = "SharedPowerpointFavorites (*.zip)|*.zip";
-            openFileDialog.RestoreDirectory = true;
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                return openFileDialog.FileName;
-            }
-            else
-            {
-                logger.Log("No file chosen.");
-                return null;
-            }
+            return DialogUtil.AskForConfirmation("Are you sure you want to delete this item?");
         }
 
         class UpdateFavViewListener : ShapePersistence.CacheListener

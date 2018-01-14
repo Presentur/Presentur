@@ -188,6 +188,7 @@
     </Compile>
     <Compile Include="persistence\ShapePersistence.cs" />
     <Compile Include="service\ShapeService.cs" />
+    <Compile Include="util\DialogUtil.cs" />
     <Compile Include="view\SharedFavView.cs">
       <SubType>Form</SubType>
     </Compile>

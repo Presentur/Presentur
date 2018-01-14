@@ -2,12 +2,21 @@
 <customUI xmlns="http://schemas.microsoft.com/office/2009/07/customui" onLoad="Ribbon_Load">
   <ribbon>
     <tabs>
-      <tab idMso="TabAddIns">
-        <group id="MainGroup"
+      <tab id="sharedFavs" label="Shared Favorites">
+        <group id="sharedFavsShapes"
                label="Favorite Shapes">
           <button id="openSharedFavButton" label="Show Favorite Shapes"
              screentip="Favorite Shapes" onAction="OnOpenSharedFavButton"
              supertip="Opens the Shared FavoritesShapes Overview"/>
+          <button id="importSharedFavButton" label="Import Favorite Shapes"
+             screentip="Import Favorite Shapes" onAction="OnImportSharedFavButton"
+             supertip="Imports Favorite Shapes"/>
+          <button id="exportSharedFavButton" label="Export Favorite Shapes"
+             screentip="Export Favorite Shapes" onAction="OnExportSharedFavButton"
+             supertip="Exports Favorite Shapes"/>
+          <button id="copyFromClipboardButton" label="Copy From Clipboard"
+             screentip="Copy a shape from Clipboard" onAction="OnCopyFromClipboardButton"
+             supertip="Copies the shape that is currently in your clipboard and imports it to your Favorite Shapes"/>
         </group>
       </tab>
     </tabs>

@@ -7,6 +7,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using Office = Microsoft.Office.Core;
 using Microsoft.Office.Interop.PowerPoint;
+using System.Windows.Forms;
+using SharedPowerpointFavoritesPlugin.util;
 
 namespace SharedPowerpointFavoritesPlugin
 {
@@ -15,6 +17,9 @@ namespace SharedPowerpointFavoritesPlugin
     {
         private Office.IRibbonUI ribbon;
         private static readonly DebugLogger logger = DebugLogger.GetLogger(typeof(MainRibbon).Name);
+        private ShapePersistence shapePersistence = ShapePersistence.INSTANCE;
+        private ImportExportService importExportService = ImportExportService.INSTANCE;
+
         public MainRibbon()
         {
         }
@@ -42,6 +47,56 @@ namespace SharedPowerpointFavoritesPlugin
             SharedFavView.ShowOrFocus();
         }
 
+        public void OnImportSharedFavButton(Office.IRibbonControl control)
+        {
+            logger.Log("Import button clicked.");
+            if (!this.AskForImportConfirmation())
+            {
+                logger.Log("User cancelled import.");
+                return;
+            }
+            var filePath = DialogUtil.GetFilePathViaDialog(isSaveAction: false);
+            if (filePath != null)
+            {
+                if (this.importExportService.ImportFromFile(filePath))
+                {
+                    MessageBox.Show("Successfully imported favorites.");
+                }
+                else
+                {
+                    MessageBox.Show("An error occured while importing favorites.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        public void OnExportSharedFavButton(Office.IRibbonControl control)
+        {
+            var filePath = DialogUtil.GetFilePathViaDialog(isSaveAction: true);
+            if (filePath != null)
+            {
+                if (this.importExportService.ExportToFile(filePath))
+                {
+                    MessageBox.Show("Successfully exported favorites.");
+                }
+                else
+                {
+                    MessageBox.Show("An error occured while exporting favorites.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        public void OnCopyFromClipboardButton(Office.IRibbonControl control)
+        {
+            if (!this.shapePersistence.SaveShapeFromClipBoard())
+            {
+                MessageBox.Show("Clipboard content could not be read.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            else
+            {
+                SharedFavView.ShowOrFocus();
+            }
+        }
+
         public void SaveFavoriteShape(Office.IRibbonControl control)
         {
             logger.Log("Save As FavoriteShape clicked.");
@@ -56,6 +111,11 @@ namespace SharedPowerpointFavoritesPlugin
             {
                 logger.Log("Could not save selection " + selection);
             }
+        }
+
+        private bool AskForImportConfirmation()
+        {
+            return DialogUtil.AskForConfirmation("Are you sure you want to import a favorites archive? This deletes your own favorites!");
         }
 
 

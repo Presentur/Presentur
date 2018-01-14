@@ -12,6 +12,7 @@ using SharedPowerpointFavoritesPlugin.model;
 using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 using FileInfo = System.IO.FileInfo;
 using System.IO;
+using System.Windows.Forms;
 
 namespace SharedPowerpointFavoritesPlugin
 {
@@ -132,14 +133,23 @@ namespace SharedPowerpointFavoritesPlugin
             return shape.FilePath.Replace(PERSISTENCE_EXTENSION, PNG_EXTENSION);
         }
 
-        public void SaveShapeFromClipBoard()
+        public bool SaveShapeFromClipBoard()
         {
             var temporaryPresentation = Globals.ThisAddIn.Application.Presentations.Add(Core.MsoTriState.msoFalse);
             var targetSlide = temporaryPresentation.Slides.Add(1, PowerPoint.PpSlideLayout.ppLayoutBlank);
             var newUuid = Guid.NewGuid().ToString();
             var fileName = GetFileName(newUuid);
             var persistenceFile = GetPersistenceFile(fileName);
-            targetSlide.Shapes.Paste();
+            try
+            {
+                targetSlide.Shapes.Paste();
+            }
+            catch(Exception e)
+            {
+                logger.Log("Clipboard content could not be pasted. " + e.Message);
+                temporaryPresentation.Close();
+                return false;
+            }
             logger.Log("Saving shape.");
             var cachedShapes = CachedShapes; // ensure this is already loaded before saving!
             var shapeToSave = new ShapeFavorite(persistenceFile, targetSlide.Shapes[1]);
@@ -149,6 +159,7 @@ namespace SharedPowerpointFavoritesPlugin
             this.GetThumbnail(shapeToSave); //create thumbnail
             cachedShapes.Add(shapeToSave);
             InformCacheListenersOnItemAdded(shapeToSave);
+            return true;
         }
 
         public void SaveShape(Shape shape)
