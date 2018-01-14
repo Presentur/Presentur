@@ -69,7 +69,7 @@ namespace SharedPowerpointFavoritesPlugin
             int row = (index - (index % 2)) / 2;
             pictureBox.Location = new Point(4 + (column * 120), 4 + (row * 120));
             pictureBox.Image = shape.Thumbnail;
-            pictureBox.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.MouseDoubleClick += new MouseEventHandler((sender, args) => HandlePictureBoxDoubleClick(shape));
             pictureBox.ContextMenu = GetContextMenu(pictureBox);
             return pictureBox;
