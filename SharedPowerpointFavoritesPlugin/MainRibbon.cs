@@ -41,6 +41,11 @@ namespace SharedPowerpointFavoritesPlugin
             this.ribbon = ribbonUI;
         }
 
+        public bool IsAdmin(Office.IRibbonControl control)
+        {
+            return BuildEnvironment.IsAdminBuild();
+        }
+
         public void OnOpenSharedFavButton(Office.IRibbonControl control)
         {
             logger.Log("Open Button pressed.");

@@ -189,6 +189,7 @@
     <Compile Include="persistence\ShapePersistence.cs" />
     <Compile Include="service\ShapeService.cs" />
     <Compile Include="util\DialogUtil.cs" />
+    <Compile Include="util\BuildEnvironment.cs" />
     <Compile Include="view\SharedFavView.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -223,6 +224,22 @@
   </PropertyGroup>
   <PropertyGroup>
     <ManifestCertificateThumbprint>71B9C448000D9B894A32DADF654FE3AC01C53689</ManifestCertificateThumbprint>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'ReleaseAdmin|AnyCPU'">
+    <OutputPath>bin\ReleaseAdmin\</OutputPath>
+    <DefineConstants>TRACE;VSTO40,ADMIN</DefineConstants>
+    <Optimize>true</Optimize>
+    <DebugType>pdbonly</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'DebugAdmin|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\DebugAdmin\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;VSTO40,ADMIN</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <!-- Include the build rules for a C# project. -->
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

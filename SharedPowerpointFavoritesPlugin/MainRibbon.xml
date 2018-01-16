@@ -13,9 +13,9 @@
              supertip="Imports Favorite Shapes"/>
           <button id="exportSharedFavButton" label="Export Favorite Shapes"
              screentip="Export Favorite Shapes" onAction="OnExportSharedFavButton"
-             supertip="Exports Favorite Shapes"/>
+             supertip="Exports Favorite Shapes" getVisible="IsAdmin"/>
           <button id="copyFromClipboardButton" label="Copy From Clipboard"
-             screentip="Copy a shape from Clipboard" onAction="OnCopyFromClipboardButton"
+             screentip="Copy a shape from Clipboard" onAction="OnCopyFromClipboardButton" getVisible="IsAdmin"
              supertip="Copies the shape that is currently in your clipboard and imports it to your Favorite Shapes"/>
         </group>
       </tab>
@@ -24,7 +24,7 @@
   <contextMenus>
     <contextMenu idMso="ContextMenuShape">
       <menu id="ShapeFavoritesMenu" label="Favorite Shapes...">
-        <button id="SaveFavoriteShapeContextButton" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape"/>
+        <button id="SaveFavoriteShapeContextButton" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
       </menu>
     </contextMenu>
   </contextMenus>
