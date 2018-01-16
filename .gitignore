@@ -4,3 +4,5 @@ obj
 packages
 SharedPowerpointFavoritesPluginInstaller/Debug
 SharedPowerpointFavoritesPluginInstaller/Release
+SharedPowerpointFavoritesPluginInstaller/DebugAdmin
+SharedPowerpointFavoritesPluginInstaller/ReleaseAdmin

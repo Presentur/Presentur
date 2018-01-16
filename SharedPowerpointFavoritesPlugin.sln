@@ -10,17 +10,21 @@ EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
+		DebugAdmin|Any CPU = DebugAdmin|Any CPU
 		Release|Any CPU = Release|Any CPU
 		ReleaseAdmin|Any CPU = ReleaseAdmin|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{0F91C9E7-E199-45ED-9B7A-D19B7D187F26}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0F91C9E7-E199-45ED-9B7A-D19B7D187F26}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F91C9E7-E199-45ED-9B7A-D19B7D187F26}.DebugAdmin|Any CPU.ActiveCfg = DebugAdmin|Any CPU
+		{0F91C9E7-E199-45ED-9B7A-D19B7D187F26}.DebugAdmin|Any CPU.Build.0 = DebugAdmin|Any CPU
 		{0F91C9E7-E199-45ED-9B7A-D19B7D187F26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F91C9E7-E199-45ED-9B7A-D19B7D187F26}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0F91C9E7-E199-45ED-9B7A-D19B7D187F26}.ReleaseAdmin|Any CPU.ActiveCfg = ReleaseAdmin|Any CPU
 		{0F91C9E7-E199-45ED-9B7A-D19B7D187F26}.ReleaseAdmin|Any CPU.Build.0 = ReleaseAdmin|Any CPU
 		{82FBEC20-ABDB-4442-8D33-78B47827B1C4}.Debug|Any CPU.ActiveCfg = Debug
+		{82FBEC20-ABDB-4442-8D33-78B47827B1C4}.DebugAdmin|Any CPU.ActiveCfg = DebugAdmin
 		{82FBEC20-ABDB-4442-8D33-78B47827B1C4}.Release|Any CPU.ActiveCfg = Release
 		{82FBEC20-ABDB-4442-8D33-78B47827B1C4}.ReleaseAdmin|Any CPU.ActiveCfg = ReleaseAdmin
 	EndGlobalSection
