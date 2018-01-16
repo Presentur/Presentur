@@ -9,6 +9,7 @@ using Office = Microsoft.Office.Core;
 using Microsoft.Office.Interop.PowerPoint;
 using System.Windows.Forms;
 using SharedPowerpointFavoritesPlugin.util;
+using SharedPowerpointFavoritesPlugin.view;
 
 namespace SharedPowerpointFavoritesPlugin
 {
@@ -50,6 +51,12 @@ namespace SharedPowerpointFavoritesPlugin
         {
             logger.Log("Open Button pressed.");
             SharedFavView.ShowOrFocus();
+        }
+
+        public void OnInfoButton(Office.IRibbonControl control)
+        {
+            logger.Log("Info Button pressed.");
+            new InfoDialog().ShowDialog();
         }
 
         public void OnImportSharedFavButton(Office.IRibbonControl control)

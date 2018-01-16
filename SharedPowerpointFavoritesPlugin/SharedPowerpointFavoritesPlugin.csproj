@@ -174,6 +174,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="view\InfoDialog.resx">
+      <DependentUpon>InfoDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="view\SharedFavView.resx">
       <DependentUpon>SharedFavView.cs</DependentUpon>
     </EmbeddedResource>
@@ -190,6 +193,12 @@
     <Compile Include="service\ShapeService.cs" />
     <Compile Include="util\DialogUtil.cs" />
     <Compile Include="util\BuildEnvironment.cs" />
+    <Compile Include="view\InfoDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="view\InfoDialog.Designer.cs">
+      <DependentUpon>InfoDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="view\SharedFavView.cs">
       <SubType>Form</SubType>
     </Compile>
