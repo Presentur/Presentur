@@ -13,7 +13,7 @@ namespace SharedPowerpointFavoritesPlugin.view
     public partial class InfoDialog : Form
     {
 
-        public static readonly string INFO_TEXT = "This PowerPoint Addin was built in January 2018 by\nChristopher Rudoll <christopher@rudoll.net>\nfor\nPresentur.de";
+        private static readonly string INFO_TEXT = "This PowerPoint Addin was built in January 2018 by\nChristopher Rudoll <christopher@rudoll.net>\nfor\nPresentur.de";
 
         public InfoDialog()
         {
@@ -27,7 +27,6 @@ namespace SharedPowerpointFavoritesPlugin.view
             this.Width = (int) actualSize.Width + 20;
             this.Height = (int) actualSize.Height + 50;
             this.Controls.Add(label);
-
         }
     }
 }
