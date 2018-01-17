@@ -209,7 +209,7 @@ namespace SharedPowerpointFavoritesPlugin
             public void OnItemAdded(ShapeFavorite addedItem)
             {
                 logger.Log("ItemAddedListener fired.");
-                this.sharedFavView.DrawShape(addedItem, SharedFavView.CURRENT_INSTANCE.panels[addedItem.Shape.Type]);
+                this.sharedFavView.DrawShape(addedItem, this.sharedFavView.panels[addedItem.Shape.Type]);
             }
 
             public void OnItemRemoved(ShapeFavorite removedItem)
