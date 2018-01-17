@@ -99,6 +99,7 @@ namespace SharedPowerpointFavoritesPlugin
 
         private void HandlePictureBoxDoubleClick(ShapeFavorite shape)
         {
+            logger.Log("Double click on picture box. Pasting shape.");
             this.shapeService.PasteToCurrentPresentation(shape);
         }
 
