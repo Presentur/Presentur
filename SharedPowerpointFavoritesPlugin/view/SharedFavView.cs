@@ -121,9 +121,24 @@ namespace SharedPowerpointFavoritesPlugin
             this.CreateTabPage(Office.MsoShapeType.msoAutoShape, "Auto Shapes");
             this.CreateTabPage(Office.MsoShapeType.msoTable, "Tables");
             //add further pages here...
+            this.CreateOthersTabPage(this.panels.Keys.ToList()); //note that this must be called after the other tabs have been created
+        }
+
+        private void CreateOthersTabPage(List<Office.MsoShapeType> shapeTypesMappedToPanels)
+        {
+            var otherShapeTypes = new List<Office.MsoShapeType>(Enum.GetValues(typeof(Office.MsoShapeType)).Cast<Office.MsoShapeType>());
+            otherShapeTypes.RemoveAll(item => shapeTypesMappedToPanels.Contains(item));
+            this.CreateTabPage(otherShapeTypes, "Others");
         }
 
         private void CreateTabPage(Office.MsoShapeType shapeType, string caption)
+        {
+            var singletonList = new List<Office.MsoShapeType>();
+            singletonList.Add(shapeType);
+            this.CreateTabPage(singletonList, caption);
+        }
+
+        private void CreateTabPage(List<Office.MsoShapeType> shapeTypes, string caption)
         {
             var parentControl = this.tabControl1;
             var tabPage = new TabPage();
@@ -131,7 +146,10 @@ namespace SharedPowerpointFavoritesPlugin
             tabPage.Height = parentControl.Height - 28;
             var panel = this.GetPanel(tabPage);
             tabPage.Controls.Add(panel);
-            this.panels.Add(shapeType, panel);
+            foreach (Office.MsoShapeType shapeType in shapeTypes)
+            {
+                this.panels.Add(shapeType, panel);
+            }
             tabPage.Text = caption;
             parentControl.Controls.Add(tabPage);
         }
