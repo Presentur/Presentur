@@ -71,7 +71,7 @@ namespace SharedPowerpointFavoritesPlugin
             pictureBox.Image = shape.Thumbnail;
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.MouseDoubleClick += new MouseEventHandler((sender, args) => HandlePictureBoxDoubleClick(shape));
-            if (util.BuildEnvironment.IsAdminBuild())
+            if (BuildEnvironment.IsAdminBuild())
             {
                 pictureBox.ContextMenu = GetContextMenu(pictureBox);
             }
