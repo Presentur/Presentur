@@ -117,28 +117,21 @@ namespace SharedPowerpointFavoritesPlugin
 
         private void InitializeTabPages()
         {
-            this.CreateTabPage(Office.MsoShapeType.msoChart, "Charts");
-            this.CreateTabPage(Office.MsoShapeType.msoAutoShape, "Auto Shapes");
-            this.CreateTabPage(Office.MsoShapeType.msoTable, "Tables");
+            this.CreateTabPage("Charts", Office.MsoShapeType.msoChart);
+            this.CreateTabPage("Auto Shapes", Office.MsoShapeType.msoAutoShape);
+            this.CreateTabPage("Tables", Office.MsoShapeType.msoTable);
             //add further pages here...
-            this.CreateOthersTabPage(this.panels.Keys.ToList()); //note that this must be called after the other tabs have been created
+            this.CreateTabPage("Others", GetRemainingShapeTypes(this.panels.Keys.ToList()).ToArray()); //note that this must be called last
         }
 
-        private void CreateOthersTabPage(List<Office.MsoShapeType> shapeTypesMappedToPanels)
+        private List<Office.MsoShapeType> GetRemainingShapeTypes(List<Office.MsoShapeType> notToInclude)
         {
             var otherShapeTypes = new List<Office.MsoShapeType>(Enum.GetValues(typeof(Office.MsoShapeType)).Cast<Office.MsoShapeType>());
-            otherShapeTypes.RemoveAll(item => shapeTypesMappedToPanels.Contains(item));
-            this.CreateTabPage(otherShapeTypes, "Others");
+            otherShapeTypes.RemoveAll(item => notToInclude.Contains(item));
+            return otherShapeTypes;
         }
-
-        private void CreateTabPage(Office.MsoShapeType shapeType, string caption)
-        {
-            var singletonList = new List<Office.MsoShapeType>();
-            singletonList.Add(shapeType);
-            this.CreateTabPage(singletonList, caption);
-        }
-
-        private void CreateTabPage(List<Office.MsoShapeType> shapeTypes, string caption)
+        
+        private void CreateTabPage(string caption, params Office.MsoShapeType[] shapeTypes)
         {
             var parentControl = this.tabControl1;
             var tabPage = new TabPage();
