@@ -71,19 +71,27 @@ namespace SharedPowerpointFavoritesPlugin
             pictureBox.Image = shape.Thumbnail;
             pictureBox.SizeMode = PictureBoxSizeMode.Zoom;
             pictureBox.MouseDoubleClick += new MouseEventHandler((sender, args) => HandlePictureBoxDoubleClick(shape));
-            if (BuildEnvironment.IsAdminBuild())
-            {
-                pictureBox.ContextMenu = GetContextMenu(pictureBox);
-            }
+            pictureBox.ContextMenu = GetContextMenu(pictureBox);
             return pictureBox;
         }
 
         private ContextMenu GetContextMenu(PictureBox pictureBox)
         {
             var contextMenu = new ContextMenu();
-            var deleteItem = new MenuItem("Delete...", new EventHandler((sender, args) => HandleDeleteItem(pictureBox)));
-            contextMenu.MenuItems.Add(deleteItem);
+            var addItem = new MenuItem("Add to Slide", new EventHandler((sender, args) => HandleAddItemToSlide(pictureBox)));
+            contextMenu.MenuItems.Add(addItem);
+            if (BuildEnvironment.IsAdminBuild())
+            {
+                var deleteItem = new MenuItem("Delete...", new EventHandler((sender, args) => HandleDeleteItem(pictureBox)));
+                contextMenu.MenuItems.Add(deleteItem);
+            }
             return contextMenu;
+        }
+
+        private void HandleAddItemToSlide(PictureBox pictureBox)
+        {
+            logger.Log("User clicked add item to slide.");
+            this.shapeService.PasteToCurrentPresentation(this.displayedShapes[pictureBox]);
         }
 
         private void HandleDeleteItem(PictureBox pictureBox)
@@ -131,7 +139,7 @@ namespace SharedPowerpointFavoritesPlugin
             otherShapeTypes.RemoveAll(item => notToInclude.Contains(item));
             return otherShapeTypes;
         }
-        
+
         private void CreateTabPage(string caption, params Office.MsoShapeType[] shapeTypes)
         {
             var parentControl = this.tabControl1;
