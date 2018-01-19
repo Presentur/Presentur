@@ -5,21 +5,25 @@
       <tab id="sharedFavs" label="Shared Favorites">
         <group id="sharedFavsShapes"
                label="Favorite Shapes">
-          <button id="openSharedFavButton" label="Show Favorite Shapes"
+          <button id="openSharedFavButton" label="Show Favorite Shapes" size="large"
              screentip="Favorite Shapes" onAction="OnOpenSharedFavButton"
-             supertip="Opens the Shared FavoritesShapes Overview"/>
-          <button id="importSharedFavButton" label="Import Favorite Shapes"
-             screentip="Import Favorite Shapes" onAction="OnImportSharedFavButton"
-             supertip="Imports Favorite Shapes"/>
-          <button id="exportSharedFavButton" label="Export Favorite Shapes"
-             screentip="Export Favorite Shapes" onAction="OnExportSharedFavButton"
-             supertip="Exports Favorite Shapes" getVisible="IsAdmin"/>
-          <button id="copyFromClipboardButton" label="Copy From Clipboard"
+             supertip="Opens the Shared FavoritesShapes Overview" imageMso="FunctionsLookupReferenceInsertGallery"/>
+          <button id="copyFromClipboardButton" label="Copy From Clipboard" size="large"
              screentip="Copy a shape from Clipboard" onAction="OnCopyFromClipboardButton" getVisible="IsAdmin"
-             supertip="Copies the shape that is currently in your clipboard and imports it to your Favorite Shapes"/>
-        <button id="infoButton" label="Info..."
-             onAction="OnInfoButton"/>
+             supertip="Copies the shape that is currently in your clipboard and imports it to your Favorite Shapes" imageMso="Copy"/>
         </group>
+      <group id="sharedFavsImportExport" label="Import/Export">
+        <button id="importSharedFavButton" label="Import Favorite Shapes" size="large"
+             screentip="Import Favorite Shapes" onAction="OnImportSharedFavButton"
+             supertip="Imports Favorite Shapes" imageMso="ImportSavedImports"/>
+          <button id="exportSharedFavButton" label="Export Favorite Shapes" size="large"
+             screentip="Export Favorite Shapes" onAction="OnExportSharedFavButton"
+             supertip="Exports Favorite Shapes" getVisible="IsAdmin" imageMso="ExportSavedExports"/>
+      </group>
+      <group id="sharedFavsInfo" label="Information">
+        <button id="infoButton" label="About" size="large"
+             onAction="OnInfoButton" imageMso="Info"/>
+      </group>
       </tab>
     </tabs>
   </ribbon>
