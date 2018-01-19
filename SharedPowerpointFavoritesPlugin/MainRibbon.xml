@@ -12,25 +12,41 @@
              screentip="Copy a shape from Clipboard" onAction="OnCopyFromClipboardButton" getVisible="IsAdmin"
              supertip="Copies the shape that is currently in your clipboard and imports it to your Favorite Shapes" imageMso="Copy"/>
         </group>
-      <group id="sharedFavsImportExport" label="Import/Export">
-        <button id="importSharedFavButton" label="Import Favorite Shapes" size="large"
-             screentip="Import Favorite Shapes" onAction="OnImportSharedFavButton"
-             supertip="Imports Favorite Shapes" imageMso="ImportSavedImports"/>
+        <group id="sharedFavsImportExport" label="Import/Export">
+          <button id="importSharedFavButton" label="Import Favorite Shapes" size="large"
+               screentip="Import Favorite Shapes" onAction="OnImportSharedFavButton"
+               supertip="Imports Favorite Shapes" imageMso="ImportSavedImports"/>
           <button id="exportSharedFavButton" label="Export Favorite Shapes" size="large"
              screentip="Export Favorite Shapes" onAction="OnExportSharedFavButton"
              supertip="Exports Favorite Shapes" getVisible="IsAdmin" imageMso="ExportSavedExports"/>
-      </group>
-      <group id="sharedFavsInfo" label="Information">
-        <button id="infoButton" label="About" size="large"
-             onAction="OnInfoButton" imageMso="Info"/>
-      </group>
+        </group>
+        <group id="sharedFavsInfo" label="Information">
+          <button id="infoButton" label="About" size="large"
+               onAction="OnInfoButton" imageMso="Info"/>
+        </group>
       </tab>
     </tabs>
   </ribbon>
   <contextMenus>
+    <!--Copying those is not pretty but there is no way to reuse them in xml. Maybe add programmatically when necessary?-->
     <contextMenu idMso="ContextMenuShape">
       <menu id="ShapeFavoritesMenu" label="Favorite Shapes...">
         <button id="SaveFavoriteShapeContextButton" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
+      </menu>
+    </contextMenu>
+    <contextMenu idMso="ContextMenuChartArea">
+      <menu id="ChartFavoritesMenu" label="Favorite Shapes...">
+        <button id="SaveFavoriteShapeContextButton2" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
+      </menu>
+    </contextMenu>
+    <contextMenu idMso="ContextMenuPicture">
+      <menu id="PictureFavoritesMenu" label="Favorite Shapes...">
+        <button id="SaveFavoriteShapeContextButton3" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
+      </menu>
+    </contextMenu>
+    <contextMenu idMso="ContextMenuTable">
+      <menu id="TableFavoritesMenu" label="Favorite Shapes...">
+        <button id="SaveFavoriteShapeContextButton4" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
       </menu>
     </contextMenu>
   </contextMenus>
