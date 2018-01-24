@@ -3,7 +3,7 @@
   <ribbon>
     <tabs>
       <tab id="sharedFavs" label="Shared Favorites">
-        <group id="sharedFavsShapes"
+        <group id="sharedFavsShapesGroup"
                label="Favorite Shapes">
           <button id="openSharedFavButton" label="Show Favorite Shapes" size="large"
              screentip="Favorite Shapes" onAction="OnOpenSharedFavButton"
@@ -11,6 +11,10 @@
           <button id="copyFromClipboardButton" label="Copy From Clipboard" size="large"
              screentip="Copy a shape from Clipboard" onAction="OnCopyFromClipboardButton" getVisible="IsAdmin"
              supertip="Copies the shape that is currently in your clipboard and imports it to your Favorite Shapes" imageMso="Copy"/>
+        <gallery id="sharedFavsCharts" label="Charts" getItemCount="GetItemCountCharts" getItemImage="GetItemImageCharts" imageMso="ChartWall" size="large" columns="2" onAction="OnChartAction"/>
+        <gallery id="sharedFavsTables" label="Tables" getItemCount="GetItemCountTables" getItemImage="GetItemImageTables" imageMso="CreateTable" size="large" columns="2" onAction="OnTableAction"/>
+        <gallery id="sharedFavsShapes" label="Shapes" getItemCount="GetItemCountShapes" getItemImage="GetItemImageShapes" imageMso="ShapesMoreShapes" size="large" columns="2" onAction="OnShapeAction"/>
+        <gallery id="sharedFavsPictures" label="Pictures" getItemCount="GetItemCountPictures" getItemImage="GetItemImagePictures" imageMso="PictureStylesGallery" size="large" columns="2" onAction="OnPictureAction"/>  
         </group>
         <group id="sharedFavsImportExport" label="Import/Export">
           <button id="importSharedFavButton" label="Import Favorite Shapes" size="large"
