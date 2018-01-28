@@ -11,10 +11,10 @@
           <button id="copyFromClipboardButton" label="Copy From Clipboard" size="large"
              screentip="Copy a shape from Clipboard" onAction="OnCopyFromClipboardButton" getVisible="IsAdmin"
              supertip="Copies the shape that is currently in your clipboard and imports it to your Favorite Shapes" imageMso="Copy"/>
-        <gallery id="sharedFavsCharts" label="Charts" getItemCount="GetItemCountCharts" getItemImage="GetItemImageCharts" imageMso="ChartWall" size="large" columns="2" onAction="OnChartAction"/>
-        <gallery id="sharedFavsTables" label="Tables" getItemCount="GetItemCountTables" getItemImage="GetItemImageTables" imageMso="CreateTable" size="large" columns="2" onAction="OnTableAction"/>
-        <gallery id="sharedFavsShapes" label="Shapes" getItemCount="GetItemCountShapes" getItemImage="GetItemImageShapes" imageMso="ShapesMoreShapes" size="large" columns="2" onAction="OnShapeAction"/>
-        <gallery id="sharedFavsPictures" label="Pictures" getItemCount="GetItemCountPictures" getItemImage="GetItemImagePictures" imageMso="PictureStylesGallery" size="large" columns="2" onAction="OnPictureAction"/>  
+          <gallery id="sharedFavsCharts" label="Charts" getItemCount="GetItemCountCharts" getItemImage="GetItemImageCharts" imageMso="ChartWall" size="large" columns="2" onAction="OnChartAction"/>
+          <gallery id="sharedFavsTables" label="Tables" getItemCount="GetItemCountTables" getItemImage="GetItemImageTables" imageMso="CreateTable" size="large" columns="2" onAction="OnTableAction"/>
+          <gallery id="sharedFavsShapes" label="Shapes" getItemCount="GetItemCountShapes" getItemImage="GetItemImageShapes" imageMso="ShapesMoreShapes" size="large" columns="2" onAction="OnShapeAction"/>
+          <gallery id="sharedFavsPictures" label="Pictures" getItemCount="GetItemCountPictures" getItemImage="GetItemImagePictures" imageMso="PictureStylesGallery" size="large" columns="2" onAction="OnPictureAction"/>
         </group>
         <group id="sharedFavsImportExport" label="Import/Export">
           <button id="importSharedFavButton" label="Import Favorite Shapes" size="large"
@@ -34,24 +34,16 @@
   <contextMenus>
     <!--Copying those is not pretty but there is no way to reuse them in xml. Maybe add programmatically when necessary?-->
     <contextMenu idMso="ContextMenuShape">
-      <menu id="ShapeFavoritesMenu" label="Favorite Shapes...">
-        <button id="SaveFavoriteShapeContextButton" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
-      </menu>
+      <button id="SaveFavoriteShapeContextButton" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
     </contextMenu>
     <contextMenu idMso="ContextMenuChartArea">
-      <menu id="ChartFavoritesMenu" label="Favorite Shapes...">
-        <button id="SaveFavoriteShapeContextButton2" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
-      </menu>
+      <button id="SaveFavoriteShapeContextButton2" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
     </contextMenu>
     <contextMenu idMso="ContextMenuPicture">
-      <menu id="PictureFavoritesMenu" label="Favorite Shapes...">
-        <button id="SaveFavoriteShapeContextButton3" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
-      </menu>
+      <button id="SaveFavoriteShapeContextButton3" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
     </contextMenu>
     <contextMenu idMso="ContextMenuTable">
-      <menu id="TableFavoritesMenu" label="Favorite Shapes...">
-        <button id="SaveFavoriteShapeContextButton4" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
-      </menu>
+      <button id="SaveFavoriteShapeContextButton4" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
     </contextMenu>
   </contextMenus>
 </customUI>
