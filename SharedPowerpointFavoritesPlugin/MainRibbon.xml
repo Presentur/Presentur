@@ -30,24 +30,16 @@
   <contextMenus>
     <!--Copying those is not pretty but there is no way to reuse them in xml. Maybe add programmatically when necessary?-->
     <contextMenu idMso="ContextMenuShape">
-      <menu id="ShapeFavoritesMenu" label="Favorite Shapes...">
-        <button id="SaveFavoriteShapeContextButton" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
-      </menu>
+      <button id="SaveFavoriteShapeContextButton" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
     </contextMenu>
     <contextMenu idMso="ContextMenuChartArea">
-      <menu id="ChartFavoritesMenu" label="Favorite Shapes...">
-        <button id="SaveFavoriteShapeContextButton2" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
-      </menu>
+      <button id="SaveFavoriteShapeContextButton2" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
     </contextMenu>
     <contextMenu idMso="ContextMenuPicture">
-      <menu id="PictureFavoritesMenu" label="Favorite Shapes...">
-        <button id="SaveFavoriteShapeContextButton3" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
-      </menu>
+      <button id="SaveFavoriteShapeContextButton3" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
     </contextMenu>
     <contextMenu idMso="ContextMenuTable">
-      <menu id="TableFavoritesMenu" label="Favorite Shapes...">
-        <button id="SaveFavoriteShapeContextButton4" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
-      </menu>
+      <button id="SaveFavoriteShapeContextButton4" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
     </contextMenu>
   </contextMenus>
 </customUI>
