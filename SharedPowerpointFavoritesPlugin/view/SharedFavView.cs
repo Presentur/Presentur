@@ -129,6 +129,7 @@ namespace SharedPowerpointFavoritesPlugin
             this.CreateTabPage("Charts", Office.MsoShapeType.msoChart);
             this.CreateTabPage("Tables", Office.MsoShapeType.msoTable);
             this.CreateTabPage("Pictures", Office.MsoShapeType.msoPicture);
+            this.CreateTabPage("Groups", Office.MsoShapeType.msoGroup);
             //add further pages here...
             this.CreateTabPage("Others", GetRemainingShapeTypes(this.panels.Keys.ToList()).ToArray()); //note that this must be called last
         }
