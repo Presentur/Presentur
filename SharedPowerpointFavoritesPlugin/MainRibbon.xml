@@ -41,6 +41,9 @@
     <contextMenu idMso="ContextMenuTable">
       <button id="SaveFavoriteShapeContextButton4" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
     </contextMenu>
+    <contextMenu idMso="ContextMenuObjectsGroup">
+      <button id="SaveFavoriteShapeContextButton5" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
+    </contextMenu>
   </contextMenus>
 </customUI>
 
