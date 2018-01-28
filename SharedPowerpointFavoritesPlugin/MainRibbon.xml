@@ -15,6 +15,7 @@
           <gallery id="sharedFavsTables" label="Tables" getItemCount="GetItemCountTables" getItemImage="GetItemImageTables" imageMso="CreateTable" size="large" columns="2" onAction="OnTableAction"/>
           <gallery id="sharedFavsShapes" label="Shapes" getItemCount="GetItemCountShapes" getItemImage="GetItemImageShapes" imageMso="ShapesMoreShapes" size="large" columns="2" onAction="OnShapeAction"/>
           <gallery id="sharedFavsPictures" label="Pictures" getItemCount="GetItemCountPictures" getItemImage="GetItemImagePictures" imageMso="PictureStylesGallery" size="large" columns="2" onAction="OnPictureAction"/>
+          <gallery id="sharedFavsGroups" label="Groups" getItemCount="GetItemCountGroups" getItemImage="GetItemImageGroups" imageMso="ObjectsGroup" size="large" columns="2" onAction="OnGroupAction"/>
         </group>
         <group id="sharedFavsImportExport" label="Import/Export">
           <button id="importSharedFavButton" label="Import Favorite Shapes" size="large"

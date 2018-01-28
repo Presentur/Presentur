@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using SharedPowerpointFavoritesPlugin.util;
 using SharedPowerpointFavoritesPlugin.view;
 using System.Drawing;
+using SharedPowerpointFavoritesPlugin.model;
 
 namespace SharedPowerpointFavoritesPlugin
 {
@@ -42,8 +43,39 @@ namespace SharedPowerpointFavoritesPlugin
         public void Ribbon_Load(Office.IRibbonUI ribbonUI)
         {
             this.ribbon = ribbonUI;
+            this.shapePersistence.RegisterCacheListener(new RibbonCacheListener(this));
         }
-        
+
+        class RibbonCacheListener : ShapePersistence.CacheListener
+        {
+            private MainRibbon mainRibbon;
+
+            public RibbonCacheListener(MainRibbon mainRibbon)
+            {
+                this.mainRibbon = mainRibbon;
+            }
+
+            void ShapePersistence.CacheListener.OnCacheRenewed()
+            {
+                this.redrawRibbon();    
+            }
+
+            void ShapePersistence.CacheListener.OnItemAdded(ShapeFavorite addedItem)
+            {
+                this.redrawRibbon();
+            }
+
+            void ShapePersistence.CacheListener.OnItemRemoved(ShapeFavorite removedItem)
+            {
+                this.redrawRibbon();
+            }
+
+            private void redrawRibbon()
+            {
+                mainRibbon.ribbon.Invalidate();
+            }
+        }
+
         public bool IsAdmin(Office.IRibbonControl control)
         {
             return BuildEnvironment.IsAdminBuild();
@@ -189,7 +221,22 @@ namespace SharedPowerpointFavoritesPlugin
             this.OnAction(Office.MsoShapeType.msoPicture, index);
         }
 
-        
+        public int GetItemCountGroups(Office.IRibbonControl control)
+        {
+            return this.GetItemCount(Office.MsoShapeType.msoGroup);
+        }
+
+        public System.Drawing.Bitmap GetItemImageGroups(Office.IRibbonControl control, int index)
+        {
+            return this.GetItemImage(Office.MsoShapeType.msoGroup, index);
+        }
+
+        public void OnGroupAction(Office.IRibbonControl control, string id, int index)
+        {
+            this.OnAction(Office.MsoShapeType.msoGroup, index);
+        }
+
+
         private int GetItemCount(Office.MsoShapeType shapeType)
         {
             return this.shapeService.GetShapesByType(shapeType).Count;
