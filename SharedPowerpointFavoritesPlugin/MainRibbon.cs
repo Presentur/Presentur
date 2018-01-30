@@ -10,6 +10,8 @@ using Microsoft.Office.Interop.PowerPoint;
 using System.Windows.Forms;
 using SharedPowerpointFavoritesPlugin.util;
 using SharedPowerpointFavoritesPlugin.view;
+using System.Drawing;
+using SharedPowerpointFavoritesPlugin.model;
 
 namespace SharedPowerpointFavoritesPlugin
 {
@@ -20,6 +22,7 @@ namespace SharedPowerpointFavoritesPlugin
         private static readonly DebugLogger logger = DebugLogger.GetLogger(typeof(MainRibbon).Name);
         private ShapePersistence shapePersistence = ShapePersistence.INSTANCE;
         private ImportExportService importExportService = ImportExportService.INSTANCE;
+        private ShapeService shapeService = ShapeService.INSTANCE;
 
         public MainRibbon()
         {
@@ -40,6 +43,37 @@ namespace SharedPowerpointFavoritesPlugin
         public void Ribbon_Load(Office.IRibbonUI ribbonUI)
         {
             this.ribbon = ribbonUI;
+            this.shapePersistence.RegisterCacheListener(new RibbonCacheListener(this));
+        }
+
+        class RibbonCacheListener : ShapePersistence.CacheListener
+        {
+            private MainRibbon mainRibbon;
+
+            public RibbonCacheListener(MainRibbon mainRibbon)
+            {
+                this.mainRibbon = mainRibbon;
+            }
+
+            void ShapePersistence.CacheListener.OnCacheRenewed()
+            {
+                this.redrawRibbon();    
+            }
+
+            void ShapePersistence.CacheListener.OnItemAdded(ShapeFavorite addedItem)
+            {
+                this.redrawRibbon();
+            }
+
+            void ShapePersistence.CacheListener.OnItemRemoved(ShapeFavorite removedItem)
+            {
+                this.redrawRibbon();
+            }
+
+            private void redrawRibbon()
+            {
+                mainRibbon.ribbon.Invalidate();
+            }
         }
 
         public bool IsAdmin(Office.IRibbonControl control)
@@ -126,7 +160,108 @@ namespace SharedPowerpointFavoritesPlugin
                 logger.Log("Could not save selection " + selection);
             }
         }
+        
+        public int GetItemCountCharts(Office.IRibbonControl control)
+        {
+            return this.GetItemCount(Office.MsoShapeType.msoChart);
+        }
 
+        public System.Drawing.Bitmap GetItemImageCharts(Office.IRibbonControl control, int index)
+        {
+            return this.GetItemImage(Office.MsoShapeType.msoChart, index);
+        }
+
+        public void OnChartAction(Office.IRibbonControl control, string id, int index)
+        {
+            this.OnAction(Office.MsoShapeType.msoChart, index);
+        }
+        
+        public int GetItemCountTables(Office.IRibbonControl control)
+        {
+            return this.GetItemCount(Office.MsoShapeType.msoTable);
+        }
+
+        public System.Drawing.Bitmap GetItemImageTables(Office.IRibbonControl control, int index)
+        {
+            return this.GetItemImage(Office.MsoShapeType.msoTable, index);
+        }
+
+        public void OnTableAction(Office.IRibbonControl control, string id, int index)
+        {
+            this.OnAction(Office.MsoShapeType.msoTable, index);
+        }
+
+        public int GetItemCountShapes(Office.IRibbonControl control)
+        {
+            return this.GetItemCount(Office.MsoShapeType.msoAutoShape);
+        }
+
+        public System.Drawing.Bitmap GetItemImageShapes(Office.IRibbonControl control, int index)
+        {
+            return this.GetItemImage(Office.MsoShapeType.msoAutoShape, index);
+        }
+
+        public void OnShapeAction(Office.IRibbonControl control, string id, int index)
+        {
+            this.OnAction(Office.MsoShapeType.msoAutoShape, index);
+        }
+
+        public int GetItemCountPictures(Office.IRibbonControl control)
+        {
+            return this.GetItemCount(Office.MsoShapeType.msoPicture);
+        }
+
+        public System.Drawing.Bitmap GetItemImagePictures(Office.IRibbonControl control, int index)
+        {
+            return this.GetItemImage(Office.MsoShapeType.msoPicture, index);
+        }
+
+        public void OnPictureAction(Office.IRibbonControl control, string id, int index)
+        {
+            this.OnAction(Office.MsoShapeType.msoPicture, index);
+        }
+
+        public int GetItemCountGroups(Office.IRibbonControl control)
+        {
+            return this.GetItemCount(Office.MsoShapeType.msoGroup);
+        }
+
+        public System.Drawing.Bitmap GetItemImageGroups(Office.IRibbonControl control, int index)
+        {
+            return this.GetItemImage(Office.MsoShapeType.msoGroup, index);
+        }
+
+        public void OnGroupAction(Office.IRibbonControl control, string id, int index)
+        {
+            this.OnAction(Office.MsoShapeType.msoGroup, index);
+        }
+
+
+        private int GetItemCount(Office.MsoShapeType shapeType)
+        {
+            return this.shapeService.GetShapesByType(shapeType).Count;
+        }
+
+        private System.Drawing.Bitmap GetItemImage(Office.MsoShapeType shapeType, int index)
+        {
+            var thumbnail = this.shapeService.GetShapesByType(shapeType)[index].Thumbnail;
+            return new System.Drawing.Bitmap(thumbnail, 100, GetHeight(100, thumbnail));
+        }
+        
+        private int GetHeight(int width, Image image)
+        {
+            var ratio = (float)image.Height / (float)image.Width;
+            var calculatedHeight = ratio * width;
+            logger.Log("Using bitmap size: " + calculatedHeight + "|" + width);
+            return (int) calculatedHeight;
+        }
+
+        private void OnAction(Office.MsoShapeType shapeType, int index)
+        {
+            logger.Log("Chart of type " + shapeType + " with id " + index + " clicked.");
+            this.shapeService.PasteToCurrentPresentation(this.shapeService.GetShapesByType(shapeType)[index]);
+        }
+        
         private bool AskForImportConfirmation()
         {
             return DialogUtil.AskForConfirmation("Are you sure you want to import a favorites archive? This deletes your own favorites!");
