@@ -6,3 +6,8 @@ This is a PowerPoint Addin written in January 2018 by Christopher Rudoll for Edu
 
 ## License
 This project is Free Software. It is released under GPLv3.
+
+## Contributing and Forking
+You are most welcome to contribute.
+
+When forking please mind the GPL license requirements. Including a reference to Presentur.de would be appreciated!
