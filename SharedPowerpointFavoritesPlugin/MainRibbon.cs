@@ -110,6 +110,18 @@ namespace SharedPowerpointFavoritesPlugin
             System.Diagnostics.Process.Start(Constants.GITHUB_URL);
         }
 
+        public void OnTutorialButton(Office.IRibbonControl control)
+        {
+            logger.Log("Tutorial Button pressed.");
+            System.Diagnostics.Process.Start(Constants.TUTORIAL_URL);
+        }
+
+        public void OnStoryButton(Office.IRibbonControl control)
+        {
+            logger.Log("Story Button pressed.");
+            System.Diagnostics.Process.Start(Constants.STORY_URL);
+        }
+
         public void OnImportSharedFavButton(Office.IRibbonControl control)
         {
             logger.Log("Import button clicked.");

@@ -27,5 +27,7 @@ namespace SharedPowerpointFavoritesPlugin.util
     static class Constants
     {
         internal static readonly string GITHUB_URL = "https://github.com/Presentur/Presentur/";
+        internal static string STORY_URL = "https://presentur.de";
+        internal static string TUTORIAL_URL = "https://add-in.presentur.de";
     }
 }
