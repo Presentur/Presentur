@@ -232,6 +232,16 @@ namespace SharedPowerpointFavoritesPlugin
             this.shapeService.PasteToCurrentPresentation(this.shapeService.GetShapesByTypes(shapeTypes)[index]);
         }
 
+        public Bitmap GetPentagonImage(Office.IRibbonControl control)
+        {
+            return new Bitmap(Properties.Resources.Pentagon);
+        }
+
+        public Bitmap GetTutorialImage(Office.IRibbonControl control)
+        {
+            return new Bitmap(Properties.Resources.Tutorial);
+        }
+
         private bool AskForImportConfirmation()
         {
             return DialogUtil.AskForConfirmation("Are you sure you want to import a favorites archive? This deletes your own favorites!");

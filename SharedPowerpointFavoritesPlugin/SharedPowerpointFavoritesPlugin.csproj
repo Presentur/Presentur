@@ -175,6 +175,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="view\SharedFavView.resx">
       <DependentUpon>SharedFavView.cs</DependentUpon>
@@ -213,7 +214,18 @@
   <ItemGroup>
     <EmbeddedResource Include="MainRibbon.xml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Resources\TutorialPicture.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Tutorial.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\pentagon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\favicon.ico" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

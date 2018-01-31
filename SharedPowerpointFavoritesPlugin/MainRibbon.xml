@@ -51,9 +51,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         </group>
         <group id="sharedFavsInfo" label="Information">
           <button id="storyButton" label="What's your story?" size="large"
-               onAction="OnStoryButton" imageMso="Info"/>
+               onAction="OnStoryButton" getImage="GetPentagonImage"/>
         <button id="tutorialButton" label="Tutorial" size="large"
-               onAction="OnTutorialButton" imageMso="Info"/>
+               onAction="OnTutorialButton" getImage="GetTutorialImage"/>
           <button id="infoButton" label="About" size="large"
                onAction="OnInfoButton" imageMso="Info"/>
         </group>
