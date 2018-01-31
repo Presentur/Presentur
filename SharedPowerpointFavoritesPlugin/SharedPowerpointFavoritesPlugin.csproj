@@ -159,6 +159,7 @@
   -->
   <ItemGroup>
     <Compile Include="model\SupportedShapeTypes.cs" />
+    <Compile Include="util\Constants.cs" />
     <Compile Include="util\DebugLogger.cs" />
     <Compile Include="service\ImportExportService.cs" />
     <Compile Include="MainRibbon.cs" />

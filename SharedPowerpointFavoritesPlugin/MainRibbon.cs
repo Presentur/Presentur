@@ -108,7 +108,8 @@ namespace SharedPowerpointFavoritesPlugin
         public void OnInfoButton(Office.IRibbonControl control)
         {
             logger.Log("Info Button pressed.");
-            new InfoDialog().ShowDialog();
+            //new InfoDialog().ShowDialog();
+            System.Diagnostics.Process.Start(Constants.GITHUB_URL);
         }
 
         public void OnImportSharedFavButton(Office.IRibbonControl control)
