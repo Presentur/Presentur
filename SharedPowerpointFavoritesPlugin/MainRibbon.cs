@@ -27,7 +27,6 @@ using Office = Microsoft.Office.Core;
 using Microsoft.Office.Interop.PowerPoint;
 using System.Windows.Forms;
 using SharedPowerpointFavoritesPlugin.util;
-using SharedPowerpointFavoritesPlugin.view;
 using System.Drawing;
 using SharedPowerpointFavoritesPlugin.model;
 
@@ -108,7 +107,6 @@ namespace SharedPowerpointFavoritesPlugin
         public void OnInfoButton(Office.IRibbonControl control)
         {
             logger.Log("Info Button pressed.");
-            //new InfoDialog().ShowDialog();
             System.Diagnostics.Process.Start(Constants.GITHUB_URL);
         }
 
