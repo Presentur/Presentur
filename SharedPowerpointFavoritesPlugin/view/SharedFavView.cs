@@ -143,20 +143,10 @@ namespace SharedPowerpointFavoritesPlugin
 
         private void InitializeTabPages()
         {
-            this.CreateTabPage("Shapes", Office.MsoShapeType.msoAutoShape);
-            this.CreateTabPage("Charts", Office.MsoShapeType.msoChart);
-            this.CreateTabPage("Tables", Office.MsoShapeType.msoTable);
-            this.CreateTabPage("Pictures", Office.MsoShapeType.msoPicture);
-            this.CreateTabPage("Groups", Office.MsoShapeType.msoGroup);
-            //add further pages here...
-            this.CreateTabPage("Others", GetRemainingShapeTypes(this.panels.Keys.ToList()).ToArray()); //note that this must be called last
-        }
-
-        private List<Office.MsoShapeType> GetRemainingShapeTypes(List<Office.MsoShapeType> notToInclude)
-        {
-            var otherShapeTypes = new List<Office.MsoShapeType>(Enum.GetValues(typeof(Office.MsoShapeType)).Cast<Office.MsoShapeType>());
-            otherShapeTypes.RemoveAll(item => notToInclude.Contains(item));
-            return otherShapeTypes;
+            foreach (KeyValuePair<string, List<Office.MsoShapeType>> entry in SupportedShapeTypes.All)
+            {
+                this.CreateTabPage(entry.Key, entry.Value.ToArray());
+            }
         }
 
         private void CreateTabPage(string caption, params Office.MsoShapeType[] shapeTypes)

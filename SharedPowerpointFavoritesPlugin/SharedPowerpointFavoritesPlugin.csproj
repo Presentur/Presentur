@@ -158,6 +158,7 @@
     can be found.
   -->
   <ItemGroup>
+    <Compile Include="model\SupportedShapeTypes.cs" />
     <Compile Include="util\DebugLogger.cs" />
     <Compile Include="service\ImportExportService.cs" />
     <Compile Include="MainRibbon.cs" />
