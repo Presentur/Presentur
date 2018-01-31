@@ -30,16 +30,16 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
              supertip="Copies the shape that is currently in your clipboard and imports it to your Favorite Shapes" imageMso="Copy"/>
         </group>
         <group id="sharedFavsChartsGroup" label="Charts">
-          <gallery id="sharedFavsCharts" label="Charts" getItemCount="GetItemCountCharts" getItemImage="GetItemImageCharts" imageMso="ChartWall" size="large" columns="2" onAction="OnChartAction"/>
+          <gallery id="sharedFavsCharts" label="Charts" getItemCount="GetItemCount" getItemImage="GetItemImage" imageMso="ChartWall" size="large" columns="2" onAction="OnItemAction"/>
         </group>
         <group id="sharedFavsTablesGroup" label="Tables">
-          <gallery id="sharedFavsTables" label="Tables" getItemCount="GetItemCountTables" getItemImage="GetItemImageTables" imageMso="CreateTable" size="large" columns="2" onAction="OnTableAction"/>
+          <gallery id="sharedFavsTables" label="Tables" getItemCount="GetItemCount" getItemImage="GetItemImage" imageMso="CreateTable" size="large" columns="2" onAction="OnItemAction"/>
         </group>
         <group id="sharedFavsShapesGroup" label="Shapes">
-          <gallery id="sharedFavsShapes" label="Shapes" getItemCount="GetItemCountShapes" getItemImage="GetItemImageShapes" imageMso="ShapesMoreShapes" size="large" columns="2" onAction="OnShapeAction"/>
+          <gallery id="sharedFavsShapes" label="Shapes" getItemCount="GetItemCount" getItemImage="GetItemImage" imageMso="ShapesMoreShapes" size="large" columns="2" onAction="OnItemAction"/>
         </group>
         <group id="sharedFavsPicturesGroup" label="Pictures">
-          <gallery id="sharedFavsPictures" label="Pictures" getItemCount="GetItemCountPictures" getItemImage="GetItemImagePictures" imageMso="PictureStylesGallery" size="large" columns="2" onAction="OnPictureAction"/>
+          <gallery id="sharedFavsPictures" label="Pictures" getItemCount="GetItemCount" getItemImage="GetItemImage" imageMso="PictureStylesGallery" size="large" columns="2" onAction="OnAction"/>
         </group>
         <group id="sharedFavsImportExport" label="Import/Export">
           <button id="importSharedFavButton" label="Import Favorite Shapes" size="large"
