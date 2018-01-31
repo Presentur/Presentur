@@ -181,88 +181,74 @@ namespace SharedPowerpointFavoritesPlugin
         
         public int GetItemCountCharts(Office.IRibbonControl control)
         {
-            return this.GetItemCount(Office.MsoShapeType.msoChart);
+            return this.GetItemCount(SupportedShapeTypes.Charts);
         }
 
         public System.Drawing.Bitmap GetItemImageCharts(Office.IRibbonControl control, int index)
         {
-            return this.GetItemImage(Office.MsoShapeType.msoChart, index);
+            return this.GetItemImage(SupportedShapeTypes.Charts, index);
         }
 
         public void OnChartAction(Office.IRibbonControl control, string id, int index)
         {
-            this.OnAction(Office.MsoShapeType.msoChart, index);
+            this.OnAction(SupportedShapeTypes.Charts, index);
         }
         
         public int GetItemCountTables(Office.IRibbonControl control)
         {
-            return this.GetItemCount(Office.MsoShapeType.msoTable);
+            return this.GetItemCount(SupportedShapeTypes.Tables);
         }
 
         public System.Drawing.Bitmap GetItemImageTables(Office.IRibbonControl control, int index)
         {
-            return this.GetItemImage(Office.MsoShapeType.msoTable, index);
+            return this.GetItemImage(SupportedShapeTypes.Tables, index);
         }
 
         public void OnTableAction(Office.IRibbonControl control, string id, int index)
         {
-            this.OnAction(Office.MsoShapeType.msoTable, index);
+            this.OnAction(SupportedShapeTypes.Tables, index);
         }
 
         public int GetItemCountShapes(Office.IRibbonControl control)
         {
-            return this.GetItemCount(Office.MsoShapeType.msoAutoShape);
+            return this.GetItemCount(SupportedShapeTypes.Shapes);
         }
 
         public System.Drawing.Bitmap GetItemImageShapes(Office.IRibbonControl control, int index)
         {
-            return this.GetItemImage(Office.MsoShapeType.msoAutoShape, index);
+            return this.GetItemImage(SupportedShapeTypes.Shapes, index);
         }
 
         public void OnShapeAction(Office.IRibbonControl control, string id, int index)
         {
-            this.OnAction(Office.MsoShapeType.msoAutoShape, index);
+            this.OnAction(SupportedShapeTypes.Shapes, index);
         }
 
         public int GetItemCountPictures(Office.IRibbonControl control)
         {
-            return this.GetItemCount(Office.MsoShapeType.msoPicture);
+            return this.GetItemCount(SupportedShapeTypes.Pictures);
         }
 
         public System.Drawing.Bitmap GetItemImagePictures(Office.IRibbonControl control, int index)
         {
-            return this.GetItemImage(Office.MsoShapeType.msoPicture, index);
+            return this.GetItemImage(SupportedShapeTypes.Pictures, index);
         }
 
         public void OnPictureAction(Office.IRibbonControl control, string id, int index)
         {
-            this.OnAction(Office.MsoShapeType.msoPicture, index);
-        }
-
-        public int GetItemCountGroups(Office.IRibbonControl control)
-        {
-            return this.GetItemCount(Office.MsoShapeType.msoGroup);
-        }
-
-        public System.Drawing.Bitmap GetItemImageGroups(Office.IRibbonControl control, int index)
-        {
-            return this.GetItemImage(Office.MsoShapeType.msoGroup, index);
-        }
-
-        public void OnGroupAction(Office.IRibbonControl control, string id, int index)
-        {
-            this.OnAction(Office.MsoShapeType.msoGroup, index);
+            this.OnAction(SupportedShapeTypes.Pictures, index);
         }
 
 
-        private int GetItemCount(Office.MsoShapeType shapeType)
+
+        private int GetItemCount(IEnumerable<Office.MsoShapeType> shapeTypes)
         {
-            return this.shapeService.GetShapesByType(shapeType).Count;
+            return this.shapeService.GetShapesByTypes(shapeTypes).Count;
         }
 
-        private System.Drawing.Bitmap GetItemImage(Office.MsoShapeType shapeType, int index)
+        private System.Drawing.Bitmap GetItemImage(IEnumerable<Office.MsoShapeType> shapeTypes, int index)
         {
-            var thumbnail = this.shapeService.GetShapesByType(shapeType)[index].Thumbnail;
+            var thumbnail = this.shapeService.GetShapesByTypes(shapeTypes)[index].Thumbnail;
             return new System.Drawing.Bitmap(thumbnail, 100, GetHeight(100, thumbnail));
         }
         
@@ -274,10 +260,10 @@ namespace SharedPowerpointFavoritesPlugin
             return (int) calculatedHeight;
         }
 
-        private void OnAction(Office.MsoShapeType shapeType, int index)
+        private void OnAction(IEnumerable<Office.MsoShapeType> shapeTypes, int index)
         {
-            logger.Log("Chart of type " + shapeType + " with id " + index + " clicked.");
-            this.shapeService.PasteToCurrentPresentation(this.shapeService.GetShapesByType(shapeType)[index]);
+            logger.Log("Chart of type " + shapeTypes + " with id " + index + " clicked.");
+            this.shapeService.PasteToCurrentPresentation(this.shapeService.GetShapesByTypes(shapeTypes)[index]);
         }
         
         private bool AskForImportConfirmation()

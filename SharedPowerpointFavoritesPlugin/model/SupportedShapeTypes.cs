@@ -18,22 +18,46 @@ namespace SharedPowerpointFavoritesPlugin.model
             get;
         }
 
-        public static List<MsoShapeType> Others
+        public static ReadOnlyCollection<MsoShapeType> Shapes
+        {
+            get;
+        }
+
+        public static ReadOnlyCollection<MsoShapeType> Charts
+        {
+            get;
+        }
+
+        public static ReadOnlyCollection<MsoShapeType> Tables
+        {
+            get;
+        }
+
+        public static ReadOnlyCollection<MsoShapeType> Pictures
+        {
+            get;
+        }
+
+        public static ReadOnlyCollection<MsoShapeType> Others
         {
             get;
         }
         
         static SupportedShapeTypes()
         {
+            Shapes = GetList(MsoShapeType.msoAutoShape, MsoShapeType.msoGroup, MsoShapeType.msoFreeform, MsoShapeType.msoTextBox).AsReadOnly();
+            Charts = GetList(MsoShapeType.msoChart).AsReadOnly();
+            Tables = GetList(MsoShapeType.msoTable).AsReadOnly();
+            Pictures = GetList(MsoShapeType.msoPicture).AsReadOnly();
+
             var _all = new Dictionary<string, List<MsoShapeType>>();
-            _all.Add("Shapes", GetList(MsoShapeType.msoAutoShape));
-            _all.Add("Charts", GetList(MsoShapeType.msoChart));
-            _all.Add("Tables", GetList(MsoShapeType.msoTable));
-            _all.Add("Pictures", GetList(MsoShapeType.msoPicture));
-            _all.Add("Groups", GetList(MsoShapeType.msoGroup));
-            var otherShapeTypes = GetRemainingShapeTypes(_all.Values.SelectMany(i => i));
-            _all.Add("Others", otherShapeTypes);
-            Others = otherShapeTypes;
+            _all.Add("Shapes", Shapes.ToList());
+            _all.Add("Charts", Charts.ToList());
+            _all.Add("Tables", Tables.ToList());
+            _all.Add("Pictures", Pictures.ToList());
+            Others = GetRemainingShapeTypes(_all.Values.SelectMany(i => i)).AsReadOnly();
+            _all.Add("Others", Others.ToList());
+
             All = new ReadOnlyDictionary<string, List<MsoShapeType>>(_all);
         }
 

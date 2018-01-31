@@ -46,6 +46,12 @@ namespace SharedPowerpointFavoritesPlugin
             Globals.ThisAddIn.Application.ActiveWindow.View.Slide.Shapes.Paste();
         }
 
+        public List<ShapeFavorite> GetShapesByTypes(IEnumerable<Core.MsoShapeType> types)
+        {
+            var allShapes = this.shapePersistance.GetShapes();
+            return allShapes.FindAll(shapeFavorite => types.Contains(shapeFavorite.Shape.Type));
+        }
+
         public List<ShapeFavorite> GetShapesByType(Core.MsoShapeType? type)
         {
             var allShapes = this.shapePersistance.GetShapes();
