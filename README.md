@@ -1,3 +1,5 @@
+<img src="https://raw.githubusercontent.com/Presentur/Presentur/master/pentagon.ico" width="100"> 
+
 # Presentur
 Creating presentations in corporate design easily using your set of designed elements, icons and shapes.
 
