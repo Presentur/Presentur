@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     <tabs>
       <tab id="sharedFavs" label="Presentur">
         <group id="sharedFavsShapesAdminGroup"
-               label="Favorite Shape Administration" getVisible="IsAdmin">
+               label="Administration" getVisible="IsAdmin">
           <button id="openSharedFavButton" label="Show Favorite Shapes" size="large"
              screentip="Favorite Shapes" onAction="OnOpenSharedFavButton"
              supertip="Opens the Shared FavoritesShapes Overview" imageMso="FunctionsLookupReferenceInsertGallery" getVisible="IsAdmin"/>
