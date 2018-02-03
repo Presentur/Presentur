@@ -51,10 +51,10 @@ namespace SharedPowerpointFavoritesPlugin.util
         public static string GetFullBuildFlavor()
         {
             string buildType;
-#if RELEASE
-            buildType = "RELEASE";
-#else
+#if DEBUG
             buildType = "DEBUG";
+#else
+            buildType = "RELEASE";
 #endif
             var adminQualifier = IsAdminBuild() ? "ADMIN-" : "";
             return adminQualifier + buildType;
