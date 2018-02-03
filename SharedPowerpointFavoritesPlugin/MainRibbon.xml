@@ -55,7 +55,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         <button id="tutorialButton" label="Tutorial" size="large"
                onAction="OnTutorialButton" getImage="GetTutorialImage"/>
           <button id="infoButton" label="About" size="large"
-               onAction="OnInfoButton" imageMso="Info"/>
+               onAction="OnInfoButton" imageMso="Info" getSupertip="GetVersionLabel"/>
         </group>
       </tab>
     </tabs>

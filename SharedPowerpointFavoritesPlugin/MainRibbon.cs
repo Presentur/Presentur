@@ -192,6 +192,11 @@ namespace SharedPowerpointFavoritesPlugin
             }
         }
 
+        public string GetVersionLabel(Office.IRibbonControl control)
+        {
+            return "Version " + BuildEnvironment.GetFullVersion();
+        }
+
         public int GetItemCount(Office.IRibbonControl control)
         {
             return this.shapeService.GetShapesByTypes(GetShapeTypesForControl(control)).Count;

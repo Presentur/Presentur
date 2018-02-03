@@ -19,6 +19,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -26,6 +27,18 @@ namespace SharedPowerpointFavoritesPlugin.util
 {
     static class BuildEnvironment
     {
+
+        public static string GetFullVersion()
+        {
+            return GetVersion() + " (" + GetFullBuildFlavor() + ")";
+        }
+
+        public static string GetVersion()
+        {
+            return Assembly.GetExecutingAssembly().GetName().Version.ToString();
+        }
+
+
         public static bool IsAdminBuild()
         {
 #if ADMIN
@@ -33,6 +46,18 @@ namespace SharedPowerpointFavoritesPlugin.util
 #else
             return false;
 #endif
+        }
+
+        public static string GetFullBuildFlavor()
+        {
+            string buildType;
+#if RELEASE
+            buildType = "RELEASE";
+#else
+            buildType = "DEBUG";
+#endif
+            var adminQualifier = IsAdminBuild() ? "ADMIN-" : "";
+            return adminQualifier + buildType;
         }
     }
 }
