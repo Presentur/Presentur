@@ -40,6 +40,8 @@ namespace SharedPowerpointFavoritesPlugin
         private ShapePersistence shapePersistence = ShapePersistence.INSTANCE;
         private ImportExportService importExportService = ImportExportService.INSTANCE;
         private ShapeService shapeService = ShapeService.INSTANCE;
+        private readonly int ITEM_WIDTH = 100;
+        private readonly int ITEM_HEIGHT = 80;
 
         public MainRibbon()
         {
@@ -211,18 +213,28 @@ namespace SharedPowerpointFavoritesPlugin
             throw new ArgumentOutOfRangeException("Unknown shape type");
         }
 
-        public System.Drawing.Bitmap GetItemImage(Office.IRibbonControl control, int index)
+        public Bitmap GetItemImage(Office.IRibbonControl control, int index)
         {
             var thumbnail = this.shapeService.GetShapesByTypes(GetShapeTypesForControl(control))[index].Thumbnail;
-            return new System.Drawing.Bitmap(thumbnail, 100, GetHeight(100, thumbnail));
+            return GetScaledImage(thumbnail);
         }
 
-        private int GetHeight(int width, Image image)
+        private Bitmap GetScaledImage(Image original)
         {
-            var ratio = (float)image.Height / (float)image.Width;
-            var calculatedHeight = ratio * width;
-            logger.Log("Using bitmap size: " + calculatedHeight + "|" + width);
-            return (int)calculatedHeight;
+            float targetWidth = ITEM_WIDTH;
+            float targetHeight = ITEM_HEIGHT;
+            float scale = Math.Min(targetWidth / original.Width, targetHeight / original.Height);
+            logger.Log("Using scale factor: " + scale);
+            var scaledWidth = (int)(original.Width * scale);
+            var scaledHeight = (int)(original.Height * scale);
+            var brush = new SolidBrush(Color.White);
+            var result = new Bitmap((int)targetWidth, (int)targetHeight);
+            using (var graphics = Graphics.FromImage(result))
+            {
+                graphics.FillRectangle(brush, new RectangleF(0, 0, targetWidth, targetHeight));
+                graphics.DrawImage(original, new Rectangle(((int)targetWidth - scaledWidth) / 2, ((int)targetHeight - scaledHeight) / 2, scaledWidth, scaledHeight));
+            }
+            return result;
         }
 
         public void OnItemAction(Office.IRibbonControl control, string id, int index)
