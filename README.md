@@ -1,4 +1,4 @@
-<img src="https://github.com/Presentur/Presentur/blob/master/banner.png?raw=true" width="500"> 
+<img src="https://github.com/Presentur/Presentur/blob/master/banner.png?raw=true" width="700"> 
 
 # Presentur
 Creating presentations in corporate design easily using your set of designed elements, icons and shapes.
