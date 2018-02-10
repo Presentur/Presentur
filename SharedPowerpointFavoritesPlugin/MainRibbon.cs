@@ -259,6 +259,11 @@ namespace SharedPowerpointFavoritesPlugin
             return new Bitmap(Properties.Resources.Tutorial);
         }
 
+        public Bitmap GetInfoImage(Office.IRibbonControl control)
+        {
+            return new Bitmap(Properties.Resources.Info);
+        }
+
         private bool AskForImportConfirmation()
         {
             return DialogUtil.AskForConfirmation("Are you sure you want to import a favorites archive? This deletes your own favorites!");
