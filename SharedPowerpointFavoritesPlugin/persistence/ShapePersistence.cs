@@ -290,7 +290,7 @@ namespace SharedPowerpointFavoritesPlugin
 
         private List<string> LoadStructure()
         {
-            if(!Directory.Exists(STRUCTURE_PERSISTANCE_FILE))
+            if(!File.Exists(STRUCTURE_PERSISTANCE_FILE))
             {
                 logger.Log("Structure file does not exist.");
                 return new List<string>();
