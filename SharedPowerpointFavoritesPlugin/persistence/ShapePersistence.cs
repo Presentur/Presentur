@@ -163,7 +163,7 @@ namespace SharedPowerpointFavoritesPlugin
             int targetIndex = -1;
             for (int i = 0; i < shapeFavorites.Count; i++)
             {
-                if (shapeFavorites[i].Shape.Type.Equals(shapeFavorite.Shape.Type) && !(shapeFavorites[i].Equals(shapeFavorite)))
+                if (IsPeerShapeType(shapeFavorites[i].Shape.Type, shapeFavorite.Shape.Type) && !(shapeFavorites[i].Equals(shapeFavorite)))
                 {
                     targetIndex = i;
                     if(toTop)
@@ -186,6 +186,19 @@ namespace SharedPowerpointFavoritesPlugin
             shapeFavorites.Insert(targetIndex, shapeFavorite);
             CachedShapes = shapeFavorites;
             return true;
+        }
+
+        //checks whether the two specified shape types belong to the same group in SupportedShapeTypes
+        private bool IsPeerShapeType(Core.MsoShapeType shapeType1, Core.MsoShapeType shapeType2)
+        {
+            foreach(List<Core.MsoShapeType> shapeTypeGroup in SupportedShapeTypes.All.Values)
+            {
+                if(shapeTypeGroup.Contains(shapeType1) && shapeTypeGroup.Contains(shapeType2))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public bool SaveShapeFromClipBoard()
