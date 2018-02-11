@@ -290,6 +290,11 @@ namespace SharedPowerpointFavoritesPlugin
 
         private List<string> LoadStructure()
         {
+            if(!Directory.Exists(STRUCTURE_PERSISTANCE_FILE))
+            {
+                logger.Log("Structure file does not exist.");
+                return new List<string>();
+            }
             var structureString = File.ReadAllText(STRUCTURE_PERSISTANCE_FILE);
             return JsonConvert.DeserializeObject<List<string>>(structureString);
         }
