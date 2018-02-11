@@ -77,6 +77,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     <contextMenu idMso="ContextMenuObjectsGroup">
       <button id="SaveFavoriteShapeContextButton5" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
     </contextMenu>
+  <contextMenu idMso="ContextMenuShapeFreeform">
+      <button id="SaveFavoriteShapeContextButton6" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
+    </contextMenu>
+  <contextMenu idMso="ContextMenuTextEdit">
+      <button id="SaveFavoriteShapeContextButton7" label="Save as Favorite Shape" insertBeforeMso="HyperlinkInsert" onAction="SaveFavoriteShape" getVisible="IsAdmin"/>
+    </contextMenu>
   </contextMenus>
 </customUI>
 
