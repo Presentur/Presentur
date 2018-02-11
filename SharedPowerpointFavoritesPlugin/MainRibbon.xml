@@ -21,7 +21,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
     <tabs>
       <tab id="sharedFavs" label="Presentur">
         <group id="sharedFavsShapesAdminGroup"
-               label="Administration" getVisible="IsAdmin">
+               label="Administration" getVisible="IsAdmin" imageMso="FunctionsLookupReferenceInsertGallery">
           <button id="openSharedFavButton" label="Show Favorite Shapes" size="large"
              screentip="Favorite Shapes" onAction="OnOpenSharedFavButton"
              supertip="Opens the Shared FavoritesShapes Overview" imageMso="FunctionsLookupReferenceInsertGallery" getVisible="IsAdmin"/>
@@ -41,7 +41,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         <group id="sharedFavsPicturesGroup" label="Pictures">
           <gallery id="sharedFavsPictures" label="Pictures" getItemCount="GetItemCount" getItemImage="GetItemImage" imageMso="PictureStylesGallery" size="large" columns="2" onAction="OnAction"/>
         </group>
-        <group id="sharedFavsImportExport" label="Import/Export">
+        <group id="sharedFavsImportExport" label="Import/Export" imageMso="ImportSavedImports">
           <button id="importSharedFavButton" label="Import Favorite Shapes" size="large"
                screentip="Import Favorite Shapes" onAction="OnImportSharedFavButton"
                supertip="Imports Favorite Shapes" imageMso="ImportSavedImports"/>
@@ -49,7 +49,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
              screentip="Export Favorite Shapes" onAction="OnExportSharedFavButton"
              supertip="Exports Favorite Shapes" getVisible="IsAdmin" imageMso="ExportSavedExports"/>
         </group>
-        <group id="sharedFavsInfo" label="Information">
+        <group id="sharedFavsInfo" label="Information" getImage="GetPentagonImage">
           <button id="storyButton" label="Presentur.de" size="large"
                onAction="OnStoryButton" getImage="GetPentagonImage"/>
         <button id="tutorialButton" label="Tutorial" size="large"
