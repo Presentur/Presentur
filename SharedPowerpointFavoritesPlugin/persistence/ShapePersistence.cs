@@ -274,7 +274,7 @@ namespace SharedPowerpointFavoritesPlugin
             {
                 foreach (ShapeFavorite shape in allShapes)
                 {
-                    if (shape.FilePath.Equals(structureEntry))
+                    if (shape.FilePath.Contains(structureEntry))
                     {
                         result.Add(shape);
                         break;
@@ -387,7 +387,7 @@ namespace SharedPowerpointFavoritesPlugin
                 var shapesList = new List<string>();
                 foreach (ShapeFavorite fav in parent.CachedShapes)
                 {
-                    shapesList.Add(fav.FilePath);
+                    shapesList.Add(Path.GetFileName(fav.FilePath));
                 }
                 return JsonConvert.SerializeObject(shapesList);
             }
