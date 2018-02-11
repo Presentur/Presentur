@@ -194,12 +194,12 @@ namespace SharedPowerpointFavoritesPlugin
         {
             logger.Log("Reloading all favorites.");
             this.RemoveAllPictureBoxes();
-            foreach (Office.MsoShapeType shapeType in this.panels.Keys)
+            foreach (List<Office.MsoShapeType> shapeTypes in SupportedShapeTypes.All.Values)
             {
-                List<ShapeFavorite> shapes = this.shapeService.GetShapesByType(shapeType);
+                List<ShapeFavorite> shapes = this.shapeService.GetShapesByTypes(shapeTypes);
                 foreach (ShapeFavorite shape in shapes)
                 {
-                    this.DrawShape(shape, this.panels[shapeType]);
+                    this.DrawShape(shape, this.panels[shape.Shape.Type]);
                 }
 
             }
