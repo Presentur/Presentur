@@ -50,7 +50,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
              supertip="Exports Favorite Shapes" getVisible="IsAdmin" imageMso="ExportSavedExports"/>
         </group>
         <group id="sharedFavsInfo" label="Information">
-          <button id="storyButton" label="What's your story?" size="large"
+          <button id="storyButton" label="Presentur.de" size="large"
                onAction="OnStoryButton" getImage="GetPentagonImage"/>
         <button id="tutorialButton" label="Tutorial" size="large"
                onAction="OnTutorialButton" getImage="GetTutorialImage"/>
