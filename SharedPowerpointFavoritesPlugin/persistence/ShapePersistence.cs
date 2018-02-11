@@ -373,6 +373,7 @@ namespace SharedPowerpointFavoritesPlugin
 
             private void WriteStructure()
             {
+                logger.Log("Writing structure file.");
                 File.WriteAllText(structureFile, GetStructureJson());
             }
 
