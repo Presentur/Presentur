@@ -96,5 +96,15 @@ namespace SharedPowerpointFavoritesPlugin
         {
             this.shapePersistance.DeleteShape(shapeFavorite);
         }
+
+        internal bool MoveUpShape(ShapeFavorite shapeFavorite)
+        {
+            return this.shapePersistance.MoveUp(shapeFavorite, false);
+        }
+
+        internal bool MoveShapeToTop(ShapeFavorite shapeFavorite)
+        {
+            return this.shapePersistance.MoveUp(shapeFavorite, true);
+        }
     }
 }

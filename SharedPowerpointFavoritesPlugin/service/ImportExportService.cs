@@ -41,7 +41,7 @@ namespace SharedPowerpointFavoritesPlugin
         {
             try
             {
-                var persistenceDir = this.shapePersistance.GetPersistenceDir();
+                var persistenceDir = ShapePersistence.GetPersistenceDir();
                 Directory.Delete(persistenceDir, true);
                 Directory.CreateDirectory(persistenceDir);
                 ZipFile.ExtractToDirectory(filePath, persistenceDir);
@@ -58,7 +58,7 @@ namespace SharedPowerpointFavoritesPlugin
 
         public bool ExportToFile(string filePath)
         {
-            var dataPath = this.shapePersistance.GetPersistenceDir();
+            var dataPath = ShapePersistence.GetPersistenceDir();
             try
             {
                 ZipFile.CreateFromDirectory(dataPath, filePath, CompressionLevel.Fastest, false);

@@ -31,18 +31,22 @@ using PowerPoint = Microsoft.Office.Interop.PowerPoint;
 using FileInfo = System.IO.FileInfo;
 using System.IO;
 using System.Windows.Forms;
+using Newtonsoft.Json;
 
 namespace SharedPowerpointFavoritesPlugin
 {
     class ShapePersistence
     {
-        public static ShapePersistence INSTANCE = new ShapePersistence();
+        private static readonly string STRUCTURE_PERSISTANCE_FILE = GetPersistenceDir() + Path.DirectorySeparatorChar + "structure.json";
         public const string PERSISTENCE_DIR = ".sharedpowerpointfavorites";
         public const string PERSISTENCE_EXTENSION = ".pptx";
         public const string PNG_EXTENSION = ".png";
         private static readonly DebugLogger logger = DebugLogger.GetLogger(typeof(ShapePersistence).Name);
+        public static ShapePersistence INSTANCE = new ShapePersistence();
         private List<CacheListener> cacheListeners = new List<CacheListener>();
         private List<ShapeFavorite> _cachedShapes; //backing dictionary
+
+
         private List<ShapeFavorite> CachedShapes
         {
             get
@@ -62,7 +66,7 @@ namespace SharedPowerpointFavoritesPlugin
 
         private void InformCacheListenersOnRenew()
         {
-            foreach(CacheListener listener in cacheListeners)
+            foreach (CacheListener listener in cacheListeners)
             {
                 listener.OnCacheRenewed();
             }
@@ -70,7 +74,7 @@ namespace SharedPowerpointFavoritesPlugin
 
         private void InformCacheListenersOnItemAdded(ShapeFavorite addedItem)
         {
-            foreach(CacheListener listener in cacheListeners)
+            foreach (CacheListener listener in cacheListeners)
             {
                 listener.OnItemAdded(addedItem);
             }
@@ -114,16 +118,16 @@ namespace SharedPowerpointFavoritesPlugin
 
         private void DeleteIfExtant(params string[] paths)
         {
-            foreach(string path in paths)
+            foreach (string path in paths)
             {
-                if(File.Exists(path))
+                if (File.Exists(path))
                 {
                     logger.Log("Deleting file " + path);
                     try
                     {
                         File.Delete(path);
                     }
-                    catch(Exception e)
+                    catch (Exception e)
                     {
                         logger.Log("Exception while deleting file " + path + ". Exception is: " + e.Message);
                     }
@@ -144,11 +148,44 @@ namespace SharedPowerpointFavoritesPlugin
         private ShapePersistence()
         {
             //singleton
+            this.cacheListeners.Add(new StructurePersistanceListener(this, STRUCTURE_PERSISTANCE_FILE));
         }
 
         private string GetThumbnailPath(ShapeFavorite shape)
         {
             return shape.FilePath.Replace(PERSISTENCE_EXTENSION, PNG_EXTENSION);
+        }
+
+        public bool MoveUp(ShapeFavorite shapeFavorite, bool toTop)
+        {
+            logger.Log("Moving up shapeFavorite: " + shapeFavorite);
+            var shapeFavorites = new List<ShapeFavorite>(CachedShapes);
+            int targetIndex = -1;
+            for (int i = 0; i < shapeFavorites.Count; i++)
+            {
+                if (shapeFavorites[i].Shape.Type.Equals(shapeFavorite.Shape.Type) && !(shapeFavorites[i].Equals(shapeFavorite)))
+                {
+                    targetIndex = i;
+                    if(toTop)
+                    {
+                        break;
+                    }
+                }
+                if(shapeFavorites[i].Equals(shapeFavorite))
+                {
+                    break;
+                }
+            }
+            if (targetIndex == -1)
+            {
+                logger.Log("Did not find any shape with lower index. Not moving up.");
+                return false;
+            }
+            logger.Log("Setting targetIndex for moving up: " + targetIndex);
+            shapeFavorites.Remove(shapeFavorite);
+            shapeFavorites.Insert(targetIndex, shapeFavorite);
+            CachedShapes = shapeFavorites;
+            return true;
         }
 
         public bool SaveShapeFromClipBoard()
@@ -162,7 +199,7 @@ namespace SharedPowerpointFavoritesPlugin
             {
                 targetSlide.Shapes.Paste();
             }
-            catch(Exception e)
+            catch (Exception e)
             {
                 logger.Log("Clipboard content could not be pasted. " + e.Message);
                 temporaryPresentation.Close();
@@ -211,9 +248,38 @@ namespace SharedPowerpointFavoritesPlugin
                     logger.Log("Loaded shape from of type " + shape.Type + " from file " + file);
                 }
             }
-            CachedShapes = loadedShapes;
+            var structure = LoadStructure();
+            var orderedShapes = OrderShapes(loadedShapes, structure);
+            CachedShapes = orderedShapes;
         }
 
+        private List<ShapeFavorite> OrderShapes(List<ShapeFavorite> shapes, List<string> structure)
+        {
+            var allShapes = new List<ShapeFavorite>(shapes);
+            var result = new List<ShapeFavorite>();
+            foreach (string structureEntry in structure)
+            {
+                foreach (ShapeFavorite shape in allShapes)
+                {
+                    if (shape.FilePath.Equals(structureEntry))
+                    {
+                        result.Add(shape);
+                        break;
+                    }
+                }
+            }
+            allShapes.RemoveAll(favorite => result.Contains(favorite));
+            logger.Log("Found all structure entries except: " + allShapes.Count);
+            result.AddRange(allShapes);
+            logger.Log("Ordered " + shapes.Count + " shapes. Result has size: " + result.Count);
+            return result;
+        }
+
+        private List<string> LoadStructure()
+        {
+            var structureString = File.ReadAllText(STRUCTURE_PERSISTANCE_FILE);
+            return JsonConvert.DeserializeObject<List<string>>(structureString);
+        }
 
         private List<Shape> GetShapesFromFile(string file)
         {
@@ -241,7 +307,7 @@ namespace SharedPowerpointFavoritesPlugin
             return filePath;
         }
 
-        internal string GetPersistenceDir()
+        internal static string GetPersistenceDir()
         {
             var homePath = Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
             var separator = Path.DirectorySeparatorChar;
@@ -263,6 +329,49 @@ namespace SharedPowerpointFavoritesPlugin
             void OnItemAdded(ShapeFavorite addedItem);
 
             void OnItemRemoved(ShapeFavorite removedItem);
+        }
+
+        private class StructurePersistanceListener : CacheListener
+        {
+            private readonly ShapePersistence parent;
+            private readonly string structureFile;
+            private static readonly DebugLogger logger = DebugLogger.GetLogger(typeof(StructurePersistanceListener).Name);
+
+            internal StructurePersistanceListener(ShapePersistence parent, string structureFile)
+            {
+                this.parent = parent;
+                this.structureFile = structureFile;
+            }
+
+            public void OnCacheRenewed()
+            {
+                WriteStructure();
+            }
+
+            public void OnItemAdded(ShapeFavorite addedItem)
+            {
+                WriteStructure();
+            }
+
+            public void OnItemRemoved(ShapeFavorite removedItem)
+            {
+                WriteStructure();
+            }
+
+            private void WriteStructure()
+            {
+                File.WriteAllText(structureFile, GetStructureJson());
+            }
+
+            private string GetStructureJson()
+            {
+                var shapesList = new List<string>();
+                foreach (ShapeFavorite fav in parent.CachedShapes)
+                {
+                    shapesList.Add(fav.FilePath);
+                }
+                return JsonConvert.SerializeObject(shapesList);
+            }
         }
     }
 }

@@ -102,6 +102,10 @@ namespace SharedPowerpointFavoritesPlugin
             {
                 var deleteItem = new MenuItem("Delete...", new EventHandler((sender, args) => HandleDeleteItem(pictureBox)));
                 contextMenu.MenuItems.Add(deleteItem);
+                var moveUpItem = new MenuItem("Move up", new EventHandler((sender, args) => HandleMoveUpItem(pictureBox)));
+                contextMenu.MenuItems.Add(moveUpItem);
+                var moveToTopItem = new MenuItem("Move to Top", new EventHandler((sender, args) => HandleMoveToTopItem(pictureBox)));
+                contextMenu.MenuItems.Add(moveToTopItem);
             }
             return contextMenu;
         }
@@ -121,6 +125,18 @@ namespace SharedPowerpointFavoritesPlugin
                 return;
             }
             this.shapeService.DeleteShape(this.displayedShapes[pictureBox]);
+        }
+
+        private void HandleMoveUpItem(PictureBox pictureBox)
+        {
+            logger.Log("User clicked moveUp.");
+            this.shapeService.MoveUpShape(this.displayedShapes[pictureBox]);
+        }
+
+        private void HandleMoveToTopItem(PictureBox pictureBox)
+        {
+            logger.Log("User clicked moveToTop.");
+            this.shapeService.MoveShapeToTop(this.displayedShapes[pictureBox]);
         }
 
         private void HandlePictureBoxDoubleClick(ShapeFavorite shape)
