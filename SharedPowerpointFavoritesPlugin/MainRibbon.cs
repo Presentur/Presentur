@@ -166,7 +166,7 @@ namespace SharedPowerpointFavoritesPlugin
         public void OnCopyFromClipboardButton(Office.IRibbonControl control)
         {
             logger.Log("Copy from Clipboard clicked.");
-            if (!this.shapePersistence.SaveShapeFromClipBoard())
+            if (!this.shapePersistence.SaveShapeFromClipBoard(null))
             {
                 MessageBox.Show("Clipboard content could not be read.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }

@@ -94,17 +94,22 @@ namespace SharedPowerpointFavoritesPlugin
             if (!System.IO.File.Exists(thumbnailPath))
             {
                 logger.Log("Thumbnail does not exist. Creating one.");
-                var stopwatch = System.Diagnostics.Stopwatch.StartNew();
                 var temporaryPresentation = Globals.ThisAddIn.Application.Presentations.Open(shape.FilePath, Core.MsoTriState.msoTrue, Core.MsoTriState.msoTrue, Core.MsoTriState.msoFalse);
                 var targetSlide = temporaryPresentation.Slides[1];
                 var targetShape = targetSlide.Shapes[1];
-                var shapeExportArgs = new object[] { thumbnailPath, PowerPoint.PpShapeFormat.ppShapeFormatPNG, 0, 0, PowerPoint.PpExportMode.ppRelativeToSlide };
-                targetShape.GetType().InvokeMember("Export", System.Reflection.BindingFlags.InvokeMethod, null, targetShape, shapeExportArgs); //ATTENTION. This is the risky part...
+                CreateThumbnail(thumbnailPath, targetShape);
                 temporaryPresentation.Close();
-                stopwatch.Stop();
-                logger.Log("Creating thumbnail took " + stopwatch.ElapsedMilliseconds);
             }
             return thumbnailPath;
+        }
+
+        private void CreateThumbnail(string thumbnailPath, Shape targetShape)
+        {
+            var stopwatch = System.Diagnostics.Stopwatch.StartNew();
+            var shapeExportArgs = new object[] { thumbnailPath, PowerPoint.PpShapeFormat.ppShapeFormatPNG, 0, 0, PowerPoint.PpExportMode.ppRelativeToSlide };
+            targetShape.GetType().InvokeMember("Export", System.Reflection.BindingFlags.InvokeMethod, null, targetShape, shapeExportArgs); //ATTENTION. This is the risky part...
+            stopwatch.Stop();
+            logger.Log("Creating thumbnail took " + stopwatch.ElapsedMilliseconds);
         }
 
         internal void DeleteShape(ShapeFavorite shapeFavorite)
@@ -201,7 +206,7 @@ namespace SharedPowerpointFavoritesPlugin
             return false;
         }
 
-        public bool SaveShapeFromClipBoard()
+        public bool SaveShapeFromClipBoard(Shape shape)
         {
             var temporaryPresentation = Globals.ThisAddIn.Application.Presentations.Add(Core.MsoTriState.msoFalse);
             var targetSlide = temporaryPresentation.Slides.Add(1, PowerPoint.PpSlideLayout.ppLayoutBlank);
@@ -225,7 +230,14 @@ namespace SharedPowerpointFavoritesPlugin
             temporaryPresentation.Close();
             //we reload this since the shape's type seems not to be known otherwise...
             var shapeToSave = new ShapeFavorite(persistenceFile, this.GetShapesFromFile(persistenceFile).First()); // there is only one shape in this file
-            this.GetThumbnail(shapeToSave); //create thumbnail
+            if (shape == null)
+            {
+                this.GetThumbnail(shapeToSave); //create thumbnail
+            }
+            else
+            {
+                this.CreateThumbnail(GetThumbnailPath(shapeToSave), shape);
+            }
             cachedShapes.Add(shapeToSave);
             InformCacheListenersOnItemAdded(shapeToSave);
             return true;
@@ -234,7 +246,7 @@ namespace SharedPowerpointFavoritesPlugin
         public void SaveShape(Shape shape)
         {
             shape.Copy();
-            this.SaveShapeFromClipBoard();
+            this.SaveShapeFromClipBoard(shape);
         }
 
 
