@@ -46,7 +46,7 @@ namespace SharedPowerpointFavoritesPlugin
         public static ShapePersistence INSTANCE = new ShapePersistence();
         private List<CacheListener> cacheListeners = new List<CacheListener>();
         private List<ShapeFavorite> _cachedShapes; //backing dictionary
-        
+
 
         private List<ShapeFavorite> CachedShapes
         {
@@ -72,6 +72,34 @@ namespace SharedPowerpointFavoritesPlugin
             var dir = GetPersistenceDir();
             var file = dir + Path.DirectorySeparatorChar + themeName + THEME_EXTENSION;
             Globals.ThisAddIn.Application.ActivePresentation.SaveCopyAs(file);
+        }
+
+        internal void InstallPersistedTheme()
+        {
+            var persistedTheme = this.GetPersistedTheme();
+            if(persistedTheme == null)
+            {
+                logger.Log("No theme found to install.");
+                return;
+            }
+            logger.Log("Installing theme: " + persistedTheme);
+            var appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
+            var themeDir = "Microsoft\\Templates\\Document Themes";
+            var targetDir = Path.Combine(appDataDir, themeDir);
+            var targetFile = Path.Combine(targetDir, Path.GetFileName(persistedTheme));
+            logger.Log("Target file is: " + targetFile);
+            File.Copy(persistedTheme, targetFile, true); //overwrites existing theme if present
+        }
+
+        internal string GetPersistedTheme()
+        {
+            var themes = Directory.GetFiles(GetPersistenceDir(), "*" + THEME_EXTENSION,
+                                         System.IO.SearchOption.TopDirectoryOnly);
+            if (themes.Length > 0)
+            {
+                return themes[0];
+            }
+            return null;
         }
 
         private void RemoveAllSavedThemes()
@@ -188,12 +216,12 @@ namespace SharedPowerpointFavoritesPlugin
                 if (IsPeerShapeType(shapeFavorites[i].Shape.Type, shapeFavorite.Shape.Type) && !(shapeFavorites[i].Equals(shapeFavorite)))
                 {
                     targetIndex = i;
-                    if(toTop)
+                    if (toTop)
                     {
                         break;
                     }
                 }
-                if(shapeFavorites[i].Equals(shapeFavorite))
+                if (shapeFavorites[i].Equals(shapeFavorite))
                 {
                     break;
                 }
@@ -213,9 +241,9 @@ namespace SharedPowerpointFavoritesPlugin
         //checks whether the two specified shape types belong to the same group in SupportedShapeTypes
         private bool IsPeerShapeType(Core.MsoShapeType shapeType1, Core.MsoShapeType shapeType2)
         {
-            foreach(List<Core.MsoShapeType> shapeTypeGroup in SupportedShapeTypes.All.Values)
+            foreach (List<Core.MsoShapeType> shapeTypeGroup in SupportedShapeTypes.All.Values)
             {
-                if(shapeTypeGroup.Contains(shapeType1) && shapeTypeGroup.Contains(shapeType2))
+                if (shapeTypeGroup.Contains(shapeType1) && shapeTypeGroup.Contains(shapeType2))
                 {
                     return true;
                 }
@@ -319,7 +347,7 @@ namespace SharedPowerpointFavoritesPlugin
 
         private List<string> LoadStructure()
         {
-            if(!File.Exists(STRUCTURE_PERSISTANCE_FILE))
+            if (!File.Exists(STRUCTURE_PERSISTANCE_FILE))
             {
                 logger.Log("Structure file does not exist.");
                 return new List<string>();

@@ -45,6 +45,7 @@ namespace SharedPowerpointFavoritesPlugin
                 Directory.Delete(persistenceDir, true);
                 Directory.CreateDirectory(persistenceDir);
                 ZipFile.ExtractToDirectory(filePath, persistenceDir);
+                this.shapePersistance.InstallPersistedTheme();
                 this.shapePersistance.LoadShapes();
             }
             catch(Exception e)
