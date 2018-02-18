@@ -45,6 +45,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_52A40615D872D8E7C1BBD96378B9C17A"
+        "OwnerKey" = "8:_A7013B4C255E4B0B9C1A144D28118F41"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_5530871CC260C272AFCF974F7DC9A4A8"
         "OwnerKey" = "8:_A7013B4C255E4B0B9C1A144D28118F41"
         "MsmSig" = "8:_UNDEFINED"
@@ -107,6 +113,12 @@
         {
         "MsmKey" = "8:_UNDEFINED"
         "OwnerKey" = "8:_A7013B4C255E4B0B9C1A144D28118F41"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
+        "MsmKey" = "8:_UNDEFINED"
+        "OwnerKey" = "8:_52A40615D872D8E7C1BBD96378B9C17A"
         "MsmSig" = "8:_UNDEFINED"
         }
         "Entry"
@@ -466,6 +478,37 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_52A40615D872D8E7C1BBD96378B9C17A"
+            {
+            "AssemblyRegister" = "3:1"
+            "AssemblyIsInGAC" = "11:FALSE"
+            "AssemblyAsmDisplayName" = "8:Newtonsoft.Json, Version=10.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL"
+                "ScatterAssemblies"
+                {
+                    "_52A40615D872D8E7C1BBD96378B9C17A"
+                    {
+                    "Name" = "8:Newtonsoft.Json.dll"
+                    "Attributes" = "3:512"
+                    }
+                }
+            "SourcePath" = "8:Newtonsoft.Json.dll"
+            "TargetName" = "8:"
+            "Tag" = "8:"
+            "Folder" = "8:_CC717EEB5EC4487F830E6A87B96B3D48"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:TRUE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_5530871CC260C272AFCF974F7DC9A4A8"
             {
             "AssemblyRegister" = "3:1"
@@ -718,7 +761,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Presentur.de PowerPoint-Add-In"
         "ProductCode" = "8:{D8EBDAAB-CACF-4088-AB21-6F1A60F3DE64}"
-        "PackageCode" = "8:{B50D4F55-7B5D-440D-9318-32863BEAE946}"
+        "PackageCode" = "8:{7D65376F-422F-4D70-8ADD-3E5807FB2D41}"
         "UpgradeCode" = "8:{A9D0D243-C0B1-4344-A254-1C2BF6D48C1B}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -967,7 +1010,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_42C06B5C7DCB43C2B32C679BD1924143"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -998,7 +1042,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_42C06B5C7DCB43C2B32C679BD1924143"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "UpdateText"
@@ -1091,7 +1136,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_42C06B5C7DCB43C2B32C679BD1924143"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -1113,7 +1159,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_42C06B5C7DCB43C2B32C679BD1924143"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -1144,7 +1191,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_42C06B5C7DCB43C2B32C679BD1924143"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "InstallAllUsersVisible"
@@ -1179,7 +1227,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_42C06B5C7DCB43C2B32C679BD1924143"
                             "UsePlugInResources" = "11:TRUE"
                             }
                         }
@@ -1259,7 +1308,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_42C06B5C7DCB43C2B32C679BD1924143"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -1303,7 +1353,8 @@
                             "Type" = "3:8"
                             "ContextData" = "8:Bitmap"
                             "Attributes" = "3:4"
-                            "Setting" = "3:1"
+                            "Setting" = "3:2"
+                            "Value" = "8:_42C06B5C7DCB43C2B32C679BD1924143"
                             "UsePlugInResources" = "11:TRUE"
                             }
                             "ShowProgress"
@@ -1343,7 +1394,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A7013B4C255E4B0B9C1A144D28118F41"
             {
-            "SourcePath" = "8:..\\SharedPowerpointFavoritesPlugin\\obj\\DebugAdmin\\SharedPowerpointFavoritesPlugin.dll"
+            "SourcePath" = "8:..\\SharedPowerpointFavoritesPlugin\\obj\\DebugAdmin\\Presentur.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CC717EEB5EC4487F830E6A87B96B3D48"
