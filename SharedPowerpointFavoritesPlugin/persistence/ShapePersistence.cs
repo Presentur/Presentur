@@ -41,11 +41,12 @@ namespace SharedPowerpointFavoritesPlugin
         public const string PERSISTENCE_DIR = ".sharedpowerpointfavorites";
         public const string PERSISTENCE_EXTENSION = ".pptx";
         public const string PNG_EXTENSION = ".png";
+        private const string THEME_EXTENSION = ".thmx";
         private static readonly DebugLogger logger = DebugLogger.GetLogger(typeof(ShapePersistence).Name);
         public static ShapePersistence INSTANCE = new ShapePersistence();
         private List<CacheListener> cacheListeners = new List<CacheListener>();
         private List<ShapeFavorite> _cachedShapes; //backing dictionary
-
+        
 
         private List<ShapeFavorite> CachedShapes
         {
@@ -62,6 +63,22 @@ namespace SharedPowerpointFavoritesPlugin
                 _cachedShapes = value;
                 InformCacheListenersOnRenew();
             }
+        }
+
+        internal void SetShapeTheme(string themeName)
+        {
+            this.RemoveAllSavedThemes();
+            logger.Log("Saving current theme.");
+            var dir = GetPersistenceDir();
+            var file = dir + Path.DirectorySeparatorChar + themeName + THEME_EXTENSION;
+            Globals.ThisAddIn.Application.ActivePresentation.SaveCopyAs(file);
+        }
+
+        private void RemoveAllSavedThemes()
+        {
+            logger.Log("Removing all saved themes.");
+            this.DeleteIfExtant(Directory.GetFiles(GetPersistenceDir(), "*" + THEME_EXTENSION,
+                                         System.IO.SearchOption.TopDirectoryOnly));
         }
 
         private void InformCacheListenersOnRenew()

@@ -58,6 +58,7 @@ namespace SharedPowerpointFavoritesPlugin
 
         public bool ExportToFile(string filePath)
         {
+            this.shapePersistance.SetShapeTheme(Path.GetFileNameWithoutExtension(filePath));
             var dataPath = ShapePersistence.GetPersistenceDir();
             try
             {
