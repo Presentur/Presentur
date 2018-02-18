@@ -26,7 +26,7 @@
     <OutputType>Library</OutputType>
     <NoStandardLibraries>false</NoStandardLibraries>
     <RootNamespace>SharedPowerpointFavoritesPlugin</RootNamespace>
-    <AssemblyName>SharedPowerpointFavoritesPlugin</AssemblyName>
+    <AssemblyName>Presentur</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <DefineConstants>VSTO40</DefineConstants>
     <BootstrapperEnabled>true</BootstrapperEnabled>
@@ -39,10 +39,10 @@
     <UpdateInterval>7</UpdateInterval>
     <UpdateIntervalUnits>days</UpdateIntervalUnits>
     <IsWebBootstrapper>False</IsWebBootstrapper>
-    <ProductName>SharedPowerpointFavoritesPlugin</ProductName>
+    <ProductName>Presentur</ProductName>
     <PublisherName />
     <SupportUrl />
-    <FriendlyName>SharedPowerpointFavoritesPlugin</FriendlyName>
+    <FriendlyName>Presentur</FriendlyName>
     <OfficeApplicationDescription />
     <LoadBehavior>3</LoadBehavior>
   </PropertyGroup>
