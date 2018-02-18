@@ -69,6 +69,12 @@
         }
         "Entry"
         {
+        "MsmKey" = "8:_AA175F80203C424E904E5D7C62014031"
+        "OwnerKey" = "8:_UNDEFINED"
+        "MsmSig" = "8:_UNDEFINED"
+        }
+        "Entry"
+        {
         "MsmKey" = "8:_B70F72EBA9B1677F805AF1CE63ADC07F"
         "OwnerKey" = "8:_5530871CC260C272AFCF974F7DC9A4A8"
         "MsmSig" = "8:_UNDEFINED"
@@ -87,13 +93,7 @@
         }
         "Entry"
         {
-        "MsmKey" = "8:_C7C3B083F42D43AB947C72501FB4AB3A"
-        "OwnerKey" = "8:_UNDEFINED"
-        "MsmSig" = "8:_UNDEFINED"
-        }
-        "Entry"
-        {
-        "MsmKey" = "8:_E65394D442EA4EE2AE869FCE85A7436A"
+        "MsmKey" = "8:_E60631A39540447CAB0EF1CED2831447"
         "OwnerKey" = "8:_UNDEFINED"
         "MsmSig" = "8:_UNDEFINED"
         }
@@ -571,6 +571,26 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_AA175F80203C424E904E5D7C62014031"
+            {
+            "SourcePath" = "8:..\\SharedPowerpointFavoritesPlugin\\bin\\ReleaseAdmin\\Presentur.dll.manifest"
+            "TargetName" = "8:Presentur.dll.manifest"
+            "Tag" = "8:"
+            "Folder" = "8:_CC717EEB5EC4487F830E6A87B96B3D48"
+            "Condition" = "8:"
+            "Transitive" = "11:FALSE"
+            "Vital" = "11:TRUE"
+            "ReadOnly" = "11:FALSE"
+            "Hidden" = "11:FALSE"
+            "System" = "11:FALSE"
+            "Permanent" = "11:FALSE"
+            "SharedLegacy" = "11:FALSE"
+            "PackageAs" = "3:1"
+            "Register" = "3:1"
+            "Exclude" = "11:FALSE"
+            "IsDependency" = "11:FALSE"
+            "IsolateTo" = "8:"
+            }
             "{9F6F8455-1EF1-4B85-886A-4223BCC8E7F7}:_B70F72EBA9B1677F805AF1CE63ADC07F"
             {
             "AssemblyRegister" = "3:1"
@@ -633,30 +653,10 @@
             "IsDependency" = "11:TRUE"
             "IsolateTo" = "8:"
             }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_C7C3B083F42D43AB947C72501FB4AB3A"
+            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E60631A39540447CAB0EF1CED2831447"
             {
-            "SourcePath" = "8:..\\SharedPowerpointFavoritesPlugin\\bin\\Release\\SharedPowerpointFavoritesPlugin.dll.manifest"
-            "TargetName" = "8:SharedPowerpointFavoritesPlugin.dll.manifest"
-            "Tag" = "8:"
-            "Folder" = "8:_CC717EEB5EC4487F830E6A87B96B3D48"
-            "Condition" = "8:"
-            "Transitive" = "11:FALSE"
-            "Vital" = "11:TRUE"
-            "ReadOnly" = "11:FALSE"
-            "Hidden" = "11:FALSE"
-            "System" = "11:FALSE"
-            "Permanent" = "11:FALSE"
-            "SharedLegacy" = "11:FALSE"
-            "PackageAs" = "3:1"
-            "Register" = "3:1"
-            "Exclude" = "11:FALSE"
-            "IsDependency" = "11:FALSE"
-            "IsolateTo" = "8:"
-            }
-            "{1FB2D0AE-D3B9-43D4-B9DD-F88EC61E35DE}:_E65394D442EA4EE2AE869FCE85A7436A"
-            {
-            "SourcePath" = "8:..\\SharedPowerpointFavoritesPlugin\\bin\\Release\\SharedPowerpointFavoritesPlugin.vsto"
-            "TargetName" = "8:SharedPowerpointFavoritesPlugin.vsto"
+            "SourcePath" = "8:..\\SharedPowerpointFavoritesPlugin\\bin\\ReleaseAdmin\\Presentur.vsto"
+            "TargetName" = "8:Presentur.vsto"
             "Tag" = "8:"
             "Folder" = "8:_CC717EEB5EC4487F830E6A87B96B3D48"
             "Condition" = "8:"
@@ -761,7 +761,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Presentur.de PowerPoint-Add-In"
         "ProductCode" = "8:{D8EBDAAB-CACF-4088-AB21-6F1A60F3DE64}"
-        "PackageCode" = "8:{9F2BE9F8-578A-4A21-85A5-9A11D58A0BC7}"
+        "PackageCode" = "8:{BAE91CB7-1E61-416F-91D3-FC87E1A51DF6}"
         "UpgradeCode" = "8:{A9D0D243-C0B1-4344-A254-1C2BF6D48C1B}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -1394,7 +1394,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A7013B4C255E4B0B9C1A144D28118F41"
             {
-            "SourcePath" = "8:..\\SharedPowerpointFavoritesPlugin\\obj\\ReleaseAdmin\\Presentur.dll"
+            "SourcePath" = "8:..\\SharedPowerpointFavoritesPlugin\\obj\\Release\\Presentur.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CC717EEB5EC4487F830E6A87B96B3D48"
