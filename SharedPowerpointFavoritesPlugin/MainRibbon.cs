@@ -137,11 +137,38 @@ namespace SharedPowerpointFavoritesPlugin
             {
                 if (this.importExportService.ImportFromFile(filePath))
                 {
-                    MessageBox.Show("Successfully imported favorites.");
+                    //import is done. Maybe set theme as default?
+                    if(shapePersistence.GetPersistedTheme() == null)
+                    {
+                        //no theme to import
+                        MessageBox.Show("Successfully imported favorites.");
+                    }
+                    else
+                    {
+                        HandlePersistedThemeImport();
+                    }
                 }
                 else
                 {
                     MessageBox.Show("An error occured while importing favorites.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+        }
+
+        private void HandlePersistedThemeImport()
+        {
+            if (MessageBox.Show("Favorites were successfully imported. Do you want to install the imported theme as default?",
+                                     "Install theme",
+                                     MessageBoxButtons.YesNo) == DialogResult.Yes)
+            {
+                logger.Log("User wants to install default theme.");
+                if (shapePersistence.InstallPersistedDefaultTheme())
+                {
+                    MessageBox.Show("Successfully installed default theme.");
+                }
+                else
+                {
+                    MessageBox.Show("An error occured while installing default theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }

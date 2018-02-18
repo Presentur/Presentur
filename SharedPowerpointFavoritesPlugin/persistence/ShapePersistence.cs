@@ -38,6 +38,7 @@ namespace SharedPowerpointFavoritesPlugin
     class ShapePersistence
     {
         private static readonly string STRUCTURE_PERSISTANCE_FILE = GetPersistenceDir() + Path.DirectorySeparatorChar + "structure.json";
+        private const string DEFAULT_THEME_FILE = "Default Theme.thmx";
         public const string PERSISTENCE_DIR = ".sharedpowerpointfavorites";
         public const string PERSISTENCE_EXTENSION = ".pptx";
         public const string PNG_EXTENSION = ".png";
@@ -45,7 +46,7 @@ namespace SharedPowerpointFavoritesPlugin
         private static readonly DebugLogger logger = DebugLogger.GetLogger(typeof(ShapePersistence).Name);
         public static ShapePersistence INSTANCE = new ShapePersistence();
         private List<CacheListener> cacheListeners = new List<CacheListener>();
-        private List<ShapeFavorite> _cachedShapes; //backing dictionary
+        private List<ShapeFavorite> _cachedShapes; //backing list
 
 
         private List<ShapeFavorite> CachedShapes
@@ -82,13 +83,31 @@ namespace SharedPowerpointFavoritesPlugin
                 logger.Log("No theme found to install.");
                 return;
             }
-            logger.Log("Installing theme: " + persistedTheme);
+            WriteTheme(persistedTheme, Path.GetFileName(persistedTheme));
+        }
+
+        internal bool InstallPersistedDefaultTheme()
+        {
+            var persistedTheme = this.GetPersistedTheme();
+            if (persistedTheme == null)
+            {
+                logger.Log("No theme found to install as default.");
+                return false;
+            }
+            logger.Log("Writing default theme.");
+            WriteTheme(persistedTheme, DEFAULT_THEME_FILE);
+            return true;
+        }
+
+        private void WriteTheme(string source, string targetFileName)
+        {
+            logger.Log("Installing theme: " + source);
             var appDataDir = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
             var themeDir = "Microsoft\\Templates\\Document Themes";
             var targetDir = Path.Combine(appDataDir, themeDir);
-            var targetFile = Path.Combine(targetDir, Path.GetFileName(persistedTheme));
+            var targetFile = Path.Combine(targetDir, targetFileName);
             logger.Log("Target file is: " + targetFile);
-            File.Copy(persistedTheme, targetFile, true); //overwrites existing theme if present
+            File.Copy(source, targetFile, true); //overwrites existing theme if present
         }
 
         internal string GetPersistedTheme()
