@@ -39,7 +39,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
           <gallery id="sharedFavsShapes" label="Shapes" getItemCount="GetItemCount" getItemImage="GetItemImage" imageMso="ShapesMoreShapes" size="large" columns="2" onAction="OnItemAction"/>
         </group>
         <group id="sharedFavsPicturesGroup" label="Pictures">
-          <gallery id="sharedFavsPictures" label="Pictures" getItemCount="GetItemCount" getItemImage="GetItemImage" imageMso="PictureStylesGallery" size="large" columns="2" onAction="OnAction"/>
+          <gallery id="sharedFavsPictures" label="Pictures" getItemCount="GetItemCount" getItemImage="GetItemImage" imageMso="PictureStylesGallery" size="large" columns="2" onAction="OnItemAction"/>
         </group>
         <group id="sharedFavsImportExport" label="Import/Export" imageMso="ImportSavedImports">
           <button id="importSharedFavButton" label="Import Favorite Shapes" size="large"
