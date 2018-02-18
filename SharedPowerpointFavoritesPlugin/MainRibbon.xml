@@ -48,6 +48,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
           <button id="exportSharedFavButton" label="Export Favorite Shapes" size="large"
              screentip="Export Favorite Shapes" onAction="OnExportSharedFavButton"
              supertip="Exports Favorite Shapes" getVisible="IsAdmin" imageMso="ExportSavedExports"/>
+          <button id="installSharedFavDefaultThemeButton" label="Install Default Theme" size="large"
+             screentip="Install the imported theme as default" onAction="OnInstallDefaultThemeButton"
+             supertip="Install the imported theme as default" imageMso="ReviewDisplayForReview"/>
         </group>
         <group id="sharedFavsInfo" label="Information" getImage="GetPentagonImage">
           <button id="storyButton" label="Presentur.de" size="large"

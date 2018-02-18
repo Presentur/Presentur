@@ -124,6 +124,12 @@ namespace SharedPowerpointFavoritesPlugin
             System.Diagnostics.Process.Start(Constants.STORY_URL);
         }
 
+        public void OnInstallDefaultThemeButton(Office.IRibbonControl control)
+        {
+            logger.Log("Install default theme pressed.");
+            TryInstallDefaultTheme();
+        }
+
         public void OnImportSharedFavButton(Office.IRibbonControl control)
         {
             logger.Log("Import button clicked.");
@@ -162,14 +168,20 @@ namespace SharedPowerpointFavoritesPlugin
                                      MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
                 logger.Log("User wants to install default theme.");
-                if (shapePersistence.InstallPersistedDefaultTheme())
-                {
-                    MessageBox.Show("Successfully installed default theme.");
-                }
-                else
-                {
-                    MessageBox.Show("An error occured while installing default theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                TryInstallDefaultTheme();   
+            }
+        }
+
+        private void TryInstallDefaultTheme()
+        {
+            logger.Log("Trying to install default theme.");
+            if (shapePersistence.InstallPersistedDefaultTheme())
+            {
+                MessageBox.Show("Successfully installed default theme.");
+            }
+            else
+            {
+                MessageBox.Show("An error occured while installing default theme.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
