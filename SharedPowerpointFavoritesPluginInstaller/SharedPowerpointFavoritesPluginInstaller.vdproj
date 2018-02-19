@@ -761,7 +761,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Presentur.de's PowerPoint-Add-In"
         "ProductCode" = "8:{D8EBDAAB-CACF-4088-AB21-6F1A60F3DE64}"
-        "PackageCode" = "8:{F9AB9B46-7748-46C8-BAF2-DB174078328B}"
+        "PackageCode" = "8:{B4197BA0-0F80-43A0-A4B3-74A52C208114}"
         "UpgradeCode" = "8:{A9D0D243-C0B1-4344-A254-1C2BF6D48C1B}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
@@ -890,7 +890,7 @@
                                                                     "Condition" = "8:"
                                                                     "Transitive" = "11:FALSE"
                                                                     "ValueTypes" = "3:1"
-                                                                    "Value" = "8:Allows for sharing Favorite shapes from PowerPoint"
+                                                                    "Value" = "8:The Presentur.de PowerPoint-Add-Inn enables you to insert elements in Corporate Design by one click."
                                                                     }
                                                                     "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_0F87573BF4EF425DAF427EC56C711ED3"
                                                                     {
@@ -906,7 +906,7 @@
                                                                     "Condition" = "8:"
                                                                     "Transitive" = "11:FALSE"
                                                                     "ValueTypes" = "3:1"
-                                                                    "Value" = "8:SharedPowerpointFavorites"
+                                                                    "Value" = "8:Presentur"
                                                                     }
                                                                     "{ADCFDA98-8FDD-45E4-90BC-E3D20B029870}:_9571C7FCF83F4299B4E8506EA036CFBF"
                                                                     {
