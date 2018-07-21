@@ -30,6 +30,8 @@ namespace SharedPowerpointFavoritesPlugin.util
 
         private static readonly DebugLogger logger = DebugLogger.GetLogger(typeof(DialogUtil).Name);
 
+        public const string POWERPOINT_PRESENTATION_FILTER = "Powerpoint Presentation (*.pptx)|*.pptx";
+
         public static bool AskForConfirmation(string message)
         {
             return MessageBox.Show(message,
@@ -37,11 +39,11 @@ namespace SharedPowerpointFavoritesPlugin.util
                                      MessageBoxButtons.YesNo) == DialogResult.Yes;
         }
 
-        public static string GetFilePathViaDialog(bool isSaveAction)
+        public static string GetFilePathViaDialog(bool isSaveAction, string filter)
         {
             FileDialog openFileDialog = isSaveAction ? (new SaveFileDialog() as FileDialog) : (new OpenFileDialog() as FileDialog);
             openFileDialog.InitialDirectory = Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
-            openFileDialog.Filter = "SharedPowerpointFavorites (*.zip)|*.zip";
+            openFileDialog.Filter = filter;
             openFileDialog.RestoreDirectory = true;
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
@@ -52,6 +54,11 @@ namespace SharedPowerpointFavoritesPlugin.util
                 logger.Log("No file chosen.");
                 return null;
             }
+        }
+
+        public static string GetFilePathViaDialog(bool isSaveAction)
+        {
+            return GetFilePathViaDialog(isSaveAction, "SharedPowerpointFavorites (*.zip)|*.zip");
         }
     }
 }

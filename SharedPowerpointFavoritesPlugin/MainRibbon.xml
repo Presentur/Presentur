@@ -28,7 +28,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
           <button id="copyFromClipboardButton" label="Copy From Clipboard" size="large"
              screentip="Copy a shape from Clipboard" onAction="OnCopyFromClipboardButton" getVisible="IsAdmin"
              supertip="Copies the shape that is currently in your clipboard and imports it to your Favorite Shapes" imageMso="Copy"/>
-          <button id="addPresentation" label="Add Presentation..." size="large" screentip="Import a presentation" onAction="OnAddPresentation" getVisible="IsAdmin"
+          <button id="addPresentation" label="Add Presentation to Store" size="large" screentip="Import a presentation" onAction="OnAddPresentation" getVisible="IsAdmin"
                   supertip="Adds a presentation to the Presentation Store" imageMso="ImportSavedImports"/>
         </group>
         <group id="sharedFavsChartsGroup" label="Charts">

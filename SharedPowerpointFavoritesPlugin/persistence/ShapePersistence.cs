@@ -40,6 +40,7 @@ namespace SharedPowerpointFavoritesPlugin
         private static readonly string STRUCTURE_PERSISTANCE_FILE = GetPersistenceDir() + Path.DirectorySeparatorChar + "structure.json";
         private const string DEFAULT_THEME_FILE = "Default Theme.thmx";
         public const string PERSISTENCE_DIR = ".sharedpowerpointfavorites";
+        private const string PRESENTATION_DIR = "presentationstore";
         public const string PERSISTENCE_EXTENSION = ".pptx";
         public const string PNG_EXTENSION = ".png";
         private const string THEME_EXTENSION = ".thmx";
@@ -165,6 +166,24 @@ namespace SharedPowerpointFavoritesPlugin
                 temporaryPresentation.Close();
             }
             return thumbnailPath;
+        }
+
+        internal bool SavePresentation(string filePath)
+        {
+            var newUuid = Guid.NewGuid().ToString();
+            var presentationDir = GetPresentationDir();
+            var targetDir = presentationDir + Path.DirectorySeparatorChar + newUuid;
+            var targetPresentationFile = targetDir + Path.DirectorySeparatorChar + newUuid + ".pptx";
+            Directory.CreateDirectory(targetDir);
+            File.Copy(filePath, targetPresentationFile);
+            return CreatePresentationThumbnails(targetPresentationFile);
+        }
+
+        private bool CreatePresentationThumbnails(string presentationFile)
+        {
+            var temporaryPresentation = Globals.ThisAddIn.Application.Presentations.Open(presentationFile, Core.MsoTriState.msoTrue, Core.MsoTriState.msoTrue, Core.MsoTriState.msoFalse);
+            temporaryPresentation.SaveAs(Directory.GetParent(presentationFile).FullName, PowerPoint.PpSaveAsFileType.ppSaveAsPNG);
+            return true;
         }
 
         private void CreateThumbnail(string thumbnailPath, Shape targetShape)
@@ -399,6 +418,14 @@ namespace SharedPowerpointFavoritesPlugin
             var filePath = fileDir + separator + fileName;
             logger.Log("Using file path: " + filePath);
             return filePath;
+        }
+
+        internal static string GetPresentationDir()
+        {
+            var persistenceDir = GetPersistenceDir();
+            var presentationDir = persistenceDir + Path.DirectorySeparatorChar + PRESENTATION_DIR;
+            Directory.CreateDirectory(presentationDir);
+            return presentationDir;
         }
 
         internal static string GetPersistenceDir()

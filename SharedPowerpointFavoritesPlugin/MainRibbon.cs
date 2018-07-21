@@ -164,13 +164,24 @@ namespace SharedPowerpointFavoritesPlugin
         public void OnAddPresentation(Office.IRibbonControl control)
         {
             logger.Log("Add Presentation button clicked.");
-            var filePath = DialogUtil.GetFilePathViaDialog(isSaveAction: false);
-            if(!filePath.EndsWith(".pptx"))
+            var filePath = DialogUtil.GetFilePathViaDialog(isSaveAction: false, filter: DialogUtil.POWERPOINT_PRESENTATION_FILTER);
+            if(filePath == null)
             {
-                MessageBox.Show("This file format is not supported.", "Error", MessageBoxButtons.OK);
                 return;
             }
-            //TODO store presentation plus thumbnail in folder with UUID, show in ribbon, implement callback
+            if(!filePath.EndsWith(".pptx"))
+            {
+                MessageBox.Show("This file format is not supported.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if(ShapePersistence.INSTANCE.SavePresentation(filePath))
+            {
+                MessageBox.Show("Presentation was successfully imported.", "Success", MessageBoxButtons.OK);
+            }
+            else
+            {
+                MessageBox.Show("An error occured while importing the presentation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void HandlePersistedThemeImport()
