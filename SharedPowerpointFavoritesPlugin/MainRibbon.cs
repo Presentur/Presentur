@@ -264,6 +264,24 @@ namespace SharedPowerpointFavoritesPlugin
             return this.shapeService.GetShapesByTypes(GetShapeTypesForControl(control)).Count;
         }
 
+        public int GetPresentationCount(Office.IRibbonControl control)
+        {
+            //TODO
+            return 0;
+        }
+
+        public Bitmap GetPresentationImage(Office.IRibbonControl control, int index)
+        {
+            //TODO
+            return null;
+        }
+
+        public void OnPresentationAction(Office.IRibbonControl control, string id, int index)
+        {
+            //TODO
+        }
+
+
         private IEnumerable<Office.MsoShapeType> GetShapeTypesForControl(Office.IRibbonControl control)
         {
             switch (control.Id)
