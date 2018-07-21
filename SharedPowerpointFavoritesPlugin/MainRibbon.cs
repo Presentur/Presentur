@@ -161,6 +161,18 @@ namespace SharedPowerpointFavoritesPlugin
             }
         }
 
+        public void OnAddPresentation(Office.IRibbonControl control)
+        {
+            logger.Log("Add Presentation button clicked.");
+            var filePath = DialogUtil.GetFilePathViaDialog(isSaveAction: false);
+            if(!filePath.EndsWith(".pptx"))
+            {
+                MessageBox.Show("This file format is not supported.", "Error", MessageBoxButtons.OK);
+                return;
+            }
+            //TODO store presentation plus thumbnail in folder with UUID, show in ribbon, implement callback
+        }
+
         private void HandlePersistedThemeImport()
         {
             if (MessageBox.Show("Favorites were successfully imported. Do you want to install the imported theme as default?",
