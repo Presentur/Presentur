@@ -326,7 +326,7 @@
                 {
                 "Name" = "8:.NET Framework"
                 "Message" = "8:[VSDNETMSG]"
-                "FrameworkVersion" = "8:.NETFramework,Version=v4.5"
+                "FrameworkVersion" = "8:ANY"
                 "AllowLaterVersions" = "11:FALSE"
                 "InstallUrl" = "8:http://go.microsoft.com/fwlink/?LinkId=395269"
                 }
@@ -761,11 +761,11 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Presentur.de's PowerPoint-Add-In"
         "ProductCode" = "8:{D8EBDAAB-CACF-4088-AB21-6F1A60F3DE64}"
-        "PackageCode" = "8:{B4197BA0-0F80-43A0-A4B3-74A52C208114}"
+        "PackageCode" = "8:{7AF753E5-A77A-4F98-824D-700134F4130C}"
         "UpgradeCode" = "8:{A9D0D243-C0B1-4344-A254-1C2BF6D48C1B}"
         "AspNetVersion" = "8:4.0.30319.0"
         "RestartWWWService" = "11:FALSE"
-        "RemovePreviousVersions" = "11:FALSE"
+        "RemovePreviousVersions" = "11:TRUE"
         "DetectNewerInstalledVersion" = "11:TRUE"
         "InstallAllUsers" = "11:TRUE"
         "ProductVersion" = "8:1.0.0"
@@ -1394,7 +1394,7 @@
         {
             "{5259A561-127C-4D43-A0A1-72F10C7B3BF8}:_A7013B4C255E4B0B9C1A144D28118F41"
             {
-            "SourcePath" = "8:..\\SharedPowerpointFavoritesPlugin\\obj\\ReleaseAdmin\\Presentur.dll"
+            "SourcePath" = "8:..\\SharedPowerpointFavoritesPlugin\\obj\\Release\\Presentur.dll"
             "TargetName" = "8:"
             "Tag" = "8:"
             "Folder" = "8:_CC717EEB5EC4487F830E6A87B96B3D48"
