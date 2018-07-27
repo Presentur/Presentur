@@ -161,6 +161,35 @@ namespace SharedPowerpointFavoritesPlugin
             }
         }
 
+        public void OnDeletePresentationStore(Office.IRibbonControl control)
+        {
+            logger.Log("Delete Presentation button clicked.");
+            shapePersistence.DeletePresentationStore();
+        }
+
+        public void OnAddPresentation(Office.IRibbonControl control)
+        {
+            logger.Log("Add Presentation button clicked.");
+            var filePath = DialogUtil.GetFilePathViaDialog(isSaveAction: false, filter: DialogUtil.POWERPOINT_PRESENTATION_FILTER);
+            if(filePath == null)
+            {
+                return;
+            }
+            if(!filePath.EndsWith(".pptx"))
+            {
+                MessageBox.Show("This file format is not supported.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            if(ShapePersistence.INSTANCE.SavePresentation(filePath))
+            {
+                MessageBox.Show("Presentation was successfully imported.", "Success", MessageBoxButtons.OK);
+            }
+            else
+            {
+                MessageBox.Show("An error occured while importing the presentation.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         private void HandlePersistedThemeImport()
         {
             if (MessageBox.Show("Favorites were successfully imported. Do you want to install the imported theme as default?",
@@ -240,6 +269,22 @@ namespace SharedPowerpointFavoritesPlugin
         {
             return this.shapeService.GetShapesByTypes(GetShapeTypesForControl(control)).Count;
         }
+
+        public int GetPresentationCount(Office.IRibbonControl control)
+        {
+            return shapePersistence.GetPresentationStoreSlideCount();
+        }
+
+        public Bitmap GetPresentationImage(Office.IRibbonControl control, int index)
+        {
+            return GetScaledImage(shapePersistence.GetPresentationStoreSlideThumbByIndex(index));
+        }
+
+        public void OnPresentationAction(Office.IRibbonControl control, string id, int index)
+        {
+            shapePersistence.PastePresentationStoreSlide(index);
+        }
+
 
         private IEnumerable<Office.MsoShapeType> GetShapeTypesForControl(Office.IRibbonControl control)
         {

@@ -28,6 +28,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
           <button id="copyFromClipboardButton" label="Copy From Clipboard" size="large"
              screentip="Copy a shape from Clipboard" onAction="OnCopyFromClipboardButton" getVisible="IsAdmin"
              supertip="Copies the shape that is currently in your clipboard and imports it to your Favorite Shapes" imageMso="Copy"/>
+          <button id="addPresentation" label="Add Presentation to Store" size="large" screentip="Import a presentation" onAction="OnAddPresentation" getVisible="IsAdmin"
+                  supertip="Adds a presentation to the Presentation Store" imageMso="ImportSavedImports"/>
+          <button id="deletePresentationStore" label="Delete Presentation Store" size="large" screentip="Delete the presentation store" onAction="OnDeletePresentationStore" getVisible="IsAdmin"
+                  supertip="Deletes the presentation store" imageMso="Delete"/>
         </group>
         <group id="sharedFavsChartsGroup" label="Charts">
           <gallery id="sharedFavsCharts" label="Charts" getItemCount="GetItemCount" getItemImage="GetItemImage" imageMso="ChartWall" size="large" columns="2" onAction="OnItemAction"/>
@@ -40,6 +44,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         </group>
         <group id="sharedFavsPicturesGroup" label="Pictures">
           <gallery id="sharedFavsPictures" label="Pictures" getItemCount="GetItemCount" getItemImage="GetItemImage" imageMso="PictureStylesGallery" size="large" columns="2" onAction="OnItemAction"/>
+        </group>
+        <group id="sharedFavsPresentationsGroup" label="Presentations">
+          <gallery id="sharedFavsPresentations" label="Presentations" getItemCount="GetPresentationCount" getItemImage="GetPresentationImage" imageMso="UpgradePresentation" size="large" columns="2" onAction="OnPresentationAction"/>
         </group>
         <group id="sharedFavsImportExport" label="Import/Export" imageMso="ImportSavedImports">
           <button id="importSharedFavButton" label="Import Favorite Shapes" size="large"
