@@ -32,6 +32,7 @@ using FileInfo = System.IO.FileInfo;
 using System.IO;
 using System.Windows.Forms;
 using Newtonsoft.Json;
+using System.Drawing;
 
 namespace SharedPowerpointFavoritesPlugin
 {
@@ -79,7 +80,7 @@ namespace SharedPowerpointFavoritesPlugin
         internal void InstallPersistedTheme()
         {
             var persistedTheme = this.GetPersistedTheme();
-            if(persistedTheme == null)
+            if (persistedTheme == null)
             {
                 logger.Log("No theme found to install.");
                 return;
@@ -168,15 +169,28 @@ namespace SharedPowerpointFavoritesPlugin
             return thumbnailPath;
         }
 
+        internal void DeletePresentationStore()
+        {
+            var presentationDir = GetPresentationDir();
+            Directory.Delete(presentationDir, true);
+            InformCacheListenersOnRenew();
+        }
+
         internal bool SavePresentation(string filePath)
         {
+            DeletePresentationStore(); //we currently only support one stored presentation at a time
             var newUuid = Guid.NewGuid().ToString();
             var presentationDir = GetPresentationDir();
             var targetDir = presentationDir + Path.DirectorySeparatorChar + newUuid;
             var targetPresentationFile = targetDir + Path.DirectorySeparatorChar + newUuid + ".pptx";
             Directory.CreateDirectory(targetDir);
             File.Copy(filePath, targetPresentationFile);
-            return CreatePresentationThumbnails(targetPresentationFile);
+            if (!CreatePresentationThumbnails(targetPresentationFile))
+            {
+                return false;
+            }
+            InformCacheListenersOnRenew();
+            return true;
         }
 
         private bool CreatePresentationThumbnails(string presentationFile)
@@ -274,6 +288,21 @@ namespace SharedPowerpointFavoritesPlugin
             shapeFavorites.Insert(targetIndex, shapeFavorite);
             CachedShapes = shapeFavorites;
             return true;
+        }
+
+        internal void PastePresentationStoreSlide(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal Bitmap GetPresentationStoreSlideThumbById(int index)
+        {
+            throw new NotImplementedException();
+        }
+
+        internal int GetPresentationStoreSlideCount()
+        {
+            throw new NotImplementedException();
         }
 
         //checks whether the two specified shape types belong to the same group in SupportedShapeTypes

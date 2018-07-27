@@ -30,6 +30,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
              supertip="Copies the shape that is currently in your clipboard and imports it to your Favorite Shapes" imageMso="Copy"/>
           <button id="addPresentation" label="Add Presentation to Store" size="large" screentip="Import a presentation" onAction="OnAddPresentation" getVisible="IsAdmin"
                   supertip="Adds a presentation to the Presentation Store" imageMso="ImportSavedImports"/>
+          <button id="deletePresentationStore" label="Delete Presentation Store" size="large" screentip="Delete the presentation store" onAction="OnDeletePresentationStore" getVisible="IsAdmin"
+                  supertip="Deletes the presentation store" imageMso="Delete"/>
         </group>
         <group id="sharedFavsChartsGroup" label="Charts">
           <gallery id="sharedFavsCharts" label="Charts" getItemCount="GetItemCount" getItemImage="GetItemImage" imageMso="ChartWall" size="large" columns="2" onAction="OnItemAction"/>

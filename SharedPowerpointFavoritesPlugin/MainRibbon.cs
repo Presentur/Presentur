@@ -161,6 +161,12 @@ namespace SharedPowerpointFavoritesPlugin
             }
         }
 
+        public void OnDeletePresentationStore(Office.IRibbonControl control)
+        {
+            logger.Log("Delete Presentation button clicked.");
+            shapePersistence.DeletePresentationStore();
+        }
+
         public void OnAddPresentation(Office.IRibbonControl control)
         {
             logger.Log("Add Presentation button clicked.");
@@ -266,19 +272,17 @@ namespace SharedPowerpointFavoritesPlugin
 
         public int GetPresentationCount(Office.IRibbonControl control)
         {
-            //TODO
-            return 0;
+            return shapePersistence.GetPresentationStoreSlideCount();
         }
 
         public Bitmap GetPresentationImage(Office.IRibbonControl control, int index)
         {
-            //TODO
-            return null;
+            return shapePersistence.GetPresentationStoreSlideThumbById(index);
         }
 
         public void OnPresentationAction(Office.IRibbonControl control, string id, int index)
         {
-            //TODO
+            shapePersistence.PastePresentationStoreSlide(index);
         }
 
 
