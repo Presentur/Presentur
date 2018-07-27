@@ -45,11 +45,13 @@ namespace SharedPowerpointFavoritesPlugin
         public const string PERSISTENCE_EXTENSION = ".pptx";
         public const string PNG_EXTENSION = ".png";
         private const string THEME_EXTENSION = ".thmx";
+        private const string STORED_PRESENTATION_FILENAME = "presentation.pptx";
+
         private static readonly DebugLogger logger = DebugLogger.GetLogger(typeof(ShapePersistence).Name);
         public static ShapePersistence INSTANCE = new ShapePersistence();
         private List<CacheListener> cacheListeners = new List<CacheListener>();
         private List<ShapeFavorite> _cachedShapes; //backing list
-
+        
 
         private List<ShapeFavorite> CachedShapes
         {
@@ -182,7 +184,7 @@ namespace SharedPowerpointFavoritesPlugin
             var newUuid = Guid.NewGuid().ToString();
             var presentationDir = GetPresentationDir();
             var targetDir = presentationDir + Path.DirectorySeparatorChar + newUuid;
-            var targetPresentationFile = targetDir + Path.DirectorySeparatorChar + newUuid + ".pptx";
+            var targetPresentationFile = targetDir + Path.DirectorySeparatorChar + STORED_PRESENTATION_FILENAME;
             Directory.CreateDirectory(targetDir);
             File.Copy(filePath, targetPresentationFile);
             if (!CreatePresentationThumbnails(targetPresentationFile))
@@ -197,6 +199,7 @@ namespace SharedPowerpointFavoritesPlugin
         {
             var temporaryPresentation = Globals.ThisAddIn.Application.Presentations.Open(presentationFile, Core.MsoTriState.msoTrue, Core.MsoTriState.msoTrue, Core.MsoTriState.msoFalse);
             temporaryPresentation.SaveAs(Directory.GetParent(presentationFile).FullName, PowerPoint.PpSaveAsFileType.ppSaveAsPNG);
+            temporaryPresentation.Close();
             return true;
         }
 
@@ -292,17 +295,89 @@ namespace SharedPowerpointFavoritesPlugin
 
         internal void PastePresentationStoreSlide(int index)
         {
-            throw new NotImplementedException();
+            logger.Log("Trying to paste slide " + index);
+            var presentationDir = GetPresentationDir();
+            var presentations = Directory.GetDirectories(presentationDir);
+            int currentIndex = 0;
+            foreach (var presentationUUID in presentations)
+            {
+                logger.Log("Searching in presentation: " + presentationUUID);
+                var temporaryPresentation = GetStoredPresentationByFolder(presentationUUID);
+                int slideIndex = 0;
+                foreach (var slide in temporaryPresentation.Slides)
+                {
+                    if (currentIndex == index)
+                    {
+                        temporaryPresentation.Slides[slideIndex + 1].Copy(); //brillant design decision to start counting at 1..
+                        Globals.ThisAddIn.Application.ActiveWindow.Presentation.Slides.Paste();
+                        return;
+                    }
+                    else
+                    {
+                        currentIndex++;
+                    }
+                    slideIndex++;
+                }
+                temporaryPresentation.Close();
+            }
+            throw new ArgumentOutOfRangeException("No such presentation slide index.");
         }
 
-        internal Bitmap GetPresentationStoreSlideThumbById(int index)
+        internal Bitmap GetPresentationStoreSlideThumbByIndex(int index)
         {
-            throw new NotImplementedException();
+            var presentationDir = GetPresentationDir();
+            var presentations = Directory.GetDirectories(presentationDir);
+            int currentIndex = 0;
+            foreach (var presentationUUID in presentations)
+            {
+                var temporaryPresentation = GetStoredPresentationByFolder(presentationUUID);
+                int slideIndex = 0;
+                foreach(var slide in temporaryPresentation.Slides)
+                {
+                    if(currentIndex == index)
+                    {
+                        return GetPresentationStoreSlideThumbByFolderAndIndex(presentationUUID, slideIndex);
+                    }
+                    else
+                    {
+                        currentIndex++;
+                    }
+                    slideIndex++;
+                }
+                temporaryPresentation.Close();
+            }
+            throw new ArgumentOutOfRangeException("No such presentation slide index.");
+        }
+
+        private Bitmap GetPresentationStoreSlideThumbByFolderAndIndex(string presentationFolder, int slideIndex)
+        {
+            var thumbs = Directory.GetFiles(presentationFolder, "*.png");
+            var targetThumbFile = thumbs[slideIndex];
+            using(var image = Image.FromFile(targetThumbFile, true))
+            {
+                return new Bitmap(image);
+            }
         }
 
         internal int GetPresentationStoreSlideCount()
         {
-            throw new NotImplementedException();
+            var result = 0;
+            var presentationDir = GetPresentationDir();
+            var presentations = Directory.GetDirectories(presentationDir);
+            foreach(var presentationUUID in presentations)
+            {
+                var temporaryPresentation = GetStoredPresentationByFolder(presentationUUID);
+                result += temporaryPresentation.Slides.Count;
+                temporaryPresentation.Close();
+            }
+            return result;
+        }
+
+        //do not forget to close the obtained presentation
+        internal PowerPoint.Presentation GetStoredPresentationByFolder(string uuid)
+        {
+            var presentationFile = uuid + Path.DirectorySeparatorChar + STORED_PRESENTATION_FILENAME;
+            return Globals.ThisAddIn.Application.Presentations.Open(presentationFile, Core.MsoTriState.msoTrue, Core.MsoTriState.msoTrue, Core.MsoTriState.msoFalse);
         }
 
         //checks whether the two specified shape types belong to the same group in SupportedShapeTypes
@@ -431,6 +506,7 @@ namespace SharedPowerpointFavoritesPlugin
             {
                 result.Add(shape);
             }
+            temporaryPresentation.Close();
             return result;
         }
 

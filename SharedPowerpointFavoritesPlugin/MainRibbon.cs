@@ -277,7 +277,7 @@ namespace SharedPowerpointFavoritesPlugin
 
         public Bitmap GetPresentationImage(Office.IRibbonControl control, int index)
         {
-            return shapePersistence.GetPresentationStoreSlideThumbById(index);
+            return GetScaledImage(shapePersistence.GetPresentationStoreSlideThumbByIndex(index));
         }
 
         public void OnPresentationAction(Office.IRibbonControl control, string id, int index)
