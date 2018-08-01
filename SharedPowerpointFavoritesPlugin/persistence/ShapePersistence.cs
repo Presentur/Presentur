@@ -33,6 +33,7 @@ using System.IO;
 using System.Windows.Forms;
 using Newtonsoft.Json;
 using System.Drawing;
+using System.Diagnostics;
 
 namespace SharedPowerpointFavoritesPlugin
 {
@@ -337,37 +338,24 @@ namespace SharedPowerpointFavoritesPlugin
             logger.Log("Searching presentation thumbnail for index " + index);
             var presentationDir = GetPresentationDir();
             var presentations = Directory.GetDirectories(presentationDir).OrderBy(f => f);
-            int currentIndex = 0;
+            int currentOffset = 0;
             foreach (var presentationUUID in presentations)
             {
-                var temporaryPresentation = GetStoredPresentationByFolder(presentationUUID);
-                int slideIndex = 0;
-                foreach (var slide in temporaryPresentation.Slides)
+                var relativeIndex = index - currentOffset;
+                var thumbs = Directory.GetFiles(presentationUUID, "*.png").OrderBy(f => getIdFromThumbnailName(Path.GetFileNameWithoutExtension(new FileInfo(f).Name)));
+                if (thumbs.Count() <= relativeIndex)
                 {
-                    if (currentIndex == index)
-                    {
-                        return GetPresentationStoreSlideThumbByFolderAndIndex(presentationUUID, slideIndex);
-                    }
-                    else
-                    {
-                        currentIndex++;
-                    }
-                    slideIndex++;
+                    currentOffset += thumbs.Count();
+                    continue;
                 }
-                temporaryPresentation.Close();
+                var targetThumbFile = thumbs.ElementAt(relativeIndex);
+                logger.Log("Using thumbnail " + targetThumbFile);
+                using (var image = Image.FromFile(targetThumbFile, true))
+                {
+                    return new Bitmap(image);
+                }
             }
             throw new ArgumentOutOfRangeException("No such presentation slide index.");
-        }
-
-        private Bitmap GetPresentationStoreSlideThumbByFolderAndIndex(string presentationFolder, int slideIndex)
-        {
-            var thumbs = Directory.GetFiles(presentationFolder, "*.png").OrderBy(f => getIdFromThumbnailName(Path.GetFileNameWithoutExtension(new FileInfo(f).Name)));
-            var targetThumbFile = thumbs.ElementAt(slideIndex);
-            logger.Log("Using thumbnail " + targetThumbFile);
-            using (var image = Image.FromFile(targetThumbFile, true))
-            {
-                return new Bitmap(image);
-            }
         }
 
         private int getIdFromThumbnailName(string name)

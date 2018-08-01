@@ -29,6 +29,7 @@ using System.Windows.Forms;
 using SharedPowerpointFavoritesPlugin.util;
 using System.Drawing;
 using SharedPowerpointFavoritesPlugin.model;
+using System.Diagnostics;
 
 namespace SharedPowerpointFavoritesPlugin
 {
@@ -276,7 +277,15 @@ namespace SharedPowerpointFavoritesPlugin
 
         public Bitmap GetPresentationImage(Office.IRibbonControl control, int index)
         {
-            return GetScaledImage(shapePersistence.GetPresentationStoreSlideThumbByIndex(index));
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            var thumbnail = shapePersistence.GetPresentationStoreSlideThumbByIndex(index);
+            logger.Log("Loading thumbnail took " + stopwatch.ElapsedMilliseconds);
+            stopwatch.Restart();
+            var scaledThumbnail = GetScaledImage(thumbnail);
+            stopwatch.Stop();
+            logger.Log("Scaling thumbnail took " + stopwatch.ElapsedMilliseconds);
+            return scaledThumbnail;
         }
 
         public void OnPresentationAction(Office.IRibbonControl control, string id, int index)
