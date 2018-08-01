@@ -515,7 +515,6 @@ namespace SharedPowerpointFavoritesPlugin
             {
                 result.Add(shape);
             }
-            temporaryPresentation.Close();
             return result;
         }
 
