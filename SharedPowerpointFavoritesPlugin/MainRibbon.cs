@@ -252,7 +252,6 @@ namespace SharedPowerpointFavoritesPlugin
             if (selectedShape != null)
             {
                 ShapePersistence.INSTANCE.SaveShape(selectedShape);
-                SharedFavView.ShowOrFocus();
             }
             else
             {
