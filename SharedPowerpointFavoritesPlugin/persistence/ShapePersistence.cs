@@ -308,8 +308,17 @@ namespace SharedPowerpointFavoritesPlugin
                 {
                     if (currentIndex == index)
                     {
-                        temporaryPresentation.Slides[slideIndex + 1].Copy(); //brillant design decision to start counting at 1..
-                        Globals.ThisAddIn.Application.ActiveWindow.Presentation.Slides.Paste();
+                        temporaryPresentation.Slides[slideIndex + 1].Copy(); //brillant design decision to start counting at 1.
+                        try
+                        {
+                            var currentlySelectedSlide = Globals.ThisAddIn.Application.ActiveWindow.View.Slide.SlideIndex;
+                            Globals.ThisAddIn.Application.ActiveWindow.Presentation.Slides.Paste(currentlySelectedSlide + 1);
+                        }
+                        catch(Exception e)
+                        {
+                            logger.Log("Could not determine current slide: " + e);
+                            Globals.ThisAddIn.Application.ActiveWindow.Presentation.Slides.Paste(); //use default index as fallback
+                        }
                         return;
                     }
                     else
