@@ -51,7 +51,7 @@ namespace SharedPowerpointFavoritesPlugin
         public static ShapePersistence INSTANCE = new ShapePersistence();
         private List<CacheListener> cacheListeners = new List<CacheListener>();
         private List<ShapeFavorite> _cachedShapes; //backing list
-        
+
 
         private List<ShapeFavorite> CachedShapes
         {
@@ -297,7 +297,7 @@ namespace SharedPowerpointFavoritesPlugin
         {
             logger.Log("Trying to paste slide " + index);
             var presentationDir = GetPresentationDir();
-            var presentations = Directory.GetDirectories(presentationDir);
+            var presentations = Directory.GetDirectories(presentationDir).OrderBy(f => f);
             int currentIndex = 0;
             foreach (var presentationUUID in presentations)
             {
@@ -314,7 +314,7 @@ namespace SharedPowerpointFavoritesPlugin
                             var currentlySelectedSlide = Globals.ThisAddIn.Application.ActiveWindow.View.Slide.SlideIndex;
                             Globals.ThisAddIn.Application.ActiveWindow.Presentation.Slides.Paste(currentlySelectedSlide + 1);
                         }
-                        catch(Exception e)
+                        catch (Exception e)
                         {
                             logger.Log("Could not determine current slide: " + e);
                             Globals.ThisAddIn.Application.ActiveWindow.Presentation.Slides.Paste(); //use default index as fallback
@@ -334,16 +334,17 @@ namespace SharedPowerpointFavoritesPlugin
 
         internal Bitmap GetPresentationStoreSlideThumbByIndex(int index)
         {
+            logger.Log("Searching presentation thumbnail for index " + index);
             var presentationDir = GetPresentationDir();
-            var presentations = Directory.GetDirectories(presentationDir);
+            var presentations = Directory.GetDirectories(presentationDir).OrderBy(f => f);
             int currentIndex = 0;
             foreach (var presentationUUID in presentations)
             {
                 var temporaryPresentation = GetStoredPresentationByFolder(presentationUUID);
                 int slideIndex = 0;
-                foreach(var slide in temporaryPresentation.Slides)
+                foreach (var slide in temporaryPresentation.Slides)
                 {
-                    if(currentIndex == index)
+                    if (currentIndex == index)
                     {
                         return GetPresentationStoreSlideThumbByFolderAndIndex(presentationUUID, slideIndex);
                     }
@@ -360,11 +361,27 @@ namespace SharedPowerpointFavoritesPlugin
 
         private Bitmap GetPresentationStoreSlideThumbByFolderAndIndex(string presentationFolder, int slideIndex)
         {
-            var thumbs = Directory.GetFiles(presentationFolder, "*.png");
-            var targetThumbFile = thumbs[slideIndex];
-            using(var image = Image.FromFile(targetThumbFile, true))
+            var thumbs = Directory.GetFiles(presentationFolder, "*.png").OrderBy(f => getIdFromThumbnailName(Path.GetFileNameWithoutExtension(new FileInfo(f).Name)));
+            var targetThumbFile = thumbs.ElementAt(slideIndex);
+            logger.Log("Using thumbnail " + targetThumbFile);
+            using (var image = Image.FromFile(targetThumbFile, true))
             {
                 return new Bitmap(image);
+            }
+        }
+
+        private int getIdFromThumbnailName(string name)
+        {
+            try
+            {
+                //get trailing integer
+                var id = System.Text.RegularExpressions.Regex.Match(name, @"\d+$").Value;
+                return Convert.ToInt32(id);
+            }
+            catch (Exception e)
+            {
+                logger.Log("Exception while obtaining thumbnail id for " + name);
+                return 0;
             }
         }
 
@@ -373,7 +390,7 @@ namespace SharedPowerpointFavoritesPlugin
             var result = 0;
             var presentationDir = GetPresentationDir();
             var presentations = Directory.GetDirectories(presentationDir);
-            foreach(var presentationUUID in presentations)
+            foreach (var presentationUUID in presentations)
             {
                 var temporaryPresentation = GetStoredPresentationByFolder(presentationUUID);
                 result += temporaryPresentation.Slides.Count;
