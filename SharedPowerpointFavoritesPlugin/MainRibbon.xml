@@ -45,8 +45,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
         <group id="sharedFavsPicturesGroup" label="Pictures">
           <gallery id="sharedFavsPictures" label="Pictures" getItemCount="GetItemCount" getItemImage="GetItemImage" imageMso="PictureStylesGallery" size="large" columns="2" onAction="OnItemAction"/>
         </group>
-        <group id="sharedFavsPresentationsGroup" label="Presentations">
-          <gallery id="sharedFavsPresentations" label="Presentations" getItemCount="GetPresentationCount" getItemImage="GetPresentationImage" imageMso="UpgradePresentation" size="large" columns="2" onAction="OnPresentationAction"/>
+        <group id="sharedFavsPresentationsGroup" label="Slides">
+          <gallery id="sharedFavsPresentations" label="Slides" getItemCount="GetPresentationCount" getItemImage="GetPresentationImage" imageMso="UpgradePresentation" size="large" columns="2" onAction="OnPresentationAction"/>
         </group>
         <group id="sharedFavsImportExport" label="Import/Export" imageMso="ImportSavedImports">
           <button id="importSharedFavButton" label="Import Favorite Shapes" size="large"
