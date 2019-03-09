@@ -99,12 +99,22 @@ namespace SharedPowerpointFavoritesPlugin
 
         internal bool MoveUpShape(ShapeFavorite shapeFavorite)
         {
-            return this.shapePersistance.MoveUp(shapeFavorite, false);
+            return this.shapePersistance.Move(shapeFavorite, true, false);
         }
 
         internal bool MoveShapeToTop(ShapeFavorite shapeFavorite)
         {
-            return this.shapePersistance.MoveUp(shapeFavorite, true);
+            return this.shapePersistance.Move(shapeFavorite, true, true);
+        }
+
+        internal bool MoveDownShape(ShapeFavorite shapeFavorite)
+        {
+            return this.shapePersistance.Move(shapeFavorite, false, false);
+        }
+
+        internal bool MoveShapeToBottom(ShapeFavorite shapeFavorite)
+        {
+            return this.shapePersistance.Move(shapeFavorite, false, true);
         }
     }
 }

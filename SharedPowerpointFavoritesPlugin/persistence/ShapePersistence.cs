@@ -262,36 +262,44 @@ namespace SharedPowerpointFavoritesPlugin
             return shape.FilePath.Replace(PERSISTENCE_EXTENSION, PNG_EXTENSION);
         }
 
-        public bool MoveUp(ShapeFavorite shapeFavorite, bool toTop)
+        public bool Move(ShapeFavorite shapeFavorite, bool up, bool toLimit)
         {
-            logger.Log("Moving up shapeFavorite: " + shapeFavorite);
+            logger.Log("Moving shapeFavorite: " + shapeFavorite + (up ? " up" : " down"));
             var shapeFavorites = new List<ShapeFavorite>(CachedShapes);
-            int targetIndex = -1;
-            for (int i = 0; i < shapeFavorites.Count; i++)
-            {
-                if (IsPeerShapeType(shapeFavorites[i].Shape.Type, shapeFavorite.Shape.Type) && !(shapeFavorites[i].Equals(shapeFavorite)))
-                {
-                    targetIndex = i;
-                    if (toTop)
-                    {
-                        break;
-                    }
-                }
-                if (shapeFavorites[i].Equals(shapeFavorite))
-                {
-                    break;
-                }
-            }
+            int targetIndex = GetTargetIndexForMoveOperation(shapeFavorites, shapeFavorite, up, toLimit);
             if (targetIndex == -1)
             {
-                logger.Log("Did not find any shape with lower index. Not moving up.");
+                logger.Log("Cannot move shape in the given direction.");
                 return false;
             }
-            logger.Log("Setting targetIndex for moving up: " + targetIndex);
+            logger.Log("Setting targetIndex for move operation: " + targetIndex);
             shapeFavorites.Remove(shapeFavorite);
             shapeFavorites.Insert(targetIndex, shapeFavorite);
             CachedShapes = shapeFavorites;
             return true;
+        }
+
+        private int GetTargetIndexForMoveOperation(List<ShapeFavorite> shapeFavorites, ShapeFavorite shapeFavorite, bool up, bool toLimit)
+        {
+            int targetIndex = -1;
+            for (int i = 0; i < shapeFavorites.Count; i++)
+            {
+                var currentIndex = up ? i : shapeFavorites.Count - 1 - i;
+                var currentShape = shapeFavorites[currentIndex];
+                if (IsPeerShapeType(currentShape.Shape.Type, shapeFavorite.Shape.Type) && !(currentShape.Equals(shapeFavorite)))
+                {
+                    targetIndex = currentIndex;
+                    if (toLimit)
+                    {
+                        break;
+                    }
+                }
+                if (currentShape.Equals(shapeFavorite))
+                {
+                    break;
+                }
+            }
+            return targetIndex;
         }
 
         internal void PastePresentationStoreSlide(int index)
