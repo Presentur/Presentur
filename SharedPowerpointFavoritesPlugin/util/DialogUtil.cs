@@ -42,7 +42,7 @@ namespace SharedPowerpointFavoritesPlugin.util
         public static string GetFilePathViaDialog(bool isSaveAction, string filter)
         {
             FileDialog openFileDialog = isSaveAction ? (new SaveFileDialog() as FileDialog) : (new OpenFileDialog() as FileDialog);
-            openFileDialog.InitialDirectory = Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
+            openFileDialog.InitialDirectory = ShapePersistence.GetDesignatedImportDir();
             openFileDialog.Filter = filter;
             openFileDialog.RestoreDirectory = true;
             if (openFileDialog.ShowDialog() == DialogResult.OK)

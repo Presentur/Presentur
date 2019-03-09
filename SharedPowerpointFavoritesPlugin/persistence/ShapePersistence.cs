@@ -41,7 +41,9 @@ namespace SharedPowerpointFavoritesPlugin
     {
         private static readonly string STRUCTURE_PERSISTANCE_FILE = GetPersistenceDir() + Path.DirectorySeparatorChar + "structure.json";
         private const string DEFAULT_THEME_FILE = "Default Theme.thmx";
+        public const string PRESENTUR_DIR = "Presentur";
         public const string PERSISTENCE_DIR = ".sharedpowerpointfavorites";
+        public const string DESIGNATED_IMPORT_DIR = "Sets";
         private const string PRESENTATION_DIR = "presentationstore";
         public const string PERSISTENCE_EXTENSION = ".pptx";
         public const string PNG_EXTENSION = ".png";
@@ -556,11 +558,26 @@ namespace SharedPowerpointFavoritesPlugin
 
         internal static string GetPersistenceDir()
         {
-            var homePath = Environment.ExpandEnvironmentVariables("%HOMEDRIVE%%HOMEPATH%");
-            var separator = Path.DirectorySeparatorChar;
-            var persistenceDir = homePath + separator + PERSISTENCE_DIR;
+            var presenturDir = GetPresenturDir();
+            var persistenceDir = presenturDir + Path.DirectorySeparatorChar + PERSISTENCE_DIR;
             Directory.CreateDirectory(persistenceDir);
             return persistenceDir;
+        }
+
+        internal static string GetDesignatedImportDir()
+        {
+            var presenturDir = GetPresenturDir();
+            var designatedImportDir = presenturDir + Path.DirectorySeparatorChar + DESIGNATED_IMPORT_DIR;
+            Directory.CreateDirectory(designatedImportDir);
+            return designatedImportDir;
+        }
+
+        internal static string GetPresenturDir()
+        {
+            var programDataDirPath = Environment.ExpandEnvironmentVariables("%ProgramData%");
+            var presenturDir = programDataDirPath + Path.DirectorySeparatorChar + PRESENTUR_DIR;
+            Directory.CreateDirectory(presenturDir);
+            return presenturDir;
         }
 
         internal void RegisterCacheListener(CacheListener listener)
