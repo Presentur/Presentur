@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -28,10 +29,12 @@ namespace SharedPowerpointFavoritesPlugin
     {
         internal static bool DEBUG_LOGGING_ENABLED = true;
         private readonly string tag;
+        private readonly string logFile;
 
         private DebugLogger(string tag)
         {
             this.tag = tag;
+            this.logFile = Path.Combine(ShapePersistence.GetPresenturDir(), "presentur.log");
         }
         public void Log(string message)
         {
@@ -39,7 +42,9 @@ namespace SharedPowerpointFavoritesPlugin
             {
                 return;
             }
-            System.Diagnostics.Debug.WriteLine(DateTime.Now.ToString() + " | " + tag + ": " + message);
+            var formattedLogMessage = DateTime.Now.ToString() + " | " + tag + ": " + message;
+            System.Diagnostics.Debug.WriteLine(formattedLogMessage);
+            File.AppendAllText(this.logFile, formattedLogMessage + Environment.NewLine);
         }
 
         public static DebugLogger GetLogger(string tag)
